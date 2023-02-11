@@ -1,14 +1,14 @@
 import express from 'express'
 import cors from 'cors'
 import colors from 'colors'
-import router from './routes/test.js'
 import dotenv from 'dotenv'
 import mongoose from 'mongoose'
+import productRouter from './routes/productRouter.js'
+import connectDB from './config/connectDB.js'
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT || 5000
-
 const startServer = () => {
   app.listen(
     PORT,
@@ -34,24 +34,11 @@ const addMiddlewares = () => {
 }
 
 const loadRoutes = () => {
-  app.use('/api', router)
-}
-
-const connect = async () => {
-  try {
-    await mongoose.connect(process.env.DB)
-    console.log(
-      `Connection to MongoDB established on port: ${PORT}`.bgBrightGreen,
-    )
-  } catch (error) {
-    console.log(
-      `Error while trying to connect to MongoDB, error: ${error}`.bgBrightRed,
-    )
-  }
+  app.use('/api/products', productRouter)
 }
 
 ;(async function controller() {
-  await connect()
+  await connectDB()
   addMiddlewares()
   loadRoutes()
   startServer()
