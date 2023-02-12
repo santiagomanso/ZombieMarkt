@@ -20,10 +20,14 @@ const productSchema = mongoose.Schema({
   },
   rating: {
     type: Number,
-    required: true,
+    required: false,
     default: 3,
   },
-  numReviews: { type: Number, required: false, default: 0 },
+  numReviews: {
+    type: Number,
+    required: false,
+    default: 0,
+  },
   image: {
     type: String,
     required: true,
