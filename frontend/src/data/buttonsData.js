@@ -1,18 +1,18 @@
 export const buttonsData = [
   {
     id: 1,
-    title: 'Inbound inventory',
-    path: '/inbound',
+    title: 'Create product',
+    path: '/create',
   },
   {
     id: 2,
-    title: 'Outbound inventory',
-    path: '/outbound',
+    title: 'Update product',
+    path: '/update',
   },
   {
     id: 3,
-    title: 'Inventory Check',
-    path: '/check',
+    title: 'Delete product',
+    path: '/delete',
   },
   {
     id: 4,
