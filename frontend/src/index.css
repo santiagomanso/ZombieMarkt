@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 @layer base {
-  input {
-    @apply focus:outline-pink-300 focus:outline-2;
+  input,
+  select {
+    @apply focus:outline-pink-300 focus:outline-2 px-3 py-2 rounded-md;
+  }
+  button {
+    @apply rounded-md;
   }
 }
