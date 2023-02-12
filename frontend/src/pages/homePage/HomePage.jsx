@@ -4,10 +4,10 @@ import { useNavigate } from 'react-router-dom'
 const HomePage = () => {
   const navigate = useNavigate()
   return (
-    <section className='ml-0 sm:ml-36 mr-0 sm:mr-36 flex flex-col sm:flex-row justify-center items-center flex-wrap'>
+    <main className='ml-0 sm:ml-36 mr-0 sm:mr-36 flex flex-col sm:flex-row justify-center items-center flex-wrap'>
       {buttonsData.map((button) => {
         return (
-          <div
+          <section
             key={button.id}
             className='m-2 sm:m-4 h-16 sm:h-64 w-64 bg-stone-200 rounded-md'
           >
@@ -17,10 +17,10 @@ const HomePage = () => {
             >
               {button.title}
             </button>
-          </div>
+          </section>
         )
       })}
-    </section>
+    </main>
   )
 }
 export default HomePage
