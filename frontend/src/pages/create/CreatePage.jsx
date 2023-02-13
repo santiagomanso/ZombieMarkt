@@ -50,7 +50,7 @@ const CreatePage = () => {
 
       setResponse(res.data)
     } catch (error) {
-      console.log(error.response.data.message)
+      console.log(error.response.data.message) //REVIEW - i dont like this way of axios
       setError(error.response.data.message)
     }
   }
