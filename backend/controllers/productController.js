@@ -38,20 +38,29 @@ export const getProductsByEAN = async (req, res) => {
 
 export const postNewProduct = async (req, res) => {
   //destructure fields that are mandatory
-  const { name, ean, sku, category, image } = req.body
+  const { name, ean, sku, category, image, countInStock } = req.body
+  if (!name && !ean && !sku && !category && !image && !countInStock) {
+    return res.status(500).json({
+      message: 'error empty field/s detected',
+    })
+  }
+  // console.log('name', name)
+  // console.log('ean', ean)
+  // console.log('sku', sku)
+  // console.log('category', category)
+  // console.log('image', image)
+  // console.log('countInStock', countInStock)
   try {
     const existingProduct = await productModel.findOne({ ean: ean })
     if (existingProduct) {
-      res.status(500).json({
-        message: 'Product already exists',
-        product: existingProduct,
-      })
+      console.log('error product already exists')
+      res.status(501).json({ message: 'error: product already exists' })
     } else {
       const newProduct = new productModel({
         name: name,
         sku: sku,
         ean: ean,
-        countInStock: req.body.countInStock,
+        countInStock: countInStock,
         rating: req.body.rating,
         numReviews: req.body.numReviews,
         image: image,
@@ -59,19 +68,21 @@ export const postNewProduct = async (req, res) => {
       })
       try {
         const savedProduct = await newProduct.save()
-        console.log(savedProduct)
+        // console.log(savedProduct)
         res.status(201).json({
           msg: 'Product created successfully',
         })
       } catch (error) {
-        res.status(500).json({
-          msg: error,
+        console.log('error server')
+        res.status(503).json({
+          msg: 'error inner catch',
         })
       }
     }
   } catch (error) {
-    res.status(500).json({
-      msg: error,
+    console.log('error undefined')
+    res.status().json({
+      message: error,
     })
   }
 }
