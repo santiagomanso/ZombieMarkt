@@ -57,7 +57,7 @@ const UpdatePage = () => {
         <div
           className={`py-0 sm:py-4 px-0 sm:px-4 overflow-auto rounded-lg  bg-white  h-[400px] lg:h-[600px] grid duration-500 ${
             products.length > 0
-              ? 'grid-cols-1 lg:grid-cols-3 gap-5 mt-6 sm:mt-1 lg:mt-0'
+              ? 'grid-cols-1 lg:grid-cols-2 gap-5 mt-6 sm:mt-1 lg:mt-0'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5'
           } outline outline-1 outline-gray-300 shadow-md`}
         >
@@ -66,7 +66,9 @@ const UpdatePage = () => {
               return <Product product={item} index={i} key={item._id} />
             })
           ) : (
-            <p className='text-3xl'>Search or scan a product to start</p>
+            <p className='text-3xl text-gray-600'>
+              Search or scan a product to start
+            </p>
           )}
         </div>
 
