@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ReactDom from 'react-dom'
 import UseGetProducts from '../../hooks/UseGetProducts'
 import { useDebounce } from 'use-debounce'
@@ -9,8 +9,10 @@ const Modal = ({ active, setActive, setProducts }) => {
   const [debouncedText] = useDebounce(input, 1000)
   const [data, setData] = useState('')
   const [error, setError] = useState('')
+  const inputRef = useRef(null)
 
   useEffect(() => {
+    inputRef.current.focus()
     const detectKeyDown = (e) => {
       if (e.key === 'Escape') {
         setActive(!active)
@@ -37,6 +39,7 @@ const Modal = ({ active, setActive, setProducts }) => {
           >
             <input
               type='text'
+              ref={inputRef}
               placeholder='Search SKU / EAN / Name'
               className='p-7 md:text-lg sm:w-3/4 lg:w-full rounded-md outline outline-1 outline-gray-300 font-medium text-2xl h-14'
               onChange={(e) => setInput(e.target.value)}
