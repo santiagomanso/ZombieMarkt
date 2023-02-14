@@ -9,7 +9,7 @@ const HomePage = () => {
         return (
           <section
             key={button.id}
-            className='m-2 sm:m-4 h-16 sm:h-64 w-64 bg-stone-200 rounded-md'
+            className='m-2 sm:m-4 h-16 sm:h-52 w-52 bg-stone-200 rounded-md outline outline-1 outline-gray-400/60'
           >
             <button
               onClick={() => navigate(button.path)}
