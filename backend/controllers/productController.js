@@ -36,6 +36,12 @@ export const getProductsByEAN = async (req, res) => {
   }
 }
 
+//NOTE 1nd step
+export const postImage = async (req, res) => {
+  res.json(req.file)
+}
+
+//NOTE POST NEW PRODUCT
 export const postNewProduct = async (req, res) => {
   //destructure fields that are mandatory
   const { name, ean, sku, category, image, countInStock } = req.body
@@ -44,12 +50,6 @@ export const postNewProduct = async (req, res) => {
       message: 'error empty field/s detected',
     })
   }
-  // console.log('name', name)
-  // console.log('ean', ean)
-  // console.log('sku', sku)
-  // console.log('category', category)
-  // console.log('image', image)
-  // console.log('countInStock', countInStock)
   try {
     const existingProduct = await productModel.findOne({ ean: ean })
     if (existingProduct) {
@@ -71,6 +71,7 @@ export const postNewProduct = async (req, res) => {
         // console.log(savedProduct)
         res.status(201).json({
           msg: 'Product created successfully',
+          product: savedProduct,
         })
       } catch (error) {
         console.log('error server')
@@ -83,6 +84,46 @@ export const postNewProduct = async (req, res) => {
     console.log('error undefined')
     res.status().json({
       message: error,
+    })
+  }
+}
+
+export const updateProduct = async (req, res) => {
+  const { _id } = req.params
+
+  const { name, ean, sku, countInStock, rating, numReviews, image, category } =
+    req.body
+
+  const newProduct = {}
+  if (name) newProduct.name = name
+  if (ean) newProduct.ean = ean
+  if (sku) newProduct.sku = sku
+  if (countInStock) newProduct.countInStock = countInStock
+  if (rating) newProduct.rating = rating
+  if (numReviews) newProduct.numReviews = numReviews
+  if (image) newProduct.image = image
+  if (category) newProduct.category = category
+
+  try {
+    let product = await productModel.findById(_id)
+    if (product) {
+      //update product
+      product = await productModel.findByIdAndUpdate(
+        { _id: _id },
+        { $set: newProduct },
+        { new: true },
+      )
+      res.status(200).json({
+        product: product,
+      })
+    } else {
+      res.status(404).json({
+        msg: 'Product not found',
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Internal error',
     })
   }
 }
