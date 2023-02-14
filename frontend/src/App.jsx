@@ -4,19 +4,24 @@ import Navbar from './components/navbar/Navbar'
 import HomePage from './pages/homePage/HomePage'
 import CreatePage from './pages/create/CreatePage'
 import UpdatePage from './pages/update/UpdatePage'
+import ProductContextProvider from './context/ProductContext'
+import Details from './pages/detailPage/Details'
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <AppContainer>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/create' element={<CreatePage />} />
-          <Route path='/update' element={<UpdatePage />} />
-        </Routes>
-      </AppContainer>
-    </BrowserRouter>
+    <ProductContextProvider>
+      <BrowserRouter>
+        <AppContainer>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/create' element={<CreatePage />} />
+            <Route path='/update' element={<UpdatePage />} />
+            <Route path='/details/:id' element={<Details />} />
+          </Routes>
+        </AppContainer>
+      </BrowserRouter>
+    </ProductContextProvider>
   )
 }
 export default App
