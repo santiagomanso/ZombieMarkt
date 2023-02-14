@@ -1,11 +1,14 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import { Link } from 'react-router-dom'
 import Modal from '../../components/modal/Modal'
 import Product from '../../components/Product/Product'
+import { ProductContext } from '../../context/ProductContext'
 
 const UpdatePage = () => {
   const [active, setActive] = useState(false)
   const [products, setProducts] = useState('')
   const [error, setError] = useState('')
+  const { productList } = useContext(ProductContext)
 
   return (
     <>
@@ -55,15 +58,19 @@ const UpdatePage = () => {
         </p>
 
         <div
-          className={`py-0 sm:py-4 px-0 sm:px-4 overflow-auto rounded-lg  bg-white  h-[400px] lg:h-[600px] grid duration-500 ${
-            products.length > 0
-              ? 'grid-cols-1 lg:grid-cols-2 gap-5 mt-6 sm:mt-1 lg:mt-0'
+          className={`py-0 sm:py-4 px-0 sm:px-4 overflow-auto rounded  bg-white  h-[400px] lg:h-[600px]  grid duration-500 ${
+            productList.length > 0
+              ? 'grid-cols-1 lg:grid-cols-3 grid-rows-layout gap-5 mt-6 sm:mt-1 lg:mt-0'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5'
           } outline outline-1 outline-gray-300 shadow-md`}
         >
-          {products.length > 0 ? (
-            products.map((item, i) => {
-              return <Product product={item} index={i} key={item._id} />
+          {productList.length > 0 ? (
+            productList.map(({ product }, i) => {
+              return (
+                <Link to={`/details/${product._id}`} key={product._id}>
+                  <Product product={product} index={i} opt='h-[150px]' />
+                </Link>
+              )
             })
           ) : (
             <p className='text-3xl text-gray-600'>
