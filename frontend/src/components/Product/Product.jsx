@@ -1,21 +1,49 @@
-const Product = ({ product, index }) => {
-  const randomBg = () => {
-    const bg = [
-      'to-fuchsia-300/40',
-      'to-stone-300/40',
-      'to-green-300/40',
-      'to-stone-300/40',
-      'to-blue-300/40',
-      'to-indigo-300/40',
-      'to-red-300/40',
-      'to-orange-300/40',
-    ]
-    return bg[Math.floor(Math.random() * bg.length)]
+import { useContext, useState } from 'react'
+import { ProductContext } from '../../context/ProductContext'
+
+const Product = ({
+  product,
+  index,
+  opt,
+  setError,
+  setMsg,
+  setActive,
+  setInput,
+}) => {
+  const { productList, setProductList } = useContext(ProductContext)
+
+  const handleAdd = () => {
+    if (productList.length > 0) {
+      if (productList.some((item) => item.product._id === product._id)) {
+        setError('Product already in the list')
+        setTimeout(() => {
+          setError('')
+        }, 1500)
+      } else {
+        setError('')
+        setProductList([{ product }, ...productList])
+        setMsg('Product added to the list')
+        setTimeout(() => {
+          setMsg('')
+          setActive(false)
+        }, 1200)
+      }
+    } else {
+      setError('')
+      setProductList([{ product }, ...productList])
+      setMsg('Product added to the list')
+      setTimeout(() => {
+        setMsg('')
+        setActive(false)
+      }, 1200)
+    }
   }
 
   return (
     <article
-      className={` h-[150px] p-3 rounded bg-gradient-to-br from-white ${randomBg()} flex gap-5 outline outline-1 outline-gray-300 shadow-lg`}
+      className={`${opt} p-3 rounded bg-gradient-to-br outline outline-1 outline-stone-300
+      from-white via-slate-200 to-stone-500/40 flex gap-5  shadow-lg cursor-pointer`}
+      onDoubleClick={handleAdd}
     >
       <div className='w-28 h-28 place-self-center'>
         <img
