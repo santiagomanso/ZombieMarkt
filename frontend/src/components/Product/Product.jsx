@@ -10,33 +10,17 @@ const Product = ({
   setActive,
   setInput,
 }) => {
-  const { productList, setProductList } = useContext(ProductContext)
+  const { productFromContext, setProductFromContext } =
+    useContext(ProductContext)
 
   const handleAdd = () => {
-    if (productList.length > 0) {
-      if (productList.some((item) => item.product._id === product._id)) {
-        setError('Product already in the list')
-        setTimeout(() => {
-          setError('')
-        }, 1500)
-      } else {
-        setError('')
-        setProductList([{ product }, ...productList])
-        setMsg('Product added to the list')
-        setTimeout(() => {
-          setMsg('')
-          setActive(false)
-        }, 1200)
-      }
-    } else {
-      setError('')
-      setProductList([{ product }, ...productList])
-      setMsg('Product added to the list')
-      setTimeout(() => {
-        setMsg('')
-        setActive(false)
-      }, 1200)
-    }
+    setError('')
+    setProductFromContext(product)
+    setMsg('Product added to the list')
+    setTimeout(() => {
+      setMsg('')
+      setActive(false)
+    }, 1200)
   }
 
   return (

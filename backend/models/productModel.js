@@ -12,11 +12,16 @@ const productSchema = mongoose.Schema({
   ean: {
     type: Number,
     required: true,
+    unique: true,
   },
   countInStock: {
     type: Number,
     required: true,
     default: 0,
+  },
+  price: {
+    type: Number,
+    required: true,
   },
   rating: {
     type: Number,
@@ -30,7 +35,8 @@ const productSchema = mongoose.Schema({
   },
   image: {
     type: String,
-    required: true,
+    required: false,
+    default: 'https://app.advaiet.com/item_dfile/default_product.png',
   },
   category: {
     type: String,

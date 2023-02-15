@@ -6,6 +6,7 @@ import CreatePage from './pages/create/CreatePage'
 import UpdatePage from './pages/update/UpdatePage'
 import ProductContextProvider from './context/ProductContext'
 import Details from './pages/detailPage/Details'
+import DeletePage from './pages/deletePage/DeletePage'
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route path='/create' element={<CreatePage />} />
             <Route path='/update' element={<UpdatePage />} />
             <Route path='/details/:id' element={<Details />} />
+            <Route path='/delete/' element={<DeletePage />} />
           </Routes>
         </AppContainer>
       </BrowserRouter>

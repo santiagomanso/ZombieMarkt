@@ -5,7 +5,7 @@ import { useDebounce } from 'use-debounce'
 import Product from '../Product/Product'
 import FloatingMsg from '../floatingMsg/FloatingMsg'
 
-const Modal = ({ active, setActive, setProducts }) => {
+const Modal = ({ active, setActive }) => {
   const [input, setInput] = useState('')
   const [debouncedText] = useDebounce(input, 1000)
   const [data, setData] = useState('')
@@ -35,7 +35,7 @@ const Modal = ({ active, setActive, setProducts }) => {
           className='absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-br from-black/95 via-slate-900/95 to-slate-900'
           onClick={() => setActive(!active)}
         />
-        <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-full lg:h-[80vh] lg:w-[60vw]'>
+        <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-full lg:h-[80vh] lg:w-[70vw]'>
           <div
             className={`flex flex-col justify-between bg-gray-100  w-full h-full rounded-md px-8 py-6  border-2 border-gray-700`}
           >
@@ -50,7 +50,7 @@ const Modal = ({ active, setActive, setProducts }) => {
             <div
               className={`grid bg-white w-full h-5/6 outline outline-1 outline-gray-300 rounded ${
                 data.length > 0
-                  ? 'grid-cols-1 lg:grid-cols-2 grid-rows-layout gap-5 p-7'
+                  ? 'grid-cols-1 lg:grid-cols-3 grid-rows-layout gap-5 p-7'
                   : 'grid-cols-1 place-items-center '
               } outline outline-1 outline-gray-300 shadow-md`}
             >

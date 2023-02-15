@@ -1,9 +1,9 @@
 import express from 'express'
 import {
+  deleteProduct,
   getAllProducts,
   getProductsByEAN,
   getProductsByName,
-  postImage,
   postNewProduct,
   updateProduct,
 } from '../controllers/productController.js'
@@ -17,10 +17,12 @@ productRouter.get('/name/:name', getProductsByName)
 productRouter.get('/ean/:ean', getProductsByEAN)
 
 //NOTE POST
-productRouter.post('/create', postNewProduct)
-productRouter.post('/uploadImage', multerUpload.single('image'), postImage)
+productRouter.post('/create', multerUpload.single('image'), postNewProduct)
 
 //NOTE PUT
-productRouter.put('/update/:_id', updateProduct)
+productRouter.put('/update/:_id', multerUpload.single('image'), updateProduct)
+
+//NOTE DELETE
+productRouter.delete('/delete/:_id', deleteProduct)
 
 export default productRouter

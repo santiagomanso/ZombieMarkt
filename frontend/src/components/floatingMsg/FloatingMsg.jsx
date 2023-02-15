@@ -1,8 +1,8 @@
-const FloatingMsg = ({ msg, opt, icon }) => {
+const FloatingMsg = ({ msg, opt, icon, text }) => {
   return (
     <div className={`absolute ${opt}`}>
-      <span className='lg:text-2xl'>{msg}</span>
-      <i className={`fa-solid ${icon} text-2xl`}></i>
+      <span className={`${text}`}>{msg}</span>
+      <i className={`${icon}`}></i>
     </div>
   )
 }
