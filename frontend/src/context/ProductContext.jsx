@@ -3,11 +3,11 @@ import { createContext, useState } from 'react'
 export const ProductContext = createContext()
 
 const ProductContextProvider = ({ children }) => {
-  const [productList, setProductList] = useState([])
+  const [productFromContext, setProductFromContext] = useState('')
 
   const data = {
-    productList,
-    setProductList,
+    productFromContext,
+    setProductFromContext,
   }
 
   return (
