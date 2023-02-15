@@ -4,6 +4,7 @@ export const sampleProducts = [
     sku: 23423425,
     ean: 11231434255,
     countInStock: 20,
+    price: 1.19,
     rating: 4.5,
     numReviews: 2,
     image:
@@ -15,6 +16,7 @@ export const sampleProducts = [
     sku: 2431313,
     ean: 123123435,
     countInStock: 3,
+    price: 1.21,
     rating: 3.5,
     numReviews: 1,
     image:
@@ -26,6 +28,7 @@ export const sampleProducts = [
     sku: 132343,
     ean: 241234123,
     countInStock: 23,
+    price: 0.79,
     rating: 2,
     numReviews: 4,
     image: 'https://m.media-amazon.com/images/I/61LXtgkFFUL._SL1500_.jpg',
@@ -36,6 +39,7 @@ export const sampleProducts = [
     sku: 213134,
     ean: 1231324121,
     countInStock: 45,
+    price: 1.11,
     rating: 4.5,
     numReviews: 5,
     image:
@@ -45,8 +49,9 @@ export const sampleProducts = [
   {
     name: 'pepsi cola dose',
     sku: 1234121253,
-    ean: 12233432453415,
+    ean: 3068320113111,
     countInStock: 200,
+    price: 0.81,
     rating: 3.5,
     numReviews: 11,
     image:
@@ -58,6 +63,7 @@ export const sampleProducts = [
     sku: 32445474,
     ean: 5467476456743,
     countInStock: 70,
+    price: 2.22,
     rating: 5,
     numReviews: 8,
     image:
