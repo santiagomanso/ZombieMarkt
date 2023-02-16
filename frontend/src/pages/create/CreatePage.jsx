@@ -6,11 +6,12 @@ const CreatePage = () => {
   const [newProduct, setNewProduct] = useState('')
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
+  const [enabled, setEnabled] = useState(false)
   const nameRef = useRef(null)
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createProduct()
+    createProduct(e)
   }
 
   const handleChange = (e) => {
@@ -18,56 +19,72 @@ const CreatePage = () => {
   }
 
   useEffect(() => {
-    nameRef.current.focus()
-  }, [])
+    validate()
+  }, [newProduct])
 
-  const createProduct = async () => {
+  const validate = () => {
     if (
       !newProduct.name ||
       !newProduct.ean ||
       !newProduct.sku ||
       !newProduct.countInStock ||
       !newProduct.category ||
-      !newProduct.price
+      !newProduct.price ||
+      !newProduct.image
     ) {
-      setError('Error, complete all fields')
-      setTimeout(() => {
-        setError('')
-      }, 1500)
-      return
+      setEnabled(false)
+    } else {
+      setEnabled(true)
     }
+  }
 
-    const formData = new FormData()
-    formData.append('image', newProduct.image)
+  const createProduct = async (e) => {
+    if (!enabled) {
+      return
+    } else {
+      const formdata = new FormData()
+      formdata.append('name', newProduct.name)
+      formdata.append('sku', newProduct.sku)
+      formdata.append('ean', newProduct.ean)
+      formdata.append('category', newProduct.category)
+      formdata.append('price', newProduct.price)
+      formdata.append('image', newProduct.image)
+      formdata.append('countInStock', newProduct.countInStock)
+      formdata.append('shelf', newProduct.shelf)
+      formdata.append('backstock', newProduct.backstock)
 
-    try {
-      const response = await axios.post(
-        'http://localhost:5500/api/products/create',
-        formData,
-        {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        },
-      )
-      setMsg('Product created successfully')
-      setTimeout(() => {
-        setMsg('')
-        setNewProduct({
-          name: '',
-          ean: '',
-          sku: '',
-          countInStock: '',
-          category: '',
-          price: '',
-        })
-      }, 2000)
-    } catch (error) {
-      console.log(error.response.data.message) //REVIEW - i dont like this way of axios
-      setError(error.response.data.message)
-      setTimeout(() => {
-        setError('')
-      }, 2000)
+      const requestOptions = {
+        method: 'POST',
+        body: formdata,
+      }
+
+      try {
+        const response = await fetch(
+          'http://localhost:5500/api/products/create',
+          requestOptions,
+        )
+
+        console.log('response', response)
+
+        setMsg('Product created successfully')
+        setTimeout(() => {
+          setMsg('')
+          setNewProduct({
+            name: '',
+            ean: '',
+            sku: '',
+            countInStock: '',
+            category: '',
+            price: '',
+          })
+        }, 2000)
+      } catch (error) {
+        console.log('fail') //REVIEW - i dont like this way of axios
+        setError('fail')
+        setTimeout(() => {
+          setError('')
+        }, 2000)
+      }
     }
   }
 
@@ -192,7 +209,40 @@ const CreatePage = () => {
                   onChange={handleChange}
                 />
               </div>
-              <div className='flex mt-5 flex-col h-40  bg-blue-400 lg:h-[150px]  col-span-3 relative rounded z-0'>
+              <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
+                <label htmlFor='image'>Image</label>
+                <input
+                  className='bg-gray-100 outline outline-1 outline-gray-300'
+                  type='text'
+                  value={newProduct.image || ''}
+                  name='image'
+                  id='image'
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
+                <label htmlFor='shelf'>Shelf</label>
+                <input
+                  className='bg-gray-100 outline outline-1 outline-gray-300'
+                  type='text'
+                  value={newProduct.shelf || ''}
+                  name='shelf'
+                  id='shelf'
+                  onChange={handleChange}
+                />
+              </div>
+              <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
+                <label htmlFor='backstock'>backstock</label>
+                <input
+                  className='bg-gray-100 outline outline-1 outline-gray-300'
+                  type='text'
+                  value={newProduct.backstock || ''}
+                  name='backstock'
+                  id='backstock'
+                  onChange={handleChange}
+                />
+              </div>
+              {/* <div className='flex mt-5 flex-col h-40  bg-blue-400 lg:h-[150px]  col-span-3 relative rounded z-0'>
                 <label
                   htmlFor='image'
                   className='bg-gray-100 w-full h-full outline-2 outline-dashed outline-gray-300 cursor-pointer rounded'
@@ -210,13 +260,16 @@ const CreatePage = () => {
                   onChange={handleChange}
                 />
                 <i className='fa-solid fa-cloud-arrow-up text-gray-500 text-5xl absolute top-[73%] lg:top-[55%] -translate-y-[50%] left-[50%] -translate-x-[50%]'></i>
-              </div>
-              <div className='flex justify-center col-span-1 self-center'>
+              </div> */}
+              <div className='flex justify-center col-span-3 self-center'>
                 <button
                   onClick={handleSubmit}
                   type='button'
-                  className={` hidden  sm:block bg-gray-500/90 rounded-md cursor-pointer    w-full h-12                  
-                  text-white font-bold text-lg`}
+                  className={`font-medium duration-500 ease-in flex items-center justify-center w-full p-2 rounded outline outline-1 outline-gray-300 mt-2 ${
+                    enabled
+                      ? 'bg-teal-600 text-white block  opacity-100 active:translate-y-5 scale-100'
+                      : 'bg-slate-400 text-gray-700 hidden'
+                  }`}
                 >
                   Create Product
                 </button>
