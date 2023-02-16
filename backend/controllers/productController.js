@@ -114,20 +114,31 @@ export const postNewProduct = async (req, res) => {
 export const updateProduct = async (req, res) => {
   const { _id } = req.params
 
-  const { name, ean, sku, countInStock, rating, numReviews, category } =
-    req.body
+  const {
+    name,
+    ean,
+    sku,
+    countInStock,
+    rating,
+    numReviews,
+    category,
+    shelf,
+    backstock,
+    price,
+    image,
+  } = req.body
 
-  // console.log('req.file', req.file)
-  let imageUrl
-  if (req.file) {
-    //TODO search more adecuate way of dealing with undefined
-    //NOTE OBJECTO COMO RESPUESTA>
-    imageUrl = await cloudinary.uploader.upload(req.file.path, {
-      folder: 'productImages',
-    })
-  }
-  if (imageUrl) imageUrl = imageUrl.url
-  // console.log('imageUrl', imageUrl)
+  // // console.log('req.file', req.file)
+  // let imageUrl
+  // if (req.file) {
+  //   //TODO search more adecuate way of dealing with undefined
+  //   //NOTE OBJECTO COMO RESPUESTA>
+  //   imageUrl = await cloudinary.uploader.upload(req.file.path, {
+  //     folder: 'productImages',
+  //   })
+  // }
+  // if (imageUrl) imageUrl = imageUrl.url
+  // // console.log('imageUrl', imageUrl)
 
   const newProduct = {}
   if (name) newProduct.name = name
@@ -137,7 +148,9 @@ export const updateProduct = async (req, res) => {
   if (rating) newProduct.rating = rating
   if (numReviews) newProduct.numReviews = numReviews
   if (category) newProduct.category = category
-  if (imageUrl) newProduct.image = imageUrl
+  if (image) newProduct.image = image
+  if (shelf) newProduct.shelf = shelf
+  if (backstock) newProduct.backstock = backstock
 
   console.log('newProduct', newProduct)
 
