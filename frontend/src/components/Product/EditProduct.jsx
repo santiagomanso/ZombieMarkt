@@ -84,24 +84,38 @@ const EditProduct = ({ product, handleChange }) => {
             <option value='hygiene'>hygiene</option>
           </select>
         </div>
-        <div className='flex mt-5 flex-col h-40  lg:h-[200px]  col-span-3 relative rounded z-0'>
-          <label
-            htmlFor='image'
-            className='bg-white w-full h-full outline-2 outline-dashed outline-gray-300 cursor-pointer rounded'
-          >
-            <span className='absolute top-[50%] lg:top-[25%] -translate-y-[50%]  left-[20%] lg:left-[50%] lg:-translate-x-[50%] lg:text-3xl text-gray-600'>
-              Upload picture or drag & drop
-            </span>
-          </label>
+        <div className='flex flex-col lg:col-span-1 w-full'>
+          <label htmlFor='shelf'>Shelf</label>
           <input
             onChange={handleChange}
-            className='hidden'
-            type='file'
+            className='outline outline-1 outline-gray-300'
+            type='text'
+            name='shelf'
+            id='shelf'
+            value={product.shelf}
+          />
+        </div>
+        <div className='flex flex-col lg:col-span-1 w-full'>
+          <label htmlFor='backstock'>Backstock</label>
+          <input
+            onChange={handleChange}
+            className='outline outline-1 outline-gray-300'
+            type='text'
+            name='backstock'
+            id='backstock'
+            value={product.backstock}
+          />
+        </div>
+        <div className='flex flex-col lg:col-span-1 w-full'>
+          <label htmlFor='image'>Image</label>
+          <input
+            onChange={handleChange}
+            className='outline outline-1 outline-gray-300'
+            type='text'
             name='image'
             id='image'
-            accept='.jpg, .png, .jpeg'
+            value={product.image}
           />
-          <i className='fa-solid fa-cloud-arrow-up text-gray-500 text-5xl absolute top-[73%] lg:top-[55%] -translate-y-[50%] left-[50%] -translate-x-[50%]'></i>
         </div>
       </div>
     </article>
