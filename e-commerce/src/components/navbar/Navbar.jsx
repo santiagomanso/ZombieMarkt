@@ -47,7 +47,7 @@ const Navbar = () => {
       </nav>
 
       {/* PC */}
-      <nav className='hidden lg:flex justify-between bg-orange-100/20 py-3 items-center px-1 lg:px-20 shadow-md'>
+      <nav className='hidden lg:flex justify-between bg-orange-100/20 py-5 items-center px-1 lg:px-20 shadow-md'>
         <Link to='/'>
           <i className='fa-solid fa-burger text-amber-700 text-3xl'></i>
           <span className='text-3xl'>ZombieMarkt</span>
