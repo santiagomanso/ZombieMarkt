@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+@layer base {
+  span:not(button span, aside span),
+  li {
+    @apply text-gray-800 lg:text-xl;
+  }
+  .categories {
+    @apply flex-wrap;
+  }
+  .categories li {
+    @apply bg-black/10 w-44 h-44;
+  }
+
+  p {
+    @apply text-sm md:text-lg text-gray-800;
+  }
+
+  main {
+    @apply my-5;
+  }
+
+  h1 {
+    @apply text-xl md:text-4xl text-gray-800;
+  }
+
+  h2 {
+    @apply text-xl md:text-2xl text-gray-800;
+  }
+
+  h3 {
+    @apply lg:text-xl text-gray-800;
+  }
+
+  button {
+    @apply p-3;
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+}
