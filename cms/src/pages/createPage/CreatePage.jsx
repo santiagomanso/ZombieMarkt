@@ -11,7 +11,7 @@ const CreatePage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    createProduct(e)
+    createProduct()
   }
 
   const handleChange = (e) => {
