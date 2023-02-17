@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+/* custom components imports */
+@import './styles/buttons.css';
+@import './styles/containers.css';
+@import './styles/cards.css';
 
 * {
   margin: 0;
@@ -17,7 +21,11 @@
     @apply flex-wrap;
   }
   .categories li {
-    @apply bg-black/10 w-44 h-44;
+    @apply bg-gradient-to-b from-amber-100/20  duration-200 to-black/30 w-44 h-28 rounded flex flex-col items-center hover:-translate-y-2 cursor-pointer justify-center gap-10 relative outline outline-2 outline-slate-800;
+  }
+
+  .categories li img {
+    @apply w-[130px] h-[100px] object-cover absolute -top-14;
   }
 
   p {
