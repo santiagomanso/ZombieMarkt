@@ -1,10 +1,3 @@
 button {
   @apply active:translate-y-1 duration-100 transition-all ease-in-out;
 }
-aside button {
-  @apply w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center;
-}
-
-.mainCta {
-  @apply mt-10 bg-gradient-to-br from-gray-500 to-slate-900 rounded outline outline-2 outline-gray-400  text-gray-200 font-medium px-10  text-3xl;
-}
