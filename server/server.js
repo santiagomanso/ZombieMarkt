@@ -2,10 +2,10 @@ import express from 'express'
 import cors from 'cors'
 import colors from 'colors'
 import dotenv from 'dotenv'
-import mongoose from 'mongoose'
 import productRouter from './routes/productRouter.js'
 import connectDB from './config/connectDB.js'
 import cloudinaryConfig from './config/cloudinary.js'
+import categoriesRouter from './routes/categoriesRouter.js'
 dotenv.config()
 
 const app = express()
@@ -21,22 +21,24 @@ const startServer = () => {
 }
 
 const addMiddlewares = () => {
+  const corsOption = {
+    origin: 'http://localhost:3000',
+    credentials: true,
+  }
+  app.use(cors(corsOption))
   app.use(express.json())
   app.use(
     express.urlencoded({
       extended: true,
     }),
   )
-  const corsOption = {
-    origin: 'http://localhost:3000',
-    credentials: true,
-  }
-  app.use(cors(corsOption))
+
   cloudinaryConfig()
 }
 
 const loadRoutes = () => {
   app.use('/api/products', productRouter)
+  app.use('/api/categories', categoriesRouter)
 }
 
 ;(async function controller() {
