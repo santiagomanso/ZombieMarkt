@@ -2,10 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 /* custom components imports */
 @import './styles/buttons.css';
-@import './styles/containers.css';
-@import './styles/cards.css';
 
 * {
   margin: 0;
@@ -20,13 +19,6 @@
   .categories {
     @apply flex-wrap;
   }
-  .categories li {
-    @apply bg-gradient-to-b from-amber-100/20  duration-200 to-black/30 w-44 h-28 rounded flex flex-col items-center hover:-translate-y-2 cursor-pointer justify-center gap-10 relative outline outline-2 outline-slate-800;
-  }
-
-  .categories li img {
-    @apply w-[130px] h-[100px] object-cover absolute -top-14;
-  }
 
   p {
     @apply text-sm md:text-lg text-gray-800;
@@ -37,7 +29,7 @@
   }
 
   h1 {
-    @apply text-xl md:text-4xl text-gray-800;
+    @apply text-lg md:text-3xl text-gray-700;
   }
 
   h2 {
@@ -50,6 +42,42 @@
 
   button {
     @apply p-3;
+  }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #374151 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
 
