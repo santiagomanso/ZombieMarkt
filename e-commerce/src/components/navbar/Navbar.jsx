@@ -10,13 +10,14 @@ const Navbar = () => {
       <nav className=' lg:hidden'>
         <button
           onClick={() => setActive(!active)}
-          className='fixed top-3 right-5'
+          className='fixed top-3 right-5 z-10'
         >
           <i className='fa-solid fa-burger text-4xl text-amber-800'></i>
         </button>
 
         <aside
-          className={`absolute top-0 left-0 duration-300 transition-all ease-in-out bg-black/95 w-full h-full text-gray-200 p-3
+          className={`absolute top-0 left-0 duration-300 transition-all ease-in-out
+          bg-gradient-to-br from-black/95 to-stone-900/95 w-full h-full text-gray-200 p-3 z-20
           ${active ? '-translate-x-full' : 'translate-x-0'}`}
         >
           <button
@@ -29,18 +30,21 @@ const Navbar = () => {
             <span>guest@guest.com</span>
             <i className='fa-solid fa-flag-usa'></i>
           </div>
-          <ul>
+          <ul className='flex flex-col items-center gap-10'>
             <Link>
               <span>Home</span>
             </Link>
             <Link>
-              <span>Home</span>
+              <span>calculator</span>
             </Link>
             <Link>
-              <span>Home</span>
+              <span>survivor's kit</span>
             </Link>
             <Link>
-              <span>Home</span>
+              <span>login</span>
+            </Link>
+            <Link>
+              <span>cart</span>
             </Link>
           </ul>
         </aside>
