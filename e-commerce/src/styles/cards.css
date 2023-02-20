@@ -1,3 +1,0 @@
-.zombieCard {
-  @apply flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 h-[370px];
-}
