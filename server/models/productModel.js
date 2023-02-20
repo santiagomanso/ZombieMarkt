@@ -51,8 +51,13 @@ const productSchema = mongoose.Schema({
     required: false,
     default: 'https://app.advaiet.com/item_dfile/default_product.png',
   },
-  category: {
+  categoryName: {
     type: String,
+    required: true,
+  },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'category',
     required: true,
   },
   shelf: {
