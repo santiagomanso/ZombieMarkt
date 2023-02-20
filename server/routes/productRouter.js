@@ -2,7 +2,9 @@ import express from 'express'
 import {
   deleteProduct,
   getAllProducts,
+  getProductsByCategory,
   getProductsByEAN,
+  getProductById,
   getProductsByName,
   postNewProduct,
   updateProduct,
@@ -15,6 +17,8 @@ const productRouter = express.Router()
 productRouter.get('/all', getAllProducts)
 productRouter.get('/name/:name', getProductsByName)
 productRouter.get('/ean/:ean', getProductsByEAN)
+productRouter.get('/category/:category', getProductsByCategory)
+productRouter.get('/detail/:_id', getProductById)
 
 //NOTE POST
 productRouter.post('/create', multerUpload.single('image'), postNewProduct)
