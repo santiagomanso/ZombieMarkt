@@ -1,19 +1,40 @@
 import { v2 as cloudinary } from 'cloudinary'
 import productModel from '../models/productModel.js'
 
+//NOTE GET ALL
 export const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await productModel.find({})
+    const allProducts = await productModel
+      .find({})
+      .populate({ path: 'category' })
+      .exec()
     res.status(200).json({
       amountOfItems: allProducts.length,
       allProducts,
     })
   } catch (error) {
     res.status(500).json({
-      error,
-      message: 'There are no products',
+      error: error,
+      message: 'Uncatched error',
     })
   }
+}
+
+//NOTE GET by category
+export const getProductsByCategory = async (req, res) => {
+  // console.log('req.params', req.params)
+
+  try {
+    const products = await productModel
+      .find({
+        categoryName: req.params.category,
+      })
+      .populate({ path: 'category' })
+      .exec()
+    res.status(200).json({
+      products,
+    })
+  } catch (error) {}
 }
 
 //NOTE GET BY NAME
@@ -24,6 +45,28 @@ export const getProductsByName = async (req, res) => {
     res.status(200).json(products)
   } catch (error) {
     console.log(error)
+  }
+}
+
+//NOTE GET BY ID
+export const getProductById = async (req, res) => {
+  const { _id } = req.params
+  if (!_id) {
+    res.status(404).json({
+      error: 'Product not found',
+    })
+    return
+  } else {
+    try {
+      const product = await productModel.findById(_id)
+      res.status(200).json({
+        product: product,
+      })
+    } catch (error) {
+      res.status(500).json({
+        message: 'Product not found',
+      })
+    }
   }
 }
 
