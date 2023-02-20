@@ -1,7 +1,0 @@
-section aside {
-  @apply bg-gray-800/20 w-[400px] h-full flex flex-col items-center px-2 lg:px-5 gap-20 py-20;
-}
-
-.containerRight {
-  @apply flex gap-64 flex-col bg-black/10 w-full h-full px-10;
-}
