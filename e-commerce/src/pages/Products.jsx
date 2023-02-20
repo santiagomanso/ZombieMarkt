@@ -1,0 +1,65 @@
+import bag2 from '../assets/bag2.png'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { categories } from '../data/categories'
+import LeftPanel from '../components/leftPanel/LeftPanel'
+import Header from '../components/header/Header'
+import MainContainer from '../components/containers/MainContainer'
+import RightContainer from '../components/containers/RightContainer'
+import useFetch from '../hooks/useFetch'
+import ItemList from '../components/lists/ItemList'
+import Loading from '../components/loading/Loading'
+
+const ProductsPage = () => {
+  const { category } = useParams()
+  const navigate = useNavigate()
+  const [animate, setAnimate] = useState('animate__animated animate__fadeIn')
+
+  const url = `http://localhost:5500/api/products/category/${category}`
+
+  const { loading, data, error } = useFetch(url)
+
+  const handleNavigate = (path) => {
+    setAnimate('animate__animated animate__fadeOut')
+    setTimeout(() => {
+      navigate(path)
+    }, 800)
+  }
+
+  return (
+    <MainContainer animation={animate}>
+      <LeftPanel />
+
+      <RightContainer gap='lg:gap-10'>
+        <Header
+          handleNavigate={handleNavigate}
+          title={category}
+          typeWritter={false}
+        />
+        {loading ? (
+          <Loading />
+        ) : (
+          data.products && (
+            <>
+              <ItemList
+                array={data.products}
+                gridOpt='grid-cols-2  lg:grid-cols-3 gap-y-10 lg:gap-y-10 gap-x-5 lg:gap-x-10'
+                itemContainerOpt='lg:w-[340px] h-64'
+                itemImg='w-56 h-56 object-scale-down'
+                redirectToDetail
+              />
+
+              <img
+                src={data.products[0].category.image}
+                alt={data.products[0].category.name}
+                className='absolute bottom-0 right-3'
+              />
+            </>
+          )
+        )}
+      </RightContainer>
+    </MainContainer>
+  )
+}
+
+export default ProductsPage
