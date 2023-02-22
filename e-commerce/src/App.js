@@ -4,18 +4,21 @@ import Navbar from './components/navbar/Navbar'
 import ProductsPage from './pages/Products'
 import HomePage from './pages/Home'
 import Details from './pages/Details'
+import { CartProvider } from './store/CartContext'
 const App = () => {
   return (
-    <BrowserRouter>
-      <AppContainer>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<HomePage />} />
-          <Route path='/products/:category' element={<ProductsPage />} />
-          <Route path='/products/details/:_id' element={<Details />} />
-        </Routes>
-      </AppContainer>
-    </BrowserRouter>
+    <CartProvider>
+      <BrowserRouter>
+        <AppContainer>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<HomePage />} />
+            <Route path='/products/:category' element={<ProductsPage />} />
+            <Route path='/products/details/:_id' element={<Details />} />
+          </Routes>
+        </AppContainer>
+      </BrowserRouter>
+    </CartProvider>
   )
 }
 export default App
