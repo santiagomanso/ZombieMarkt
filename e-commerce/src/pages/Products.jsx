@@ -1,7 +1,5 @@
-import bag2 from '../assets/bag2.png'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import { categories } from '../data/categories'
+import { useState } from 'react'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Header from '../components/header/Header'
 import MainContainer from '../components/containers/MainContainer'

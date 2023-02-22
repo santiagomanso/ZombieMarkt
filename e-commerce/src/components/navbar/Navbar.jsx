@@ -1,8 +1,11 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { CartContext } from '../../store/CartContext'
+import Badge from '../Badge/Badge'
 
 const Navbar = () => {
   const [active, setActive] = useState(true)
+  const { cart } = useContext(CartContext)
 
   return (
     <>
@@ -68,8 +71,9 @@ const Navbar = () => {
             <span>login</span>
           </Link>
           <span>profile</span>
-          <Link to='/cart'>
+          <Link to='/cart' className='relative'>
             <span>cart</span>
+            {cart.length > 0 && <Badge position='absolute -top-4 -right-4' />}
             <i className='fa-solid fa-cart-shopping text-gray-700 text-xl'></i>
           </Link>
         </ul>

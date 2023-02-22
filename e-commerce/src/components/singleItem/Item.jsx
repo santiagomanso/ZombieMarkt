@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import Rating from '../rating/Rating'
 
 const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
   return (
@@ -12,6 +13,11 @@ const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
       <span className='text-center transition-all ease-in-out duration-300 scale-0 group-hover:scale-100 text-3xl lg:text-5xl font-zombie tracking-wider'>
         {item.name}
       </span>
+      {redirectToDetail && (
+        <div className='transition-all ease-in-out duration-300 scale-0 group-hover:scale-100'>
+          <Rating rating={item.rating} />
+        </div>
+      )}
       <div className='absolute top-[50%] group-hover:-top-5 transition-all ease-in-out  duration-350 -translate-y-[50%]  w-40  right-[50%] translate-x-[50%] group-hover:rotate-[20deg]'>
         <img src={item.image} alt='' className={itemImg} />
       </div>
