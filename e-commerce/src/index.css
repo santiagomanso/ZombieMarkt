@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
+/* custom components imports */
+@import './styles/buttons.css';
+
+@layer base {
+  span:not(button span, aside span),
+  li {
+    @apply text-gray-800 lg:text-xl;
+  }
+
+  input {
+    @apply outline-transparent focus:outline-2 focus:outline-indigo-600 px-2 py-2 rounded-md;
+  }
+
+  p {
+    @apply text-sm md:text-lg text-gray-800;
+  }
+
+  main {
+    @apply my-5;
+  }
+
+  h1 {
+    @apply text-lg md:text-3xl text-gray-700;
+  }
+
+  h2 {
+    @apply text-xl md:text-2xl text-gray-800;
+  }
+
+  h3 {
+    @apply lg:text-xl text-gray-800;
+  }
+
+  button {
+    @apply p-3;
+  }
+}
+
+.lds-ring {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-ring div {
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  margin: 8px;
+  border: 8px solid #fff;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #374151 transparent transparent transparent;
+}
+.lds-ring div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.lds-ring div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.lds-ring div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white !important;
+}
