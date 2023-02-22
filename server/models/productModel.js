@@ -12,7 +12,23 @@ const randomPrice = () => {
   return prices[Math.floor(Math.random() * prices.length)]
 }
 
+const reviewSchema = mongoose.Schema(
+  {
+    name: { type: String, required: true },
+    rating: { type: Number, required: true },
+    comment: { type: String, required: true },
+  },
+  {
+    timestampts: true,
+  },
+)
+
 const productSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: false,
+    ref: 'user',
+  },
   name: {
     type: String,
     required: true,
@@ -36,11 +52,7 @@ const productSchema = mongoose.Schema({
     required: true,
     default: randomPrice(),
   },
-  rating: {
-    type: Number,
-    required: false,
-    default: 3,
-  },
+  reviews: [reviewSchema],
   numReviews: {
     type: Number,
     required: false,
@@ -70,6 +82,7 @@ const productSchema = mongoose.Schema({
     required: false,
     default: randomShelf(),
   },
+  //array usuarios que likearon
 })
 
 const productModel = mongoose.model('product', productSchema)
