@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Header from '../components/header/Header'
 import RightContainer from '../components/containers/RightContainer'
@@ -7,30 +7,28 @@ import MainContainer from '../components/containers/MainContainer'
 import ItemList from '../components/lists/ItemList'
 import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
+import { AnimationContext } from '../store/AnimationContext'
 
 const HomePage = () => {
   const navigate = useNavigate()
-  const [animate, setAnimate] = useState('animate__animated animate__fadeIn')
+  const { setAnimation } = useContext(AnimationContext)
 
   const { loading, data, error } = useFetch(
     'http://localhost:5500/api/categories/all',
   )
   // console.log('data.categories', data.categories)
 
-  const handleNavigate = (path) => {
-    setAnimate('animate__animated animate__fadeOut')
-    setTimeout(() => {
-      navigate(path)
-    }, 800)
-  }
-
   return (
-    <MainContainer animation={animate}>
-      <LeftPanel />
+    <MainContainer>
+      <LeftPanel
+        topImgOpt=''
+        topBtnText='calculator'
+        topBtnPath='/calculator'
+        bottomCard={true}
+      />
 
       <RightContainer gap='lg:gap-32'>
         <Header
-          handleNavigate={handleNavigate}
           title='ZombieMarkt Groceries'
           subtitle='Where prices are dropped dead'
           typeWritter

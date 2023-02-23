@@ -1,12 +1,5 @@
 import TypeWriterEffect from 'react-typewriter-effect'
-const Header = ({
-  handleNavigate,
-  button,
-  title,
-  subtitle,
-  typeWritter,
-  height,
-}) => {
+const Header = ({ title, subtitle, typeWritter, height }) => {
   return (
     <article className={`lg:self-start ${height && height}`}>
       <h1 className='lg:text-7xl font-bold capitalize'>{title}</h1>
@@ -32,17 +25,6 @@ const Header = ({
           />
         )}
       </div>
-
-      {button ? (
-        <button
-          onClick={() => handleNavigate('/categories')}
-          className='hidden md:block mt-10 bg-gradient-to-br from-gray-500 to-slate-900 rounded outline outline-2 outline-gray-400  text-gray-200 font-medium px-10  lg:text-3xl'
-        >
-          View groceries
-        </button>
-      ) : (
-        ''
-      )}
     </article>
   )
 }
