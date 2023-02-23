@@ -11,29 +11,17 @@ import Loading from '../components/loading/Loading'
 const ProductsPage = () => {
   const { category } = useParams()
   const navigate = useNavigate()
-  const [animate, setAnimate] = useState('animate__animated animate__fadeIn')
 
   const url = `http://localhost:5500/api/products/category/${category}`
 
   const { loading, data, error } = useFetch(url)
 
-  const handleNavigate = (path) => {
-    setAnimate('animate__animated animate__fadeOut')
-    setTimeout(() => {
-      navigate(path)
-    }, 800)
-  }
-
   return (
-    <MainContainer animation={animate}>
-      <LeftPanel />
+    <MainContainer>
+      <LeftPanel bottomCard />
 
-      <RightContainer gap='lg:gap-10'>
-        <Header
-          handleNavigate={handleNavigate}
-          title={category}
-          typeWritter={false}
-        />
+      <RightContainer gap='lg:gap-20'>
+        <Header title={category} typeWritter={false} />
         {loading ? (
           <Loading />
         ) : (
