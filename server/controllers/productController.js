@@ -193,6 +193,7 @@ export const updateProduct = async (req, res) => {
   if (category) newProduct.category = category
   if (image) newProduct.image = image
   if (shelf) newProduct.shelf = shelf
+  if (price) newProduct.price = price
   if (backstock) newProduct.backstock = backstock
 
   console.log('newProduct', newProduct)
