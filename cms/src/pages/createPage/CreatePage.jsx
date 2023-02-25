@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
+import useFetch from '../../hooks/UseFetch'
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState('')
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
   const [enabled, setEnabled] = useState(false)
+  const [categories, setcategories] = useState('')
   const nameRef = useRef(null)
 
   const handleSubmit = (e) => {
@@ -14,13 +16,16 @@ const CreatePage = () => {
     createProduct()
   }
 
+  const { data } = useFetch('http://localhost:5500/api/categories/all')
+
   const handleChange = (e) => {
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value })
   }
 
   useEffect(() => {
     validate()
-  }, [newProduct])
+    if (data) setcategories(data.categories)
+  }, [newProduct, data])
 
   const validate = () => {
     if (
@@ -184,18 +189,14 @@ const CreatePage = () => {
                   id='category'
                   onChange={handleChange}
                 >
-                  <option value='choose'>choose</option>
-                  <option value='bevergages'>beverages</option>
-                  <option value='snacks'>snacks</option>
-                  <option value='fruits'>fruits</option>
-                  <option value='vegetables'>vegetables</option>
-                  <option value='household'>household</option>
-                  <option value='breakfast'>breakfast</option>
-                  <option value='meat'>meat</option>
-                  <option value='sweet'>sweet</option>
-                  <option value='icecream'>icecream</option>
-                  <option value='books'>books</option>
-                  <option value='hygiene'>hygiene</option>
+                  {categories &&
+                    categories.map((item) => {
+                      return (
+                        <option value={item._id} key={item._id}>
+                          {item.name}
+                        </option>
+                      )
+                    })}
                 </select>
               </div>
               <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
