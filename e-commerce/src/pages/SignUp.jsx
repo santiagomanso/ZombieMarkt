@@ -1,23 +1,57 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import MainContainer from '../components/containers/MainContainer'
 import RightContainer from '../components/containers/RightContainer'
+import FloatingMsg from '../components/floatingMsg/FloatingMsg'
 import Header from '../components/header/Header'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import { AnimationContext } from '../store/AnimationContext'
 import { UserContext } from '../store/UserContext'
 
 const SignUp = () => {
-  const { createUser } = useContext(UserContext)
-  const { error, setError } = useContext(UserContext)
-  const navigate = useNavigate()
+  //context states extractions
+  const { createUser, msg, errorContext, user } = useContext(UserContext)
   const { setAnimation } = useContext(AnimationContext)
 
-  const [newUser, setNewUser] = useState('')
+  //component states
+  const [error, setError] = useState('')
+  const [newUser, setNewUser] = useState(null)
+  const [active, setActive] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    createUser(newUser)
+    validateInputs(newUser) //NOTE after validating this function firesUp the createUser
+  }
+
+  const validateInputs = (object) => {
+    switch (true) {
+      case object === null: {
+        setError('ERROR - Complete all fields')
+        setActive(false)
+        console.log('objeto nulo')
+        break
+      }
+
+      case !object.email || !object.password: {
+        setError('ERROR - Complete all fields')
+        setActive(false)
+        console.log('campos vacios')
+        break
+      }
+
+      case object.email && object.password: {
+        console.log('TODO OK')
+        return setActive(true)
+      }
+
+      //submit to userContext and trigger create user function only when everything goes ok
+      default: {
+        createUser(object)
+        break
+      }
+    }
   }
 
   const handleChange = (e) => {
@@ -34,15 +68,36 @@ const SignUp = () => {
     }, 850)
   }
 
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user])
+
   return (
     <MainContainer>
       <LeftPanel />
-      <RightContainer gap='gap-10'>
+      <RightContainer gap='gap-10' relative>
         <Header
           title='Sign up'
           subtitle='As easy as filling out the survival form'
         />
-
+        {msg && (
+          <FloatingMsg
+            icon='fa-solid fa-circle-check text-green-800'
+            msg={msg}
+            opt='bg-green-200 px-4 py-3 rounded '
+            text='text-green-800 font-medium'
+          />
+        )}
+        {errorContext && (
+          <FloatingMsg
+            icon='fa-solid fa-triangle-exclamation text-red-900'
+            msg={errorContext}
+            opt='bg-rose-300 px-4 py-3 rounded '
+            text='text-red-900 font-medium'
+          />
+        )}
         <div
           className='h-screen w-full max-w-3xl md:h-auto  md:min-w-auto bg-gradient-to-br     
         from-indigo-500/20   dark:from-black/50
@@ -62,18 +117,16 @@ const SignUp = () => {
                 <span className='capitalize flex gap-1'>
                   Email
                   <span className='hidden md:inline text-red-500 font-bold'>
-                    {error ? error : ''}
+                    {error && error}
                   </span>
                 </span>
                 <span className='md:hidden text-red-500 font-bold'>
-                  {error ? error : ''}
+                  {error}
                 </span>
                 <input
                   onClick={() => setError(null)}
                   onChange={handleChange}
-                  className={` ${
-                    error && error.length > 1 ? '' : ''
-                  } p-2 mb-2 rounded-lg  focus:border-blue-500  transition duration-200`}
+                  className={`  p-2 mb-2 rounded-lg  focus:border-blue-500  transition duration-200`}
                   type='email'
                   placeholder='Enter your email'
                   name='email'
@@ -95,6 +148,7 @@ const SignUp = () => {
                     <path d='M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z' />
                   </svg>
                   <input
+                    onClick={() => setError(null)}
                     onChange={handleChange}
                     className='w-full bg-white p-2 rounded-lg border-2 border-opacity-50 outline-none focus:border-blue-500  transition duration-200'
                     type='password'
