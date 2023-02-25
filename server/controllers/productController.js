@@ -14,8 +14,7 @@ export const getAllProducts = async (req, res) => {
     })
   } catch (error) {
     res.status(500).json({
-      error: error,
-      message: 'Uncatched error',
+      msg: 'Uncatched error',
     })
   }
 }
@@ -34,7 +33,11 @@ export const getProductsByCategory = async (req, res) => {
     res.status(200).json({
       products,
     })
-  } catch (error) {}
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Fatal error',
+    })
+  }
 }
 
 //NOTE GET BY NAME
@@ -44,7 +47,9 @@ export const getProductsByName = async (req, res) => {
     const products = await productModel.find({ name: { $regex: name } })
     res.status(200).json(products)
   } catch (error) {
-    console.log(error)
+    res.status(400).json({
+      msg: 'Fatal error',
+    })
   }
 }
 
@@ -53,7 +58,7 @@ export const getProductById = async (req, res) => {
   const { _id } = req.params
   if (!_id) {
     res.status(404).json({
-      error: 'Product not found',
+      msg: 'Product not found',
     })
     return
   } else {
@@ -64,7 +69,7 @@ export const getProductById = async (req, res) => {
       })
     } catch (error) {
       res.status(500).json({
-        message: 'Product not found',
+        msg: 'Product not found',
       })
     }
   }
@@ -78,7 +83,9 @@ export const getProductsByEAN = async (req, res) => {
     const products = await productModel.find({ ean: ean })
     res.status(200).json(products)
   } catch (error) {
-    console.log(error)
+    res.staus(500).json({
+      msg: 'Fatal error',
+    })
   }
 }
 
@@ -97,9 +104,18 @@ export const postNewProduct = async (req, res) => {
   } = req.body
 
   if (!name || !ean || !sku || !category || !countInStock || !price) {
-    return res.status(500).json({
-      message: 'error empty field/s detected',
+    res.status(400).json({
+      msg: 'error empty field/s detected',
+      fields: {
+        name: name,
+        ean: ean,
+        sku: sku,
+        category: category,
+        countInStock: countInStock,
+        price: price,
+      }, //FIXME - here
     })
+    return
   }
 
   // let imageUrl
@@ -116,7 +132,7 @@ export const postNewProduct = async (req, res) => {
     const existingProduct = await productModel.findOne({ ean: ean })
     if (existingProduct) {
       console.log('error product already exists')
-      res.status(501).json({ message: 'error: product already exists' })
+      res.status(501).json({ msg: 'error: product already exists' })
     } else {
       const newProduct = new productModel({
         name: name,
@@ -141,14 +157,14 @@ export const postNewProduct = async (req, res) => {
         console.log('error server')
         // console.log(error)
         res.status(503).json({
-          msg: error,
+          msg: 'Fatal error',
         })
       }
     }
   } catch (error) {
     console.log('error undefined')
-    res.status().json({
-      message: error,
+    res.status(500).json({
+      msg: 'Fatal error',
     })
   }
 }
@@ -199,22 +215,26 @@ export const updateProduct = async (req, res) => {
   console.log('newProduct', newProduct)
 
   try {
+    //try to get an existing product
     let product = await productModel.findById(_id)
-    if (product) {
-      //update product
-      product = await productModel.findByIdAndUpdate(
-        { _id: _id },
-        { $set: newProduct },
-        { new: true },
-      )
-      res.status(200).json({
-        product: product,
-      })
-    } else {
+
+    //validate if there is no product
+    if (!product) {
       res.status(404).json({
-        msg: 'Product not found',
+        msg: 'product not found',
       })
+      return
     }
+
+    //update product
+    product = await productModel.findByIdAndUpdate(
+      { _id: _id },
+      { $set: newProduct },
+      { new: true },
+    )
+    res.status(200).json({
+      product: product,
+    })
   } catch (error) {
     res.status(500).json({
       msg: 'Internal error',

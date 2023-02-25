@@ -10,17 +10,19 @@ export const createUser = async (req, res) => {
   // console.log('email', email)
 
   // REVIEW error - sending without email
-  if (email === undefined)
-    return res.status(500).json({
-      error: 'error: invalid email',
+  if (!email) {
+    res.status(401).json({
+      msg: 'Error - invalid email',
     })
+    return
+  }
 
   try {
     // checking existing user
     const existingUser = await userModel.findOne({ email: email })
     if (existingUser) {
       res.status(401).json({
-        error: 'error: email already in use',
+        msg: 'error: email already in use',
       })
     } else {
       const newUser = new userModel({
@@ -29,25 +31,38 @@ export const createUser = async (req, res) => {
       })
       const savedUser = await newUser.save()
       if (savedUser) {
-        return res.status(200).json({
+        const token = generateToken(savedUser._id)
+        console.log('token', token)
+
+        //user object for response (no password/isAdmin) fields
+        const user = {
+          email: savedUser.email,
+          image: savedUser.image,
+          joined: savedUser.createdAt,
+        }
+        res.status(201).json({
           msg: 'User created successfully',
+          user: user,
+          token: token,
         })
       }
     }
   } catch (error) {
     return res.status(500).json({
-      error: 'Internal server error: ',
-      error,
+      msg: 'Fatal Error',
     })
   }
 }
 
+// @desc login user
+// @route POST /api/users
+// @access Public
 export const login = async (req, res) => {
   const { email, password } = req.body
 
   if (!email || !password) {
     res.status(400).json({
-      error: 'error: invalid username or password',
+      msg: 'error: invalid username or password',
     })
     return
   }
@@ -57,7 +72,7 @@ export const login = async (req, res) => {
     const existingUser = await userModel.findOne({ email: email })
     if (!existingUser) {
       res.status(404).json({
-        error: `error: email does not exist`,
+        msg: `error: email does not exist`,
       })
       return
     }
@@ -69,7 +84,7 @@ export const login = async (req, res) => {
     )
     if (!correctPassword) {
       res.status(401).json({
-        error: 'error: incorrect password',
+        msg: 'error: incorrect password',
       })
       return
     }
@@ -111,12 +126,12 @@ export const getAllUsers = async (req, res) => {
       })
     else {
       res.status(500).json({
-        error: 'there was an error fetching all',
+        msg: 'there was an error fetching all',
       })
     }
   } catch (error) {
     res.status(500).json({
-      error: 'Internal server error',
+      msg: 'Internal server error',
     })
   }
 }
