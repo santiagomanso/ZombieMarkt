@@ -7,7 +7,7 @@ import { ProductContext } from '../../context/ProductContext'
 
 const UpdatePage = () => {
   const [active, setActive] = useState(false) //modal logic
-  const [enabled, setEnabled] = useState(false) //button logic
+  const [enabled, setEnabled] = useState(false) //update button logic
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
   const { productFromContext, setProductFromContext } =
