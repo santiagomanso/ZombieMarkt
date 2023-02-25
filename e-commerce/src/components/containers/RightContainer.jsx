@@ -3,7 +3,9 @@ const RightContainer = ({ children, gap, relative, overflowHidden }) => {
     <section
       className={`flex flex-col items-center lg:bg-black/10 w-full h-full lg:px-10 rounded ${
         gap ? gap : ''
-      } ${relative ? relative : ''} ${overflowHidden ? overflowHidden : ''}  `}
+      } ${relative ? 'relative' : ''} ${
+        overflowHidden ? overflowHidden : ''
+      }  `}
     >
       {children}
     </section>
