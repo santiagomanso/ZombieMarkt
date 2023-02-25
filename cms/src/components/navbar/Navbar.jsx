@@ -28,7 +28,7 @@ const Navbar = () => {
     }
   }
 
-  console.log('location', location)
+  // console.log('location', location)
   return (
     <nav className='bg-white p-5 sm:px-14 sm:py-12 flex justify-between items-center h-16 text-black relative shadow'>
       <Link
