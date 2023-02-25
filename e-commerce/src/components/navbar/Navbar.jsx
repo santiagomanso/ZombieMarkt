@@ -1,11 +1,14 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CartContext } from '../../store/CartContext'
+import { UserContext } from '../../store/UserContext'
 import Badge from '../Badge/Badge'
+import Dropdown from '../dropdown/Dropdown'
 
 const Navbar = () => {
   const [active, setActive] = useState(true)
   const { cart } = useContext(CartContext)
+  const { user, logOut } = useContext(UserContext)
 
   return (
     <>
@@ -70,7 +73,7 @@ const Navbar = () => {
           <Link to='/login'>
             <span>login</span>
           </Link>
-          <span>profile</span>
+          {user && <Dropdown name={user.email} logout={logOut} />}
           <Link to='/cart' className='relative'>
             <span>cart</span>
             {cart.length > 0 && <Badge position='absolute -top-4 -right-4' />}
