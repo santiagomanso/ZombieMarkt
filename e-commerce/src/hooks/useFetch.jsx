@@ -12,9 +12,16 @@ const useFetch = (url) => {
       setTimeout(async () => {
         try {
           const { data } = await axios.get(url)
-          if (data) setData(data)
-          setLoading(false)
+          console.log('data', data)
+          if (data) {
+            setData(data)
+            setLoading(false)
+          } else {
+            setData(null)
+            setLoading(false)
+          }
         } catch (error) {
+          console.log('error', error)
           setError(error)
           setLoading(false)
         }
