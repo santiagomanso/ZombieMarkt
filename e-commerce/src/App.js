@@ -11,6 +11,8 @@ import Calculator from './pages/Calculator'
 import SurvivalKits from './pages/SurvivalKits'
 import SignUp from './pages/SignUp'
 import UserProvider from './store/UserContext'
+import Profile from './pages/Profile'
+import Cart from './pages/Cart'
 const App = () => {
   return (
     <UserProvider>
@@ -27,6 +29,8 @@ const App = () => {
                 <Route path='/signup' element={<SignUp />} />
                 <Route path='/calculator' element={<Calculator />} />
                 <Route path='/survivalKits' element={<SurvivalKits />} />
+                <Route path='/profile' element={<Profile />} />
+                <Route path='/cart' element={<Cart />} />
               </Routes>
             </AppContainer>
           </BrowserRouter>
