@@ -80,7 +80,7 @@ const SignUp = () => {
       <RightContainer gap='gap-10' relative>
         <Header
           title='Sign up'
-          subtitle='As easy as filling out the survival form'
+          subtitle="The undead can't shop here, but you can. Sign in now!"
         />
         {msg && (
           <FloatingMsg
@@ -99,24 +99,22 @@ const SignUp = () => {
           />
         )}
         <div
-          className='h-screen w-full max-w-3xl md:h-auto  md:min-w-auto bg-gradient-to-br     
-        from-indigo-500/20   dark:from-black/50
-         via-gray-100/90   dark:via-slate-800/80
-          to-gray-300/80   dark:to-black/50 flex rounded-2xl  md:p-5 shadow-lg items-stretch '
+          className='h-screen w-full max-w-3xl md:h-auto  md:min-w-auto  flex rounded-2xl  md:p-5 shadow-xl shadow-slate-800 bg-gradient-to-br  items-stretch 
+        from-gray-500 dark:via-slate-900 dark:to-slate-900 '
         >
           {/* form container */}
           <div className='w-full px-5 md:px-10 flex flex-col justify-center'>
             <span
               onClick={() => redirectTo('/login')}
-              className='mt-2 text-gray-600 p-0 w-[300px] font-bold  select-none cursor-pointer'
+              className='mt-2 text-gray-700 p-0 w-[300px] font-bold  select-none cursor-pointer'
             >
               Already a survivor? Click here
             </span>
             <form className='flex flex-col gap-4 mt-5' onSubmit={handleSubmit}>
               <label className='flex flex-col relative'>
-                <span className='capitalize flex gap-1'>
+                <span className='text-gray-800 font-medium capitalize flex gap-1'>
                   Email
-                  <span className='hidden md:inline text-red-500 font-bold'>
+                  <span className='hidden md:inline text-red-900 font-bold'>
                     {error && error}
                   </span>
                 </span>
@@ -134,7 +132,7 @@ const SignUp = () => {
               </label>
 
               <label className='flex flex-col'>
-                <span>Password</span>
+                <span className='text-gray-800 font-medium'>Password</span>
                 <div className='relative'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -159,7 +157,7 @@ const SignUp = () => {
                 </div>
               </label>
 
-              <button className='select-none mt-7 w-full shadow-md bg-gradient-to-br from-indigo-500/90 to-purple-500/80 text-white rounded-lg py-2 flex justify-center items-center gap-2 border font-semibold hover:scale-105 duration-300'>
+              <button className='select-none mt-7 w-full shadow-md bg-gradient-to-br  text-white rounded-lg py-2 flex justify-center items-center gap-2 border font-semibold  hover:scale-105 duration-300'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='22'
@@ -174,7 +172,7 @@ const SignUp = () => {
                   />
                   <path d='M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z' />
                 </svg>
-                <span className=''>Sign up now to surive!</span>
+                <span className=''>Join the living (or undead) now!</span>
               </button>
             </form>
           </div>
