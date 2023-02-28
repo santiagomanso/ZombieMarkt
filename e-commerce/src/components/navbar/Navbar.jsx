@@ -59,21 +59,23 @@ const Navbar = () => {
       {/* PC */}
       <nav className='hidden lg:flex justify-between bg-orange-100/20 py-5 items-center px-1 lg:px-20 shadow-md'>
         <Link to='/'>
-          <i className='fa-solid fa-burger text-amber-700 text-3xl'></i>
+          <i className='fa-solid fa-burger text-orange-500 text-3xl'></i>
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
         <ul className='flex gap-10 items-center'>
           <Link
             to='/categories'
-            className='bg-orange-300/50 hover:bg-amber-600/50 rounded px-3 py-1 flex gap-1 items-baseline'
+            className='bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded px-3 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40'
           >
-            <i className='fa-solid fa-virus text-gray-700 text-xl'></i>
-            <span>shop now</span>
+            <i className='fa-solid fa-virus text-gray-200 text-xl'></i>
+            <span className='text-gray-200'>shop now</span>
           </Link>
           <Link to='/login'>
             <span>login</span>
           </Link>
-          {user && <Dropdown name={user.email} logout={logOut} />}
+          {user && (
+            <Dropdown name={user.email} img={user.image} logout={logOut} />
+          )}
           <Link to='/cart' className='relative'>
             <span>cart</span>
             {cart.length > 0 && <Badge position='absolute -top-4 -right-4' />}
