@@ -8,12 +8,31 @@ const UserProvider = ({ children }) => {
   const [errorContext, setErrorContext] = useState('')
   const [msg, setMsg] = useState('')
 
+  //NOTE create user
   const createUser = async (newUser) => {
     // console.log('newUser', newUser)
     try {
       const { data } = await axios.post(
         'http://localhost:5500/api/users/create',
         newUser,
+      )
+      console.log('data', data)
+      setUser(data.user)
+      setMsg(data.msg)
+      saveTokenToLocalStorage(data.token)
+    } catch (error) {
+      setErrorContext(error)
+      setErrorContext(error.response.data.msg)
+      //FIXME - hacer error msg floating
+    }
+  }
+
+  const loginUser = async (userObj) => {
+    console.log('userObj', userObj)
+    try {
+      const { data } = await axios.post(
+        'http://localhost:5500/api/users/login',
+        userObj,
       )
       console.log('data', data)
       setUser(data.user)
@@ -44,7 +63,7 @@ const UserProvider = ({ children }) => {
     setTimeout(() => {
       setMsg('')
       setErrorContext('')
-    }, 2500)
+    }, 3500)
   }, [msg, errorContext])
 
   const data = {
@@ -53,6 +72,7 @@ const UserProvider = ({ children }) => {
     msg,
     setUser,
     createUser,
+    loginUser,
     logOut,
   }
 
