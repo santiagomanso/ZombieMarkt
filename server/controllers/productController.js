@@ -101,6 +101,7 @@ export const postNewProduct = async (req, res) => {
     image,
     shelf,
     backstock,
+    categoryName,
   } = req.body
 
   if (!name || !ean || !sku || !category || !countInStock || !price) {
@@ -113,7 +114,7 @@ export const postNewProduct = async (req, res) => {
         category: category,
         countInStock: countInStock,
         price: price,
-      }, //FIXME - here
+      },
     })
     return
   }
@@ -126,12 +127,14 @@ export const postNewProduct = async (req, res) => {
   // }
   // if (imageUrl) imageUrl = imageUrl.url
   // console.log('imageUrl', imageUrl)
-  console.log('req.body', req.body)
+  // console.log('req.body', req.body)
 
   try {
+    console.log('ean', ean)
     const existingProduct = await productModel.findOne({ ean: ean })
+    // console.log('existingProduct->', existingProduct)
     if (existingProduct) {
-      console.log('error product already exists')
+      // console.log('error product already exists')
       res.status(501).json({ msg: 'error: product already exists' })
     } else {
       const newProduct = new productModel({
@@ -141,6 +144,7 @@ export const postNewProduct = async (req, res) => {
         countInStock: countInStock,
         price: price,
         image: image,
+        categoryName: categoryName,
         category: category,
         shelf: shelf,
         backstock: backstock,
@@ -148,13 +152,13 @@ export const postNewProduct = async (req, res) => {
       // console.log('newProduct', newProduct)
       try {
         const savedProduct = await newProduct.save()
-        // console.log(savedProduct)
+        // console.log('savedProduct::::', savedProduct)
         res.status(201).json({
           msg: 'Product created successfully',
           product: savedProduct,
         })
       } catch (error) {
-        console.log('error server')
+        console.log('error server', error)
         // console.log(error)
         res.status(503).json({
           msg: 'Fatal error',
@@ -162,7 +166,7 @@ export const postNewProduct = async (req, res) => {
       }
     }
   } catch (error) {
-    console.log('error undefined')
+    console.log(error)
     res.status(500).json({
       msg: 'Fatal error',
     })
