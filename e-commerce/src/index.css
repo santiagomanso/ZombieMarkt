@@ -4,14 +4,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Creepster&display=swap');
 /* custom components imports */
-@import './styles/buttons.css';
 
 @layer base {
   span:not(button span, aside span),
-  li {
+  li,
+  label {
     @apply text-gray-800 lg:text-xl;
   }
-
+  button {
+    @apply active:translate-y-1 duration-100 transition-all ease-in-out;
+  }
   input {
     @apply outline-transparent focus:outline-2 focus:outline-indigo-600 px-2 py-2 rounded-md;
   }
