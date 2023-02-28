@@ -27,7 +27,7 @@ const LeftPanel = ({
   return (
     <aside
       className={`hidden bg-gray-800/20 w-[400px] h-full lg:flex flex-col items-center px-2 lg:px-5 gap-20 py-20 ${
-        bottomCard ? '' : 'justify-center'
+        bottomCard ? '' : ''
       }`}
     >
       <article
