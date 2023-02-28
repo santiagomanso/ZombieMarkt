@@ -2,13 +2,17 @@ import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import useFetch from '../../hooks/UseFetch'
+import { useParams } from 'react-router-dom'
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState('')
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
   const [enabled, setEnabled] = useState(false)
-  const [categories, setcategories] = useState('')
+  const [categories, setCategories] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('beverages')
+
+  //select
   const nameRef = useRef(null)
 
   const handleSubmit = (e) => {
@@ -19,38 +23,59 @@ const CreatePage = () => {
   const { data } = useFetch('http://localhost:5500/api/categories/all')
 
   const handleChange = (e) => {
+    console.log('selectedCategory', selectedCategory)
+    const category = categories.find((item) => {
+      return item.name === selectedCategory
+    })
+    setNewProduct({
+      ...newProduct,
+      [e.target.name]: e.target.value,
+      category: category?._id,
+    })
+    // console.log('newProduct', newProduct)
+  }
+
+  const handleCategoryName = (e) => {
+    // console.log('e.target', e)
+    setSelectedCategory(e.target.value)
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value })
   }
 
   useEffect(() => {
     validate()
-    if (data) setcategories(data.categories)
-  }, [newProduct, data])
+    if (data) setCategories(data.categories)
+    // console.log('categories', categories)
+  }, [data])
 
   const validate = () => {
-    if (
-      !newProduct.name ||
-      !newProduct.ean ||
-      !newProduct.sku ||
-      !newProduct.countInStock ||
-      !newProduct.category ||
-      !newProduct.price ||
-      !newProduct.image
-    ) {
-      setEnabled(false)
-    } else {
-      setEnabled(true)
-    }
+    //FIXME - validation
+    // if (
+    //   !newProduct.name ||
+    //   !newProduct.ean ||
+    //   !newProduct.sku ||
+    //   !newProduct.countInStock ||
+    //   !newProduct.category ||
+    //   !newProduct.price ||
+    //   !newProduct.image
+    // ) {
+    //   setEnabled(false)
+    // } else {
+    //   setEnabled(true)
+    // }
+    return setEnabled(true)
   }
 
   const createProduct = async (e) => {
     if (!enabled) {
       return
     } else {
+      console.log('newProduct', newProduct)
+
       const formdata = new FormData()
       formdata.append('name', newProduct.name)
       formdata.append('sku', newProduct.sku)
       formdata.append('ean', newProduct.ean)
+      formdata.append('categoryName', newProduct.categoryName)
       formdata.append('category', newProduct.category)
       formdata.append('price', newProduct.price)
       formdata.append('image', newProduct.image)
@@ -184,19 +209,24 @@ const CreatePage = () => {
                 <select
                   className='bg-gray-100 outline outline-1 outline-gray-300'
                   type='number'
-                  value={newProduct.category || ''}
-                  name='category'
+                  value={selectedCategory}
+                  name='categoryName'
                   id='category'
-                  onChange={handleChange}
+                  onChange={handleCategoryName}
                 >
-                  {categories &&
-                    categories.map((item) => {
-                      return (
-                        <option value={item._id} key={item._id}>
-                          {item.name}
-                        </option>
-                      )
-                    })}
+                  {categories.length > 0
+                    ? categories.map((item) => {
+                        return (
+                          <option
+                            value={item.name}
+                            key={item._id}
+                            data-productid={item._id}
+                          >
+                            {item.name}
+                          </option>
+                        )
+                      })
+                    : ''}
                 </select>
               </div>
               <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
