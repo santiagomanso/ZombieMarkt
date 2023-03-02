@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from 'react'
 export const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState('')
   const [errorContext, setErrorContext] = useState('')
   const [msg, setMsg] = useState('')
 
@@ -28,13 +28,13 @@ const UserProvider = ({ children }) => {
   }
 
   const loginUser = async (userObj) => {
-    console.log('userObj', userObj)
+    // console.log('userObj', userObj)
     try {
       const { data } = await axios.post(
         'http://localhost:5500/api/users/login',
         userObj,
       )
-      console.log('data', data)
+      // console.log('data', data)
       setUser(data.user)
       setMsg(data.msg)
       saveTokenToLocalStorage(data.token)
@@ -55,6 +55,7 @@ const UserProvider = ({ children }) => {
     if (!token) {
       return
     } else {
+      window.localStorage.removeItem('token')
       window.localStorage.setItem('token', token)
     }
   }
