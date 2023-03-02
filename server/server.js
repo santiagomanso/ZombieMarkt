@@ -7,6 +7,7 @@ import connectDB from './config/connectDB.js'
 import cloudinaryConfig from './config/cloudinary.js'
 import categoriesRouter from './routes/categoriesRouter.js'
 import userRouter from './routes/userRouter.js'
+import orderRouter from './routes/orderRouter.js'
 dotenv.config()
 
 const app = express()
@@ -42,6 +43,7 @@ const loadRoutes = () => {
   app.use('/api/products', productRouter)
   app.use('/api/categories', categoriesRouter)
   app.use('/api/users', userRouter)
+  app.use('/api/orders', orderRouter)
 }
 
 ;(async function controller() {
