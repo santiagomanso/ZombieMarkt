@@ -2,6 +2,20 @@ import userModel from '../models/userModel.js'
 import { comparePasswords, passwordEncription } from '../utils/bcrypt.js'
 import generateToken from '../utils/generateTokens.js'
 
+//random Image
+const randomImg = () => {
+  const images = [
+    'https://i.ibb.co/GQDXp1X/aksdasdj-default-user-profile-picture-zombie-style-fun-ux-no-ge-ad402b67-e1fd-482d-b429-a2601634eebe.png',
+    'https://i.ibb.co/wSPJ6WQ/aksdasdj-default-user-profile-girl-zombie-style-c97e338c-dcf6-49e0-a180-111910131ef9-removebg-previe.png',
+    'https://i.ibb.co/fFmx31R/basureando-user-profile-stock-picture-cartoon-zombie-style-16f3cc14-3057-4a55-8ee2-2d0fbd9c5538-remo.png',
+    'https://i.ibb.co/2P7XwCp/basureando-user-profile-stock-picture-cartoon-zombie-style-77ddc483-8f05-4aa9-a8ea-c9e4ea39d16e-remo.png',
+    'https://i.ibb.co/pJCC7ZX/basureando-user-profile-picture-cartoon-girl-zombie-style-80557016-2fac-4acc-a431-a7efae327e34-remov.png',
+    'https://i.ibb.co/VwWtqKz/basureando-user-profile-picture-cartoon-girl-zombie-style-b46d0887-ac55-4aaf-9c9f-760ab37cb5ba-remov.png',
+    'https://i.ibb.co/cNGdsQW/basureando-user-profile-picture-cartoon-girl-zombie-style-21ea525f-48a3-424d-8490-e140878f839e-remov.png',
+  ]
+  return images[Math.floor(Math.random() * images.length)]
+}
+
 // @desc Create user
 // @route POST /api/users
 // @access Public
@@ -28,11 +42,13 @@ export const createUser = async (req, res) => {
       const newUser = new userModel({
         email: req.body.email,
         password: await passwordEncription(req.body.password), //NOTE bcrypt encription
+        image: randomImg(),
       })
+      console.log('newUser', newUser)
       const savedUser = await newUser.save()
       if (savedUser) {
         const token = generateToken(savedUser._id)
-        console.log('token', token)
+        // console.log('token', token)
 
         //user object for response (no password/isAdmin) fields
         const user = {
@@ -134,4 +150,31 @@ export const getAllUsers = async (req, res) => {
       msg: 'Internal server error',
     })
   }
+}
+
+// @desc get user Profile
+// @route GET /api/users/profile
+// @access public
+export const getUserProfile = async (req, res) => {
+  // console.log('req.user', req.user)
+  res.status(200).json({
+    user: req.user,
+  })
+  // try {
+  //   //get all users but without password field
+  //   const allUsers = await userModel.find({}).select('-password ')
+  //   if (allUsers)
+  //     res.status(200).json({
+  //       users: allUsers,
+  //     })
+  //   else {
+  //     res.status(500).json({
+  //       msg: 'there was an error fetching all',
+  //     })
+  //   }
+  // } catch (error) {
+  //   res.status(500).json({
+  //     msg: 'Internal server error',
+  //   })
+  // }
 }
