@@ -122,10 +122,10 @@ const UsersPage = () => {
             users.map((user, index) => {
               return (
                 <div
-                  className={`flex h-[200px] rounded-sm outline outline-4 ${
+                  className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
-                      ? 'bg-gradient-to-tl from-sky-400 via-violet-500 to-purple-900 outline-sky-900'
-                      : 'bg-gradient-to-br from-rose-500 to-fuchsia-700 outline-violet-800'
+                      ? 'bg-gradient-to-tl from-sky-500/80 via-violet-500/70 to-purple-900/80 outline-sky-900'
+                      : 'bg-gradient-to-br from-rose-500/80 to-fuchsia-700/80 outline-violet-800'
                   }`}
                 >
                   <div className='h-full'>
