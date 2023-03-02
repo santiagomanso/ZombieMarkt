@@ -13,6 +13,7 @@ import SignUp from './pages/SignUp'
 import UserProvider from './store/UserContext'
 import Profile from './pages/Profile'
 import Cart from './pages/Cart'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 const App = () => {
   return (
     <UserProvider>
@@ -30,7 +31,14 @@ const App = () => {
                 <Route path='/calculator' element={<Calculator />} />
                 <Route path='/survivalKits' element={<SurvivalKits />} />
                 <Route path='/profile' element={<Profile />} />
-                <Route path='/cart' element={<Cart />} />
+                <Route
+                  path='/cart'
+                  element={
+                    <ProtectedRoute>
+                      <Cart />
+                    </ProtectedRoute>
+                  }
+                />
               </Routes>
             </AppContainer>
           </BrowserRouter>
