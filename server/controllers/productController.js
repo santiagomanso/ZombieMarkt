@@ -236,6 +236,7 @@ export const updateProduct = async (req, res) => {
       { $set: newProduct },
       { new: true },
     )
+
     res.status(200).json({
       product: product,
     })
