@@ -9,24 +9,28 @@ export const buttonsData = [
     title: 'All products',
     path: '/products',
   },
-
   {
     id: 3,
+    title: 'All orders',
+    path: '/orders',
+  },
+  {
+    id: 4,
     title: 'Create product',
     path: '/create',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Update product',
     path: '/update',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Delete product',
     path: '/delete',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Backup shelves',
     path: '/shelves',
   },
