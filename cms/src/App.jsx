@@ -8,6 +8,8 @@ import ProductContextProvider from './context/ProductContext'
 import Details from './pages/detailPage/Details'
 import DeletePage from './pages/deletePage/DeletePage'
 import UsersPage from './pages/users/UsersPage'
+import AllProducts from './pages/products/AllProducts'
+import OrdersPage from './pages/orders/OrdersPage'
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
             <Route path='/details/:id' element={<Details />} />
             <Route path='/delete' element={<DeletePage />} />
             <Route path='/users' element={<UsersPage />} />
+            <Route path='/products' element={<AllProducts />} />
+            <Route path='/orders' element={<OrdersPage />} />
           </Routes>
         </AppContainer>
       </BrowserRouter>
