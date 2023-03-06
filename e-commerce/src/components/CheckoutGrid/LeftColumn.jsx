@@ -5,7 +5,7 @@ const LeftColumn = () => {
   const handleClick = (operation, item) => {
     switch (operation) {
       case '+': {
-        if (item.quantity < item.countInStock) {
+        if (item.quantity === undefined || item.quantity < item.countInStock) {
           const updatedCart = [...cart]
           const itemIndex = updatedCart.findIndex(
             (cartItem) => cartItem._id === item._id,
@@ -19,7 +19,7 @@ const LeftColumn = () => {
       }
 
       case '-': {
-        if (item.quantity > 1) {
+        if (item.quantity === undefined || item.quantity > 1) {
           const updatedCart = [...cart]
           const itemIndex = updatedCart.findIndex(
             (cartItem) => cartItem._id === item._id,
