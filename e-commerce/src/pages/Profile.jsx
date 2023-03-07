@@ -51,10 +51,10 @@ const Profile = () => {
                 <input
                   // onChange={handleChange}
                   className='outline outline-1 outline-gray-300'
-                  type='text'
+                  type='date'
                   name='ean'
-                  disabled
                   value={user.joined}
+                  disabled
                 />
               </div>
               <div className='flex flex-col'>
