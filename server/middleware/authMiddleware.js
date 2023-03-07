@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken'
-import User from '../models/userModel.js'
+import userModel from '../models/userModel.js'
 
 const authMiddleware = async (req, res, next) => {
-  console.log('req.headers', req.headers)
+  // console.log('req.headers', req.headers)
   let token
   if (
     req.headers.authorization &&
@@ -13,7 +13,7 @@ const authMiddleware = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.SECRET)
 
       //insert field into req
-      req.user = await User.findById(decoded.sub).select('-password')
+      req.user = await userModel.findById(decoded.sub).select('-password')
       next()
     } catch (error) {
       res.status(500).json({
