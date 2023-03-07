@@ -24,6 +24,13 @@ const userSchema = mongoose.Schema(
       type: String,
       required: false,
     },
+    orders: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'order',
+      },
+    ],
     // favorites:[]
     // joined date
     //money spent
@@ -35,5 +42,5 @@ const userSchema = mongoose.Schema(
   },
 )
 
-const User = mongoose.model('user', userSchema)
-export default User
+const userModel = mongoose.model('user', userSchema)
+export default userModel
