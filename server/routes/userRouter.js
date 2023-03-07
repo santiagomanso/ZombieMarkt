@@ -4,6 +4,7 @@ import {
   getAllUsers,
   getUserProfile,
   login,
+  loginWithToken,
 } from '../controllers/userController.js'
 import { authMiddleware } from '../middleware/authMiddleware.js'
 import customErrorHandler from '../middleware/customErrorHandler.js'
@@ -15,6 +16,9 @@ userRouter.post('/create', customErrorHandler, createUser)
 
 //LOGIN
 userRouter.post('/login', login)
+
+//LOGIN WITH TOKEN
+userRouter.post('/loginWithToken', loginWithToken)
 
 //GET ALL USERS
 userRouter.get('/all', getAllUsers)
