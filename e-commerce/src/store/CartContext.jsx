@@ -21,10 +21,11 @@ export const CartProvider = ({ children }) => {
     window.localStorage.setItem('cart', JSON.stringify(cart))
   }
 
-  const placeOrder = async (user) => {
+  //NOTE - PLACE ORDER
+  const placeOrder = async (user, price) => {
     const token = getTokenFromStorage()
 
-    //NOTE headers
+    //headers
     const headers = {
       headers: {
         'Content-Type': 'application/json',
@@ -41,7 +42,7 @@ export const CartProvider = ({ children }) => {
     const body = {
       cart, //the whole array of products
       shippingAdress: 'Stephan str 60',
-      price: 221,
+      price: price,
       orderItems: orderIds, //array of _ids (only ids)
     }
 
@@ -51,6 +52,8 @@ export const CartProvider = ({ children }) => {
       body,
       headers,
     )
+
+    setCart([])
   }
 
   useEffect(() => {
