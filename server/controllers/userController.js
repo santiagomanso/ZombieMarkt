@@ -1,6 +1,9 @@
-import userModel from '../models/userModel.js'
 import { comparePasswords, passwordEncription } from '../utils/bcrypt.js'
 import generateToken from '../utils/generateTokens.js'
+import jwt from 'jsonwebtoken'
+import orderModel from '../models/orderModel.js'
+import productModel from '../models/productModel.js'
+import userModel from '../models/userModel.js'
 
 //random Image
 const randomImg = () => {
@@ -128,6 +131,21 @@ export const login = async (req, res) => {
   }
 }
 
+export const loginWithToken = async (req, res) => {
+  const { token } = req.body
+  if (token) {
+    try {
+      const decoded = jwt.verify(token, process.env.SECRET)
+      const user = await userModel.findById(decoded.sub)
+      if (user) {
+        res.status(200).json({
+          user,
+        })
+      }
+    } catch (error) {}
+  }
+}
+
 // @desc get all user
 // @route GET /api/users/all
 // @access admin
@@ -135,7 +153,13 @@ export const getAllUsers = async (req, res) => {
   //   console.log('req', req)
   try {
     //get all users but without password field
-    const allUsers = await userModel.find({}).select('-password ')
+    const allUsers = await userModel
+      .find({})
+      .populate({
+        path: 'orders',
+        populate: { path: 'orderItems', populate: { path: 'category' } },
+      })
+      .exec()
     if (allUsers)
       res.status(200).json({
         users: allUsers,
@@ -146,6 +170,7 @@ export const getAllUsers = async (req, res) => {
       })
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       msg: 'Internal server error',
     })
