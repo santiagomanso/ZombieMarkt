@@ -1,11 +1,15 @@
 import orderModel from '../models/orderModel.js'
 import productModel from '../models/productModel.js'
+import userModel from '../models/userModel.js'
 
+//@desc  fetch all orders
+//@route POST /api/all
+//@acess Private
 export const getAllOrders = async (req, res) => {
   try {
     const orders = await orderModel
       .find({})
-      .populate({ path: 'user', select: '-password' })
+      .populate({ path: 'user', select: ['-password', '-orders'] })
       .exec()
     if (!orders) {
       res.status(404).json({
@@ -23,29 +27,29 @@ export const getAllOrders = async (req, res) => {
   }
 }
 
-//@desc  Create new order
-//@route POST /api/orders
+//@desc  Create new order, update stocks, and push a new order to the user
+//@route POST /api/orders/newOrder
 //@acess Private
 export const createOrder = async (req, res) => {
   const { price, orderItems, shippingAdress, cart } = req.body
-
   // console.log('cart', cart)
-
   if (!orderItems || orderItems.length < 1) {
     res.status(400).json({
       msg: 'Error - invalid order',
     })
   } else {
-    cart.map(async (item) => {
-      // console.log('item', item)
-      await productModel.findByIdAndUpdate(
-        { _id: item._id },
-        { $set: { countInStock: item.countInStock - item.quantity } },
-        { new: true },
-      )
-      // console.log('item.countInStock', item.countInStock)
-    })
     try {
+      //UPDATE STOCKS
+      cart.map(async (item) => {
+        // console.log('item', item)
+        await productModel.findByIdAndUpdate(
+          { _id: item._id },
+          { $set: { countInStock: item.countInStock - item.quantity } },
+          { new: true },
+        )
+      })
+
+      //CREATE NEW ORDER
       const order = new orderModel({
         user: req.user._id, //NOTE user from authMiddleware
         shippingAdress: shippingAdress,
@@ -53,6 +57,13 @@ export const createOrder = async (req, res) => {
         price: price,
         orderItems: orderItems,
       })
+
+      //PUSH ORDER TO EXISTING USER
+      await userModel.findByIdAndUpdate(
+        req.user._id,
+        { $push: { orders: order._id } },
+        { new: true },
+      )
 
       const savedOrder = await order.save()
       res.status(201).json({
