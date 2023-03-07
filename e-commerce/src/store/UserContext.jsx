@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
+import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 export const UserContext = createContext()
 
@@ -60,6 +61,31 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const loginWithToken = async (token) => {
+    try {
+      const { data } = await axios.post(
+        'http://localhost:5500/api/users/loginWithToken',
+        { token },
+      )
+      // console.log('data', data)
+      setUser(data.user)
+      setMsg(data.msg)
+    } catch (error) {
+      setErrorContext(error)
+      setErrorContext(error.response.data.msg)
+      //FIXME - hacer error msg floating
+    }
+  }
+
+  //NOTE - to detect user on component mount
+  useEffect(() => {
+    const token = getTokenFromStorage()
+    if (token) {
+      loginWithToken(token)
+    }
+  }, [])
+
+  //NOTE - To clean the msgs
   useEffect(() => {
     setTimeout(() => {
       setMsg('')
