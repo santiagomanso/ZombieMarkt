@@ -14,35 +14,41 @@ import UserProvider from './store/UserContext'
 import Profile from './pages/Profile'
 import Cart from './pages/Cart'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import { RedirectProvider } from './store/RedirectContext'
 const App = () => {
   return (
     <UserProvider>
       <CartProvider>
-        <AnimationProvider>
-          <BrowserRouter>
-            <AppContainer>
-              <Navbar />
-              <Routes>
-                <Route path='/' element={<HomePage />} />
-                <Route path='/products/:category' element={<ProductsPage />} />
-                <Route path='/products/details/:_id' element={<Details />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/signup' element={<SignUp />} />
-                <Route path='/calculator' element={<Calculator />} />
-                <Route path='/survivalKits' element={<SurvivalKits />} />
-                <Route path='/profile' element={<Profile />} />
-                <Route
-                  path='/cart'
-                  element={
-                    <ProtectedRoute>
-                      <Cart />
-                    </ProtectedRoute>
-                  }
-                />
-              </Routes>
-            </AppContainer>
-          </BrowserRouter>
-        </AnimationProvider>
+        <RedirectProvider>
+          <AnimationProvider>
+            <BrowserRouter>
+              <AppContainer>
+                <Navbar />
+                <Routes>
+                  <Route path='/' element={<HomePage />} />
+                  <Route
+                    path='/products/:category'
+                    element={<ProductsPage />}
+                  />
+                  <Route path='/products/details/:_id' element={<Details />} />
+                  <Route path='/login' element={<Login />} />
+                  <Route path='/signup' element={<SignUp />} />
+                  <Route path='/calculator' element={<Calculator />} />
+                  <Route path='/survivalKits' element={<SurvivalKits />} />
+                  <Route path='/profile' element={<Profile />} />
+                  <Route
+                    path='/cart'
+                    element={
+                      <ProtectedRoute>
+                        <Cart />
+                      </ProtectedRoute>
+                    }
+                  />
+                </Routes>
+              </AppContainer>
+            </BrowserRouter>
+          </AnimationProvider>
+        </RedirectProvider>
       </CartProvider>
     </UserProvider>
   )
