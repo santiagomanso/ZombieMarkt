@@ -1,6 +1,7 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { CartContext } from '../../store/CartContext'
+import { RedirectContext } from '../../store/RedirectContext'
 import { UserContext } from '../../store/UserContext'
 import Badge from '../Badge/Badge'
 import Dropdown from '../dropdown/Dropdown'
@@ -9,6 +10,15 @@ const Navbar = () => {
   const [active, setActive] = useState(true)
   const { cart } = useContext(CartContext)
   const { user, logOut } = useContext(UserContext)
+  const { setPath } = useContext(RedirectContext)
+
+  const handleClick = (path) => {
+    if (!user) {
+      setPath(path)
+    } else {
+      setPath('')
+    }
+  }
 
   return (
     <>
@@ -76,7 +86,11 @@ const Navbar = () => {
           {user && (
             <Dropdown name={user.email} img={user.image} logout={logOut} />
           )}
-          <Link to='/cart' className='relative'>
+          <Link
+            to='/cart'
+            className='relative'
+            onClick={() => handleClick('/cart')}
+          >
             <span>cart</span>
             {cart.length > 0 && <Badge position='absolute -top-4 -right-4' />}
             <i className='fa-solid fa-cart-shopping text-gray-700 text-xl'></i>
