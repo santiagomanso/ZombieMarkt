@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { CartContext } from '../../store/CartContext'
 
 const LeftColumn = () => {
@@ -37,6 +37,22 @@ const LeftColumn = () => {
     }
   }
 
+  const handleRemove = (item) => {}
+
+  useEffect(() => {
+    //NOTE - add property quantity to EVERY item of the cart, only when there are items inside
+    if (cart.length > 0) {
+      const updatedCart = cart.map((item) => {
+        if (item.quantity === undefined) {
+          return { ...item, quantity: 1 }
+        } else {
+          return item
+        }
+      })
+      setCart(updatedCart)
+    }
+  }, [])
+
   const { cart, setCart } = useContext(CartContext)
   return (
     <article className=' flex flex-col gap-7 overflow-auto p-2 pr-6'>
@@ -55,7 +71,7 @@ const LeftColumn = () => {
                     className='w-full h-full object-scale-down rounded-lg -translate-y-[30px]'
                   />
                 </div>
-                <div>
+                <div className='w-3/4 relative'>
                   <div className='flex justify-around w-full items-baseline px-2'>
                     <div className='w-2/3'>
                       <h2 className='text-gray-100 font-bold uppercase font-poppins tracking-widest text-2xl'>
@@ -84,6 +100,12 @@ const LeftColumn = () => {
                       Stock: {item.countInStock}
                     </span>
                   </div>
+                  <button
+                    onClick={() => handleRemove(item)}
+                    className=' absolute right-6 bottom-0 md:bottom-5 lg:bottom-[5%] duration-200 hover:scale-125 p-0'
+                  >
+                    <i className='fa-solid fa-trash text-gray-200 text-2xl '></i>
+                  </button>
                 </div>
               </div>
             )
