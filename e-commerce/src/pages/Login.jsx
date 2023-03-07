@@ -9,11 +9,13 @@ import { AnimationContext } from '../store/AnimationContext'
 import { UserContext } from '../store/UserContext'
 import loginPNG from '../assets/login.jpg'
 import signUpImg from '../assets/signUp.png'
+import { RedirectContext } from '../store/RedirectContext'
 
 const Login = () => {
   //context states extractions
   const { loginUser, msg, errorContext, user } = useContext(UserContext)
   const { setAnimation } = useContext(AnimationContext)
+  const { path } = useContext(RedirectContext)
 
   //component states
   const [error, setError] = useState('')
@@ -72,9 +74,16 @@ const Login = () => {
   }
 
   useEffect(() => {
-    if (user) {
-      navigate('/')
-    }
+    setTimeout(() => {
+      //redirects when successfull login to home page
+      if (user) {
+        if (path) {
+          navigate(path, { replace: true }) // reditection to attempted navigation after successful login
+        } else {
+          navigate('/', { replace: true }) // redirection to home screen
+        }
+      }
+    }, 1200)
   }, [user])
 
   const handleShowPassword = () => {
