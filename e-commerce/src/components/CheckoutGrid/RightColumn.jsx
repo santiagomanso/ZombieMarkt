@@ -8,10 +8,10 @@ const RightColumn = () => {
 
   const calculateSemitotals = () => {
     let result = 0
-    result = cart.map((item) => {
-      return (result = result + Math.floor(item.price))
+    cart.forEach((item) => {
+      result += Math.floor(item.price * 100) * item.quantity
     })
-    return result //FIXME - this should be rounded and * 100
+    return (result / 100).toFixed(2)
   }
 
   return (
@@ -76,7 +76,7 @@ const RightColumn = () => {
             </span>
           </div>
           <button
-            onClick={() => placeOrder(user)}
+            onClick={() => placeOrder(user, calculateSemitotals())}
             className='bg-gradient-to-br from-slate-500 to-gray-700 rounded mt-24 text-gray-200 font-bold'
           >
             CHECKOUT NOW
