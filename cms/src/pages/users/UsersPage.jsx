@@ -110,11 +110,15 @@ const UsersPage = () => {
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
         </section>
-
+        {users && (
+          <span className='mt-5 text-xl text-slate-600 font-medium'>
+            Users:{users.length}
+          </span>
+        )}
         <section
           className={`py-0  px-0 md:px-14 md:py-10 overflow-auto rounded  bg-white   grid duration-500 outline outline-1 outline-gray-300 shadow-md ${
             users
-              ? 'grid-cols-1 lg:grid-cols-3 mt-10 h-[700px] gap-20'
+              ? 'grid-cols-1 lg:grid-cols-3 mt-1 h-[700px] gap-20'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5 h-[500px]'
           } `}
         >
@@ -135,8 +139,14 @@ const UsersPage = () => {
                       className='h-full object-scale-down'
                     />
                   </div>
-                  <div>
+                  <div className='grid grid-cols-1 gap-0 p-5'>
                     <span className='text-2xl font-medium'>{user.email}</span>
+                    <span className='text-2xl font-medium'>
+                      Orders: {user.orders.length}
+                    </span>
+                    <span className='text-2xl font-medium'>
+                      Joined: {user.joined}
+                    </span>
                   </div>
                 </div>
               )
