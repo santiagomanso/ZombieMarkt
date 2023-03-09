@@ -15,7 +15,7 @@
     @apply active:translate-y-1 duration-100 transition-all ease-in-out;
   }
   input {
-    @apply outline-transparent focus:outline-2 focus:outline-indigo-600 px-2 py-2 rounded-md;
+    @apply px-2 py-2 rounded-md;
   }
 
   p {
