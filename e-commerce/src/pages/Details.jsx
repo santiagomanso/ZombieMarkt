@@ -1,23 +1,32 @@
+import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ButtonCta from '../components/buttons/ButtonCta'
 import MainContainer from '../components/containers/MainContainer'
 import RightContainer from '../components/containers/RightContainer'
+import FloatingMsg from '../components/floatingMsg/FloatingMsg'
 import Header from '../components/header/Header'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Loading from '../components/loading/Loading'
 import Rating from '../components/rating/Rating'
 import useFetch from '../hooks/useFetch'
 import { CartContext } from '../store/CartContext'
+import { UserContext } from '../store/UserContext'
+import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 const ProductDetail = () => {
   const [active, setActive] = useState(true)
+  const [commentObj, setCommentObj] = useState({})
   const { _id } = useParams()
   const { cart, setCart } = useContext(CartContext)
-  const { loading, data, error } = useFetch(
+  const { user } = useContext(UserContext)
+  const [msg, setMsg] = useState('')
+  const [error, setError] = useState('')
+  const { loading, data } = useFetch(
     `http://localhost:5500/api/products/detail/${_id}`,
   )
   const [product, setProduct] = useState(data)
+  const [commentsArray, setCommentsArray] = useState([])
 
   //function add to cart
   const addToCart = (item) => {
@@ -33,20 +42,109 @@ const ProductDetail = () => {
 
   const isProductOnCart = cart.find((item) => item._id === _id)
 
-  //after fetching data set a state
+  //after fetching data set states
   useEffect(() => {
-    if (data) setProduct(data.product)
+    if (data) {
+      setProduct(data.product)
+      setCommentsArray(data.product.comments)
+    }
     if (isProductOnCart) setActive(false)
   }, [data, isProductOnCart])
 
+  //NOTE spread object when onChange
+  const handleChangeInput = (e) => {
+    setCommentObj({
+      ...commentObj,
+      user: {
+        id: user._id,
+        email: user.email,
+        image: user.image,
+      },
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  //NOTE POST NEW COMMENT
+  const submitComment = async (e) => {
+    // FIXME click icon not working 8/3
+    if (e.key === 'Enter') {
+      if (!user) {
+        setError('Login first')
+        setTimeout(() => {
+          setError('')
+        }, 2500)
+      } else {
+        console.log('commentObj', commentObj)
+
+        //headers
+        const headers = {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${getTokenFromStorage()}`,
+          },
+        }
+
+        const body = {
+          comment: commentObj.comment,
+        }
+
+        try {
+          const { data } = await axios.post(
+            `http://localhost:5500/api/products/newComment/${_id}`,
+            body,
+            headers,
+          )
+          console.log('data', data)
+          setMsg('Comment added')
+          setCommentObj('')
+          setCommentsArray([...commentsArray, commentObj])
+          setTimeout(() => {
+            setMsg('')
+          }, 2500)
+        } catch (error) {
+          setMsg('')
+          setCommentObj('')
+          setError(error.response.data.msg)
+          setTimeout(() => {
+            setError('')
+          }, 2500)
+          console.log('error.response.data.msg', error.response.data.msg)
+        }
+      }
+    }
+  }
+
+  //FIXME - user side
+
   return (
     <MainContainer>
-      <LeftPanel />
-      <RightContainer relative gap='lg:gap-0'>
+      <LeftPanel bottomCard />
+      <RightContainer relative gap='lg:gap-0' lgPadding='lg:p-10'>
+        {msg && (
+          <FloatingMsg
+            msg={msg}
+            text='text-xl lg:text-7xl text-green-700'
+            icon='fa-solid fa-file-circle-check text-xl lg:text-6xl text-green-700'
+            opt=' bg-emerald-100 p-10 rounded outline outline-1 outline-green-500
+           top-[10%] lg:top-[50%] lg:-translate-y-[50%] left-[50%] lg:left-[50%] z-10  -translate-x-[50%] flex flex-col lg:flex-row items-center lg:items-center gap-2 lg:gap-4 w-fit'
+          />
+        )}
+        {error && (
+          <FloatingMsg
+            msg={error}
+            text='text-xl lg:text-7xl text-red-700'
+            icon='fa-solid fa-triangle-exclamation text-7xl text-red-700'
+            opt='bg-rose-100 p-10 rounded outline outline-1 outline-red-500 top-[10%] left-[50%] lg:top-[50%] z-10 lg:left-[50%] -translate-x-[50%] flex flex-col lg:flex-row items-center lg:items-baseline gap-1 w-3/4  lg:w-auto'
+          />
+        )}
         {loading ? (
           <Loading />
         ) : product ? (
-          <div className=' self-start h-full'>
+          <div
+            className={`self-start h-full ${
+              error || msg ? 'blur-lg' : 'blur-0'
+            }`}
+          >
             <Header title={product.name} typeWritter={false} height='h-[10%]' />
             <div className='self-start  h-[90%] p-2'>
               <div className='grid h-[14%] grid-cols-3 place-items-center  gap-5'>
@@ -64,22 +162,83 @@ const ProductDetail = () => {
                   addToCart={addToCart}
                   product={product}
                 />
-                <i class='col-span-1 text-5xl cursor-pointer text-slate-700 fa-regular fa-heart'></i>
+                <i className='col-span-1 text-5xl cursor-pointer text-slate-700 fa-regular fa-heart'></i>
               </div>
-              <section className=' outline outline-2 h-[50%] p-2 md:p-5 lg:p-10'>
+              <section className='mt-2 h-[85%]'>
                 <div className='w-full relative'>
-                  <i class='fa-solid fa-plus absolute top-[50%] -translate-y-[50%] left-3 text-lg'></i>
+                  <i
+                    name='sendIcon'
+                    onClick={submitComment}
+                    className='fa-solid fa-paper-plane text-gray-700 absolute top-[50%] -translate-y-[50%] right-3 text-xl'
+                  ></i>
                   <input
+                    onKeyDown={submitComment}
+                    onChange={handleChangeInput}
+                    value={commentObj.comment || ''}
+                    name='comment'
                     type='text'
-                    className='w-full px-8 text-lg'
+                    className='w-full px-8 text-lg bg-white/20 text-slate-800 font-medium
+                    placeholder-slate-800  outline outline-1 outline-gray-700/30'
                     placeholder='Place a comment'
                   />
                 </div>
-                <div className='bg-gray-400/20'>dssd</div>
+                <div className='mt-2 bg-gradient-to-b from-slate-900/50 to-amber-100/30 rounded-lg p-5 h-[97%] flex flex-col gap-2 border-4 border-amber-100/50 justify-start overflow-auto'>
+                  {commentsArray.length > 0 ? (
+                    commentsArray.map((comment, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={`flex gap-2 items-center ${
+                            index % 2 === 0
+                              ? 'self-end flex-row-reverse items-center'
+                              : ''
+                          }`}
+                        >
+                          <div className='bg-gradient-to-br from-slate-700 to-pink-500 via-gray-800 border-2 border-gray-200 rounded-full p-2'>
+                            <img
+                              src={comment.user.image}
+                              alt={comment.user.email}
+                              className='h-20 w-20 rounded-full object-scale-down'
+                            />
+                          </div>
+                          <div className='flex flex-col'>
+                            <span className='font-bold'>
+                              {comment.user.email}
+                            </span>
+                            <span className='text-gray-800'>
+                              {comment.comment}
+                            </span>
+                          </div>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <div
+                      className={`flex gap-2 h-full items-center self-center`}
+                    >
+                      <div className='bg-gradient-to-br from-slate-700 to-emerald-500 via-gray-800 border-2 border-gray-200 rounded-full p-2'>
+                        <img
+                          src='https://i.ibb.co/Vqx2StJ/basureando-laptop-open-with-a-zombie-logo-cartoon-zombie-style-ffc8c64e-859d-4623-82ce-157f87ffd060.png'
+                          alt='system'
+                          className='h-32 w-32 rounded-full object-scale-down'
+                        />
+                      </div>
+                      <div className='flex flex-col'>
+                        <span className='font-bold text-3xl'>ZombieMarkt</span>
+                        <span className='text-xl'>
+                          There are no comments yet
+                        </span>
+                        <span className='text-xl'>
+                          Be the first to comment!
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </section>
             </div>
 
-            <div className='absolute bottom-5 right-10 h-2/3'>
+            <div className='hidden lg:block absolute top-[50%] -translate-y-[50%] right-0 translate-x-full h-3/4'>
               <img
                 src={product.image}
                 alt={product.name}
