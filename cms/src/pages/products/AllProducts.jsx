@@ -11,7 +11,7 @@ const AllProducts = () => {
   const [enabled, setEnabled] = useState(false) //update button logic
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
-  const [users, setUsers] = useState([])
+  const [products, setProducts] = useState([])
   const { productFromContext, setProductFromContext } =
     useContext(ProductContext)
 
@@ -50,11 +50,11 @@ const AllProducts = () => {
   }
 
   //TODO evaluate if the product has indeed change the values or not in order to enable update button
-  const { data } = useFetch('http://localhost:5500/api/users/all')
+  const { data } = useFetch('http://localhost:5500/api/products/all')
 
   useEffect(() => {
-    setUsers(data.users)
-    console.log('users', users)
+    setProducts(data.products)
+    console.log('products', products)
 
     return () => {}
   }, [data])
@@ -110,33 +110,45 @@ const AllProducts = () => {
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
         </section>
-
+        {products && (
+          <span className='mt-5 text-xl text-slate-600 font-medium'>
+            Products:{products.length}
+          </span>
+        )}
         <section
           className={`py-0  px-0 md:px-14 md:py-10 overflow-auto rounded  bg-white   grid duration-500 outline outline-1 outline-gray-300 shadow-md ${
-            users
-              ? 'grid-cols-1 lg:grid-cols-3 mt-10 h-[700px] gap-20'
+            products
+              ? 'grid-cols-1 lg:grid-cols-3 mt-1 h-[700px] gap-20'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5 h-[500px]'
           } `}
         >
-          {users ? (
-            users.map((user, index) => {
+          {products ? (
+            products.map((product, index) => {
               return (
                 <div
                   className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
-                      ? 'bg-gradient-to-tl from-sky-500/80 via-violet-500/70 to-purple-900/80 outline-sky-900'
-                      : 'bg-gradient-to-br from-rose-500/80 to-fuchsia-700/80 outline-violet-800'
+                      ? 'bg-gradient-to-tl from-purple-500/80  to-slate-900/80 outline-sky-900'
+                      : 'bg-gradient-to-br from-indigo-500/80 to-slate-800/80 outline-violet-800'
                   }`}
                 >
-                  <div className='h-full'>
+                  <div className='h-full w-1/3'>
                     <img
-                      src={user.image}
-                      alt={user.email}
+                      src={product.image}
+                      alt={product.name}
                       className='h-full object-scale-down'
                     />
                   </div>
-                  <div>
-                    <span className='text-2xl font-medium'>{user.email}</span>
+                  <div className='grid grid-cols-2 gap-x-10 p-5 w-2/3'>
+                    <span className='text-2xl font-medium text-white'>
+                      {product.name}
+                    </span>
+                    <span className='text-2xl font-medium text-white'>
+                      ${product.price}
+                    </span>
+                    <span className='text-2xl font-medium text-white'>
+                      Comments: {product.comments.length}
+                    </span>
                   </div>
                 </div>
               )
