@@ -61,14 +61,15 @@ const EditProduct = ({ product, handleChange }) => {
           />
         </div>
         <div className='flex flex-col'>
+          {/* FIXME detect category / update category */}
           <label htmlFor='category'>Category</label>
           <select
-            onChange={handleChange}
+            readOnly={true}
             className='bg-white outline outline-1 outline-gray-300'
             type='text'
             name='category'
             id='category'
-            // onChange={handleChange}
+            disabled
           >
             <option value={product.category}>{product.category}</option>
             <option value='bevergages'>bevergages</option>
