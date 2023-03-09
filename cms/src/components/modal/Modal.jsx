@@ -63,8 +63,8 @@ const Modal = ({ active, setActive }) => {
               )}
               {msg && (
                 <FloatingMsg
-                  msg='Product added to the list'
-                  icon='fa-circle-check'
+                  msg='Product added'
+                  icon='fa-solid fa-circle-check'
                   opt='text-green-700 bg-emerald-100 px-3 py-2 rounded outline outline-1 outline-green-500 top-[10%] left-[50%] lg:top-[11.6%] z-10 lg:left-[50%] -translate-x-[50%] flex flex-col lg:flex-row items-center lg:items-baseline gap-1 w-3/4  lg:w-auto'
                 />
               )}
