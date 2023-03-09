@@ -4,13 +4,16 @@ import productModel from '../models/productModel.js'
 //NOTE GET ALL
 export const getAllProducts = async (req, res) => {
   try {
-    const allProducts = await productModel
+    const products = await productModel
+      .find({})
       .find({})
       .populate({ path: 'category' })
+      .populate({ path: 'comments.user', select: 'email' })
+      .populate({ path: 'favorites', select: 'email' })
       .exec()
     res.status(200).json({
-      amountOfItems: allProducts.length,
-      allProducts,
+      amountOfItems: products.length,
+      products,
     })
   } catch (error) {
     res.status(500).json({
@@ -63,7 +66,10 @@ export const getProductById = async (req, res) => {
     return
   } else {
     try {
-      const product = await productModel.findById(_id)
+      const product = await productModel
+        .findById(_id)
+        .populate({ path: 'comments.user', select: 'email image' })
+        .populate({ path: 'favorites', select: 'email' })
       res.status(200).json({
         product: product,
       })
@@ -97,12 +103,14 @@ export const postNewProduct = async (req, res) => {
     sku,
     category,
     countInStock,
+    categoryName,
     price,
     image,
     shelf,
     backstock,
-    categoryName,
   } = req.body
+
+  // console.log(req.body)
 
   if (!name || !ean || !sku || !category || !countInStock || !price) {
     res.status(400).json({
@@ -130,7 +138,7 @@ export const postNewProduct = async (req, res) => {
   // console.log('req.body', req.body)
 
   try {
-    console.log('ean', ean)
+    // console.log('ean', ean)
     const existingProduct = await productModel.findOne({ ean: ean })
     // console.log('existingProduct->', existingProduct)
     if (existingProduct) {
@@ -159,7 +167,7 @@ export const postNewProduct = async (req, res) => {
         })
       } catch (error) {
         console.log('error server', error)
-        // console.log(error)
+        console.log(error)
         res.status(503).json({
           msg: 'Fatal error',
         })
@@ -170,6 +178,101 @@ export const postNewProduct = async (req, res) => {
     res.status(500).json({
       msg: 'Fatal error',
     })
+  }
+}
+
+//NOTE POST NEW COMMENT
+export const postNewComment = async (req, res) => {
+  const { comment } = req.body
+  const { _id } = req.params
+
+  console.log('req.user', req.user)
+  console.log('comment', comment)
+  console.log('product._id', _id)
+
+  if (!comment) {
+    res.status(400).json({
+      msg: 'Invalid comment',
+    })
+    return
+  }
+
+  const product = await productModel.findById(_id)
+  if (!product) {
+    res.status(404).json({
+      msg: 'product not found',
+    })
+    return
+  }
+
+  if (product.comments.length > 0) {
+    console.log('product.comments', product.comments)
+    //NOTE check if the user has already commented on the product
+    const alreadyCommented = product.comments.some(
+      (c) => c.user.toString() === req.user._id.toString(),
+    )
+
+    if (alreadyCommented) {
+      console.log('alreadyCommented', alreadyCommented)
+      res.status(400).json({
+        msg: "can't comment twice",
+      })
+      return
+    }
+  }
+
+  try {
+    const commentsObj = {
+      user: req.user._id,
+      comment: comment,
+    }
+
+    await productModel.findByIdAndUpdate(
+      product._id,
+      { $push: { comments: commentsObj } },
+      { new: true },
+    )
+    res.status(201).json({
+      msg: 'Comment successfully added!',
+    })
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      msg: 'Fatal error',
+    })
+  }
+}
+
+//NOTE DELETE COMMENT
+export const deleteComment = async (req, res) => {
+  try {
+    const productId = req.params.id
+    const userId = req.user._id
+    const commentId = req.params.commentId
+
+    // Find the product by ID
+    const product = await Product.findById(productId)
+
+    // Find the comment in the product's comments array
+    const comment = product.comments.find(
+      (c) => c._id.toString() === commentId && c.user.toString() === userId,
+    )
+
+    // If the comment doesn't exist or doesn't belong to the current user, return an error
+    if (!comment) {
+      return res.status(404).json({ message: 'Comment not found' })
+    }
+
+    // Remove the comment from the comments array and save the product
+    product.comments = product.comments.filter(
+      (c) => c._id.toString() !== commentId,
+    )
+    await product.save()
+
+    res.json({ message: 'Comment deleted' })
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: 'Server Error' })
   }
 }
 
