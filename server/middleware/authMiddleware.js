@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
 
 const authMiddleware = async (req, res, next) => {
-  // console.log('req.headers', req.headers)
+  // console.log(req.headers.authorization)
   let token
   if (
     req.headers.authorization &&
@@ -13,7 +13,14 @@ const authMiddleware = async (req, res, next) => {
       const decoded = jwt.verify(token, process.env.SECRET)
 
       //insert field into req
-      req.user = await userModel.findById(decoded.sub).select('-password')
+      req.user = await userModel
+        .findById(decoded.sub)
+        .select('-password')
+        .populate({
+          path: 'orders',
+          populate: { path: 'orderItems', populate: { path: 'category' } },
+        })
+        .exec()
       next()
     } catch (error) {
       res.status(500).json({
