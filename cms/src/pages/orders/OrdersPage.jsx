@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import Modal from '../../components/modal/Modal'
+
 import EditProduct from '../../components/Product/EditProduct'
 import { ProductContext } from '../../context/ProductContext'
 import useFetch from '../../hooks/UseFetch'
@@ -110,11 +111,15 @@ const OrdersPage = () => {
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
         </section>
-
+        {orders && (
+          <span className='mt-5 text-xl text-slate-600 font-medium'>
+            Orders:{orders.length}
+          </span>
+        )}
         <section
           className={`py-0  px-0 md:px-14 md:py-10 overflow-auto rounded  bg-white   grid duration-500 outline outline-1 outline-gray-300 shadow-md ${
             orders
-              ? 'grid-cols-1 lg:grid-cols-2 mt-10 h-[700px] gap-20'
+              ? 'grid-cols-1 lg:grid-cols-2 mt-1 h-[700px] gap-20'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5 h-[500px]'
           } `}
         >
