@@ -17,11 +17,11 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { RedirectProvider } from './store/RedirectContext'
 const App = () => {
   return (
-    <UserProvider>
-      <CartProvider>
-        <RedirectProvider>
-          <AnimationProvider>
-            <BrowserRouter>
+    <BrowserRouter>
+      <UserProvider>
+        <CartProvider>
+          <RedirectProvider>
+            <AnimationProvider>
               <AppContainer>
                 <Navbar />
                 <Routes>
@@ -46,11 +46,11 @@ const App = () => {
                   />
                 </Routes>
               </AppContainer>
-            </BrowserRouter>
-          </AnimationProvider>
-        </RedirectProvider>
-      </CartProvider>
-    </UserProvider>
+            </AnimationProvider>
+          </RedirectProvider>
+        </CartProvider>
+      </UserProvider>
+    </BrowserRouter>
   )
 }
 export default App
