@@ -10,6 +10,7 @@ import { UserContext } from '../store/UserContext'
 import loginPNG from '../assets/login.jpg'
 import signUpImg from '../assets/signUp.png'
 import { RedirectContext } from '../store/RedirectContext'
+import { guestAccounts } from '../utils/guestsAccounts'
 
 const Login = () => {
   //context states extractions
@@ -88,6 +89,11 @@ const Login = () => {
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword)
+  }
+
+  const handleGuest = () => {
+    console.log(guestAccounts())
+    loginUser(guestAccounts())
   }
 
   return (
@@ -173,7 +179,7 @@ const Login = () => {
                 <div className='flex items-stretch justify-between mt-4'>
                   <button
                     type='button'
-                    // onClick={(e) => handleGuest(e)}
+                    onClick={(e) => handleGuest(e)}
                     className='w-[45%] shadow-md text-gray-200 rounded-lg py-2 flex justify-center bg-gradient-to-br from-orange-400/70 to-amber-600/90   items-center gap-1 border font-semibold hover:scale-105 duration-300'
                   >
                     <svg
@@ -240,7 +246,7 @@ const Login = () => {
                   Reset password
                 </p>
                 <p
-                  onClick={() => redirectTo('/register')}
+                  onClick={() => redirectTo('/signup')}
                   className='select-none cursor-pointer hover:scale-110 duration-500 text-gray-300'
                 >
                   Sign up
