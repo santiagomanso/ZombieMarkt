@@ -21,7 +21,7 @@ export const buttonsData = [
   },
   {
     id: 5,
-    title: 'Update product',
+    title: 'Search product',
     path: '/update',
   },
   {
