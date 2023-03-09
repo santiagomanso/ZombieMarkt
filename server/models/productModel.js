@@ -82,6 +82,26 @@ const productSchema = mongoose.Schema({
     required: false,
     default: randomShelf(),
   },
+  comments: [
+    {
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
+        required: false,
+      },
+      comment: {
+        type: String,
+        required: false,
+      },
+    },
+  ],
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'user',
+      required: false,
+    },
+  ],
   //array usuarios que likearon
 })
 
