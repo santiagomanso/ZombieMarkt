@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 export const CartContext = createContext()
@@ -12,9 +13,11 @@ export const CartProvider = ({ children }) => {
       return []
     }
   }
+  const navigate = useNavigate()
 
   //states
   const [cart, setCart] = useState(getCartFromStorage())
+  const [msg, setMsg] = useState('')
 
   //functions
   const setCartToStorage = () => {
@@ -54,6 +57,11 @@ export const CartProvider = ({ children }) => {
     )
 
     setCart([])
+    setMsg('Order placed')
+    setTimeout(() => {
+      navigate('/')
+      setMsg('')
+    }, 2000)
   }
 
   useEffect(() => {
@@ -63,6 +71,7 @@ export const CartProvider = ({ children }) => {
   //provider object
   const data = {
     cart,
+    msg,
     setCart,
     placeOrder,
   }
