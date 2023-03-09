@@ -16,7 +16,23 @@ const Navbar = () => {
       }
 
       case location.pathname === '/update': {
-        return setTitle('update_product')
+        return setTitle('search_product')
+      }
+
+      case location.pathname === '/delete': {
+        return setTitle('delete_product')
+      }
+
+      case location.pathname === '/users': {
+        return setTitle('all_users')
+      }
+
+      case location.pathname === '/products': {
+        return setTitle('all_products')
+      }
+
+      case location.pathname === '/orders': {
+        return setTitle('all_orders')
       }
 
       case location.pathname === '/delete': {
