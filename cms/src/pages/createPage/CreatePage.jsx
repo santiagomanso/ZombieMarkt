@@ -23,7 +23,7 @@ const CreatePage = () => {
   const { data } = useFetch('http://localhost:5500/api/categories/all')
 
   const handleChange = (e) => {
-    console.log('selectedCategory', selectedCategory)
+    // console.log('selectedCategory', selectedCategory)
     const category = categories.find((item) => {
       return item.name === selectedCategory
     })
@@ -42,40 +42,51 @@ const CreatePage = () => {
   }
 
   useEffect(() => {
-    validate()
     if (data) setCategories(data.categories)
     // console.log('categories', categories)
-  }, [data])
+    validate()
+  }, [data, newProduct])
 
   const validate = () => {
     //FIXME - validation
-    // if (
-    //   !newProduct.name ||
-    //   !newProduct.ean ||
-    //   !newProduct.sku ||
-    //   !newProduct.countInStock ||
-    //   !newProduct.category ||
-    //   !newProduct.price ||
-    //   !newProduct.image
-    // ) {
-    //   setEnabled(false)
-    // } else {
-    //   setEnabled(true)
-    // }
-    return setEnabled(true)
+    if (
+      !newProduct.name ||
+      !newProduct.ean ||
+      !newProduct.sku ||
+      !newProduct.countInStock ||
+      !newProduct.price ||
+      !newProduct.image
+    ) {
+      setEnabled(false)
+    } else {
+      setEnabled(true)
+    }
+    // return setEnabled(true)
   }
 
   const createProduct = async (e) => {
+    // console.log('newProduct.categoryName', newProduct.categoryName)
     if (!enabled) {
+      setError('Empty fields detected')
+      setTimeout(() => {
+        setError('')
+      }, 2000)
       return
     } else {
-      console.log('newProduct', newProduct)
+      // console.log('newProduct', newProduct)
 
       const formdata = new FormData()
       formdata.append('name', newProduct.name)
       formdata.append('sku', newProduct.sku)
       formdata.append('ean', newProduct.ean)
-      formdata.append('categoryName', newProduct.categoryName)
+
+      //FIXME - default category beverages starts as undefined 08/03
+      if (!newProduct.categoryName) {
+        formdata.append('categoryName', 'beverages')
+      } else {
+        formdata.append('categoryName', newProduct.categoryName)
+      }
+
       formdata.append('category', newProduct.category)
       formdata.append('price', newProduct.price)
       formdata.append('image', newProduct.image)
@@ -99,14 +110,8 @@ const CreatePage = () => {
         setMsg('Product created successfully')
         setTimeout(() => {
           setMsg('')
-          setNewProduct({
-            name: '',
-            ean: '',
-            sku: '',
-            countInStock: '',
-            category: '',
-            price: '',
-          })
+          setNewProduct('')
+          setSelectedCategory('beverages')
         }, 2000)
       } catch (error) {
         console.log('fail') //REVIEW - i dont like this way of axios
@@ -298,8 +303,8 @@ const CreatePage = () => {
                   type='button'
                   className={`font-medium duration-500 ease-in flex items-center justify-center w-full p-2 rounded outline outline-1 outline-gray-300 mt-2 ${
                     enabled
-                      ? 'bg-teal-600 text-white block  opacity-100 active:translate-y-5 scale-100'
-                      : 'bg-slate-400 text-gray-700 hidden'
+                      ? 'bg-teal-600 text-white   opacity-100 active:translate-y-5 scale-100'
+                      : 'bg-slate-400 text-gray-700 '
                   }`}
                 >
                   Create Product
