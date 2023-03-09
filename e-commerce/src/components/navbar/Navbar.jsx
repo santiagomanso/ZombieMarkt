@@ -73,16 +73,16 @@ const Navbar = () => {
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
         <ul className='flex gap-10 items-center'>
-          <Link
-            to='/categories'
-            className='bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded px-3 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40'
-          >
-            <i className='fa-solid fa-virus text-gray-200 text-xl'></i>
-            <span className='text-gray-200'>shop now</span>
-          </Link>
-          <Link to='/login'>
-            <span>login</span>
-          </Link>
+          {!user && (
+            <Link
+              to='/login'
+              className='bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded px-3 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40'
+            >
+              <i className='fa-solid fa-virus text-gray-200 text-xl'></i>
+              <span className='text-gray-200'>Login</span>
+            </Link>
+          )}
+
           {user && (
             <Dropdown name={user.email} img={user.image} logout={logOut} />
           )}
