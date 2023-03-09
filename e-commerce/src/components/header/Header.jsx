@@ -1,7 +1,14 @@
+import { useContext } from 'react'
 import TypeWriterEffect from 'react-typewriter-effect'
+import { CartContext } from '../../store/CartContext'
 const Header = ({ title, subtitle, typeWritter, height }) => {
+  const { msg } = useContext(CartContext)
   return (
-    <article className={`lg:self-start ${height && height}`}>
+    <article
+      className={`lg:self-start ${height && height} ${
+        msg ? 'blur' : 'blur-none'
+      }`}
+    >
       <h1 className='lg:text-7xl font-bold capitalize'>{title}</h1>
       {subtitle && <p className='lg:text-3xl mt-3'>{subtitle}</p>}
       <div className='absolute'>
