@@ -17,7 +17,7 @@ const UserProvider = ({ children }) => {
         'http://localhost:5500/api/users/create',
         newUser,
       )
-      console.log('data', data)
+      // console.log('data', data)
       setUser(data.user)
       setMsg(data.msg)
       saveTokenToLocalStorage(data.token)
@@ -35,7 +35,7 @@ const UserProvider = ({ children }) => {
         'http://localhost:5500/api/users/login',
         userObj,
       )
-      // console.log('data', data)
+      // console.log('data.user', data.user)
       setUser(data.user)
       setMsg(data.msg)
       saveTokenToLocalStorage(data.token)
@@ -67,7 +67,7 @@ const UserProvider = ({ children }) => {
         'http://localhost:5500/api/users/loginWithToken',
         { token },
       )
-      // console.log('data', data)
+      // console.log('data.user', data.user)
       setUser(data.user)
       setMsg(data.msg)
     } catch (error) {
