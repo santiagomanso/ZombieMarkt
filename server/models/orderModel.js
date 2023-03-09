@@ -1,28 +1,30 @@
+import moment from 'moment'
 import mongoose from 'mongoose'
 
-const orderSchema = mongoose.Schema(
-  {
-    user: {
+const orderSchema = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'user',
+  },
+  shippingAdress: {
+    type: String,
+    required: true,
+  },
+  quantity: { type: Number, required: true },
+  price: { type: Number, required: true },
+  orderItems: [
+    {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'user',
+      ref: 'product',
     },
-    shippingAdress: {
-      type: String,
-      required: true,
-    },
-    quantity: { type: Number, required: true },
-    price: { type: Number, required: true },
-    orderItems: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref: 'product',
-      },
-    ],
+  ],
+  createdAt: {
+    type: String,
+    default: moment().format('DD-MM-YYYY HH:mm'),
   },
-  { timestamps: true },
-)
+})
 
 const orderModel = mongoose.model('order', orderSchema)
 
