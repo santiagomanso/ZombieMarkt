@@ -27,7 +27,7 @@ const HomePage = () => {
         bottomCard={true}
       />
 
-      <RightContainer gap='lg:gap-32'>
+      <RightContainer gap='lg:gap-32' lgPadding='lg:p-10'>
         <Header
           title='ZombieMarkt Groceries'
           subtitle='Where prices are dropped dead'
