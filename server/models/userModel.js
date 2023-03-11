@@ -35,7 +35,13 @@ const userSchema = mongoose.Schema({
       ref: 'order',
     },
   ],
-  // favorites:[]
+  favorites: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'product',
+    },
+  ],
   // joined date
   //money spent
   //ofertas particulares
