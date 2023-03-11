@@ -7,7 +7,7 @@ import Header from '../components/header/Header'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import { AnimationContext } from '../store/AnimationContext'
 import { UserContext } from '../store/UserContext'
-import loginPNG from '../assets/login.jpg'
+
 import signUpImg from '../assets/signUp.png'
 import { RedirectContext } from '../store/RedirectContext'
 import { guestAccounts } from '../utils/guestsAccounts'
@@ -18,13 +18,15 @@ const Login = () => {
   const { setAnimation } = useContext(AnimationContext)
   const { path } = useContext(RedirectContext)
 
+  //hooks
+
+  const navigate = useNavigate()
+
   //component states
   const [error, setError] = useState('')
   const [newUser, setNewUser] = useState(null)
   const [active, setActive] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-
-  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
