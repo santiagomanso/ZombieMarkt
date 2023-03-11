@@ -2,7 +2,6 @@ import { useEffect } from 'react'
 import ReactDom from 'react-dom'
 
 const ModalOrders = ({ active, setActive, orders, email }) => {
-  console.log('orders', orders)
   useEffect(() => {
     const detectKeyDown = (e) => {
       if (e.key === 'Escape') {
