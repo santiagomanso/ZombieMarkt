@@ -5,25 +5,21 @@ import {
   getUserProfile,
   login,
   loginWithToken,
+  newFavoriteProduct,
 } from '../controllers/userController.js'
 import { authMiddleware } from '../middleware/authMiddleware.js'
 import customErrorHandler from '../middleware/customErrorHandler.js'
 
 const userRouter = express.Router()
 
-//CREATE USER
-userRouter.post('/create', customErrorHandler, createUser)
+//POSTS
+userRouter.post('/create', customErrorHandler, createUser) //new user
+userRouter.post('/login', login) //login email/password
+userRouter.post('/loginWithToken', loginWithToken) //auto login when token
+userRouter.post('/newFavoriteProduct/:_id', authMiddleware, newFavoriteProduct) //new user
 
-//LOGIN
-userRouter.post('/login', login)
-
-//LOGIN WITH TOKEN
-userRouter.post('/loginWithToken', loginWithToken)
-
-//GET ALL USERS
+//GETS
 userRouter.get('/all', getAllUsers)
-
-//GET USER PROFILE
 userRouter.get('/profile', authMiddleware, getUserProfile)
 
 export default userRouter
