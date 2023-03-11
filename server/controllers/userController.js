@@ -2,6 +2,7 @@ import { comparePasswords, passwordEncription } from '../utils/bcrypt.js'
 import generateToken from '../utils/generateTokens.js'
 import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
+import productModel from '../models/productModel.js'
 
 //random Image
 const randomImg = () => {
@@ -98,7 +99,16 @@ export const login = async (req, res) => {
       .findOne({ email: email })
       .populate({
         path: 'orders',
-        populate: { path: 'orderItems', populate: { path: 'category' } },
+        populate: {
+          path: 'orderItems',
+          select: '_id name image category categoryName',
+          populate: { path: 'category' },
+        },
+      })
+      .populate({
+        path: 'favorites',
+        model: 'product',
+        select: '_id name image category categoryName',
       })
       .exec()
     if (!existingUser) {
@@ -141,7 +151,7 @@ export const login = async (req, res) => {
 
 // @desc login user and populate orders field array and sub field from order categories
 // @route POST /api/users
-// @access Public
+// @access Protected
 export const loginWithToken = async (req, res) => {
   const { token } = req.body
   if (token) {
@@ -166,6 +176,60 @@ export const loginWithToken = async (req, res) => {
   }
 }
 
+// @desc set a new favorite product on a specific user
+// @route POST /api/users/newProduct/:_id
+// @access Protected
+export const newFavoriteProduct = async (req, res) => {
+  const { _id } = req.params
+  const user = req.user
+
+  // validate that the product exists, otherwise it could push an unexisting product
+  // and break everything
+  const product = await productModel.findOne({ _id: _id })
+
+  // validate existingProduct
+  if (!product) {
+    return res.status(404).json({
+      msg: 'Product not found',
+    })
+  }
+
+  try {
+    let updatedUser
+
+    // check if the product ID already exists in the favorites array
+    const isFavorite = user.favorites.includes(_id)
+
+    if (isFavorite) {
+      // remove the product ID from the favorites array
+      updatedUser = await userModel.findByIdAndUpdate(
+        user._id,
+        { $pull: { favorites: _id } },
+        { new: true },
+      )
+      res.status(200).json({
+        msg: 'Product removed from favorites',
+        favorites: updatedUser.favorites,
+      })
+    } else {
+      // add the product ID to the favorites array
+      updatedUser = await userModel.findByIdAndUpdate(
+        user._id,
+        { $push: { favorites: _id } },
+        { new: true },
+      )
+      res.status(200).json({
+        msg: 'Product added to favorites',
+        favorites: updatedUser.favorites,
+      })
+    }
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Error updating favorites',
+    })
+  }
+}
+
 // @desc get all user
 // @route GET /api/users/all
 // @access admin
@@ -179,6 +243,8 @@ export const getAllUsers = async (req, res) => {
         path: 'orders',
         populate: { path: 'orderItems', populate: { path: 'category' } },
       })
+      .populate({ path: 'favorites', model: 'product' })
+      .select('-password')
       .exec()
     if (allUsers)
       res.status(200).json({
@@ -201,7 +267,37 @@ export const getAllUsers = async (req, res) => {
 // @route GET /api/users/profile
 // @access public
 export const getUserProfile = async (req, res) => {
-  res.status(200).json({
-    user: req.user,
-  })
+  try {
+    //get all users but without password field
+    const user = await userModel
+      .findById(req.user._id)
+      .populate({
+        path: 'orders',
+        populate: {
+          path: 'orderItems',
+          select: '_id name image category categoryName',
+          populate: { path: 'category' },
+        },
+      })
+      .populate({
+        path: 'favorites',
+        model: 'product',
+        select: '_id name image category categoryName',
+      })
+      .exec()
+    if (user)
+      res.status(200).json({
+        user,
+      })
+    else {
+      res.status(500).json({
+        msg: 'there was an error fetching all',
+      })
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({
+      msg: 'Internal server error',
+    })
+  }
 }
