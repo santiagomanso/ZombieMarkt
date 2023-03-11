@@ -48,8 +48,8 @@ const UserProvider = ({ children }) => {
 
   //NOTE logout
   const logOut = () => {
-    setUser(null)
     window.localStorage.removeItem('token')
+    setUser(null)
   }
 
   const saveTokenToLocalStorage = (token) => {
