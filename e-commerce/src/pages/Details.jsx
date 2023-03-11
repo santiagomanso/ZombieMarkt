@@ -15,18 +15,32 @@ import { UserContext } from '../store/UserContext'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 const ProductDetail = () => {
-  const [active, setActive] = useState(true)
-  const [commentObj, setCommentObj] = useState({})
+  //params extraction
   const { _id } = useParams()
+
+  //state for adding to cart functionallity
+  const [active, setActive] = useState(true)
+
+  //extraction from context
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
+
+  //error/confirmation msgs
   const [msg, setMsg] = useState('')
   const [error, setError] = useState('')
+
+  //custom hook for fetching
   const { loading, data } = useFetch(
     `http://localhost:5500/api/products/detail/${_id}`,
   )
+
+  //MAIN STATE PRODUCT
   const [product, setProduct] = useState(data)
+
+  //By having comments on a state i can re-render the grid with the new comment
+  const [inputComment, setInputComment] = useState({})
   const [commentsArray, setCommentsArray] = useState([])
+  const [favorite, setFavorite] = useState([])
 
   //function add to cart
   const addToCart = (item) => {
@@ -42,19 +56,10 @@ const ProductDetail = () => {
 
   const isProductOnCart = cart.find((item) => item._id === _id)
 
-  //after fetching data set states
-  useEffect(() => {
-    if (data) {
-      setProduct(data.product)
-      setCommentsArray(data.product.comments)
-    }
-    if (isProductOnCart) setActive(false)
-  }, [data, isProductOnCart])
-
   //NOTE spread object when onChange
   const handleChangeInput = (e) => {
-    setCommentObj({
-      ...commentObj,
+    setInputComment({
+      ...inputComment,
       user: {
         id: user._id,
         email: user.email,
@@ -74,7 +79,7 @@ const ProductDetail = () => {
           setError('')
         }, 2500)
       } else {
-        console.log('commentObj', commentObj)
+        console.log('inputComment', inputComment)
 
         //headers
         const headers = {
@@ -85,7 +90,7 @@ const ProductDetail = () => {
         }
 
         const body = {
-          comment: commentObj.comment,
+          comment: inputComment.comment,
         }
 
         try {
@@ -96,14 +101,14 @@ const ProductDetail = () => {
           )
           console.log('data', data)
           setMsg('Comment added')
-          setCommentObj('')
-          setCommentsArray([...commentsArray, commentObj])
+          setInputComment('')
+          setCommentsArray([...commentsArray, inputComment])
           setTimeout(() => {
             setMsg('')
           }, 2500)
         } catch (error) {
           setMsg('')
-          setCommentObj('')
+          setInputComment('')
           setError(error.response.data.msg)
           setTimeout(() => {
             setError('')
@@ -114,7 +119,26 @@ const ProductDetail = () => {
     }
   }
 
-  //FIXME - user side
+  //FIXME - user comment on right side
+
+  const handleFavorite = (product) => {
+    if (!user) {
+      setError('Login first')
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
+  }
+
+  //after fetching data set states
+  useEffect(() => {
+    if (data) {
+      setProduct(data.product)
+      setCommentsArray(data.product.comments)
+      setFavorite(product.favorites)
+    }
+    if (isProductOnCart) setActive(false)
+  }, [data, isProductOnCart])
 
   return (
     <MainContainer>
@@ -162,7 +186,16 @@ const ProductDetail = () => {
                   addToCart={addToCart}
                   product={product}
                 />
-                <i className='col-span-1 text-5xl cursor-pointer text-slate-700 fa-regular fa-heart'></i>
+                <button className='p-0' onClick={() => handleFavorite(product)}>
+                  <i
+                    className={`col-span-1 text-5xl cursor-pointer 
+                    ${
+                      favorite
+                        ? 'fa-solid fa-heart text-red-700'
+                        : 'fa-regular fa-heart text-slate-700'
+                    }`}
+                  ></i>
+                </button>
               </div>
               <section className='mt-2 h-[85%]'>
                 <div className='w-full relative'>
@@ -174,7 +207,7 @@ const ProductDetail = () => {
                   <input
                     onKeyDown={submitComment}
                     onChange={handleChangeInput}
-                    value={commentObj.comment || ''}
+                    value={inputComment.comment || ''}
                     name='comment'
                     type='text'
                     className='w-full px-8 text-lg bg-white/20 text-slate-800 font-medium
