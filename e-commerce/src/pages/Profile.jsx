@@ -41,7 +41,7 @@ const Profile = () => {
     if (!orders) {
       getProfile()
     }
-  }, [])
+  }, [user])
 
   return (
     <MainContainer>
