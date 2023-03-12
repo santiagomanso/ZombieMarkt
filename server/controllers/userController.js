@@ -161,11 +161,11 @@ export const loginWithToken = async (req, res) => {
   }
 }
 
-// @desc set a new favorite product on a specific user
+// @desc set a new favorite product on a specific user and push user._id into product.favorites
 // @route POST /api/users/newProduct/:_id
 // @access Protected
 export const newFavoriteProduct = async (req, res) => {
-  const { _id } = req.params
+  const { _id } = req.params //product id
   const user = req.user
 
   // validate that the product exists, otherwise it could push an unexisting product
@@ -181,8 +181,9 @@ export const newFavoriteProduct = async (req, res) => {
 
   try {
     let updatedUser
+    let updatedProduct
 
-    // check if the product ID already exists in the favorites array
+    // check if the product ID already exists in the favorites array of the USER
     const isFavorite = user.favorites.includes(_id)
 
     if (isFavorite) {
@@ -192,9 +193,17 @@ export const newFavoriteProduct = async (req, res) => {
         { $pull: { favorites: _id } },
         { new: true },
       )
+
+      updatedProduct = await productModel.findByIdAndUpdate(
+        _id,
+        { $pull: { favorites: user._id } },
+        { new: true },
+      )
+
       res.status(200).json({
-        msg: 'Product removed from favorites',
-        favorites: updatedUser.favorites,
+        msg: 'Favorite relationship deleted',
+        userFavorites: updatedUser.favorites,
+        productFavorites: updatedProduct.favorites,
       })
     } else {
       // add the product ID to the favorites array
@@ -203,12 +212,19 @@ export const newFavoriteProduct = async (req, res) => {
         { $push: { favorites: _id } },
         { new: true },
       )
+      const updatedProduct = await productModel.findByIdAndUpdate(
+        _id,
+        { $push: { favorites: user._id } },
+        { new: true },
+      )
       res.status(200).json({
         msg: 'Product added to favorites',
-        favorites: updatedUser.favorites,
+        user: updatedUser,
+        product: updatedProduct,
       })
     }
   } catch (error) {
+    console.log(error)
     res.status(500).json({
       msg: 'Error updating favorites',
     })
