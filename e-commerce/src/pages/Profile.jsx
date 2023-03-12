@@ -5,22 +5,28 @@ import { useNavigate } from 'react-router-dom'
 import MainContainer from '../components/containers/MainContainer'
 import RightContainer from '../components/containers/RightContainer'
 import LeftPanel from '../components/leftPanel/LeftPanel'
-import ModalOrders from '../components/modal/ModalOrders'
+import Modal from '../components/modal/Modal'
 
 import { UserContext } from '../store/UserContext'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 const Profile = () => {
+  //extract states from context
   const { user, setUser } = useContext(UserContext)
+
+  //hooks
   const navigate = useNavigate()
 
-  const [orders, setOrders] = useState('')
+  //internal states
 
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
+    //if logout on this page redirect to home
     if (!user) navigate('/')
+
     const getProfile = async () => {
+      console.log('SEEEE')
       const myHeaders = {
         authorization: `Bearer ${getTokenFromStorage()}`,
       }
@@ -38,20 +44,29 @@ const Profile = () => {
       }
     }
 
-    if (!orders) {
+    if (!user.orders || !user.favorites) {
       getProfile()
     }
-  }, [user])
+  }, [])
 
   return (
     <MainContainer>
       <LeftPanel bottomCard />
       <RightContainer justifyCenter lgPadding='lg:p-20'>
-        {active ? (
-          <ModalOrders
+        {active === 'orders' ? (
+          <Modal
+            dataType='orders'
             active={active}
             setActive={setActive}
-            orders={user.orders}
+            array={user.orders}
+            email={user.email}
+          />
+        ) : active === 'favorites' ? (
+          <Modal
+            dataType='favorites'
+            active={active}
+            setActive={setActive}
+            array={user.favorites}
             email={user.email}
           />
         ) : (
@@ -106,11 +121,8 @@ const Profile = () => {
               </div>
               <div className='flex flex-col'>
                 <button
-                  // onChange={handleChange}
-                  type='number'
-                  name='countInStock'
+                  onClick={() => setActive('favorites')}
                   className='flex gap-1 justify-center items-baseline w-full bg-slate-800/60 font-bold text-gray-100 tracking-wider text-lg rounded outline outline-2 outline-slate-500 self-center place-self-center'
-                  // value={product.countInStock}
                 >
                   <i className='fa-regular fa-heart'></i>
                   <span>Favourites</span>
@@ -118,7 +130,7 @@ const Profile = () => {
               </div>
               <div className='flex flex-col lg:col-span-1 w-full'>
                 <button
-                  onClick={() => setActive(true)}
+                  onClick={() => setActive('orders')}
                   className='flex gap-1 justify-center items-baseline w-full bg-slate-800/60 font-bold text-gray-100 tracking-wider text-lg rounded outline outline-2 outline-slate-500 self-center place-self-center'
                 >
                   <i className='fa-solid fa-folder-open'></i>
