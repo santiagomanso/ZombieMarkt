@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
 
 const authMiddleware = async (req, res, next) => {
+  // console.log('req', req)
   // console.log(req.headers.authorization)
   let token
   if (
@@ -16,10 +17,6 @@ const authMiddleware = async (req, res, next) => {
       req.user = await userModel
         .findById(decoded.sub)
         .select('-password')
-        .populate({
-          path: 'orders',
-          populate: { path: 'orderItems', populate: { path: 'category' } },
-        })
         .exec()
       next()
     } catch (error) {
