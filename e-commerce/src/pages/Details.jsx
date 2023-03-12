@@ -40,7 +40,8 @@ const ProductDetail = () => {
   //By having comments on a state i can re-render the grid with the new comment
   const [inputComment, setInputComment] = useState({})
   const [commentsArray, setCommentsArray] = useState([])
-  const [favorite, setFavorite] = useState([])
+  const [favoritesArray, setFavoritesArray] = useState('')
+  const [isFavorite, setIsFavorite] = useState(false)
 
   //function add to cart
   const addToCart = (item) => {
@@ -121,24 +122,64 @@ const ProductDetail = () => {
 
   //FIXME - user comment on right side
 
-  const handleFavorite = (product) => {
+  const handleFavorite = async () => {
     if (!user) {
       setError('Login first')
+      setIsFavorite(false)
       setTimeout(() => {
         setError('')
       }, 2000)
+    } else {
+      try {
+        const { data } = await axios.post(
+          `http://localhost:5500/api/users/newFavoriteProduct/${_id}`,
+          null,
+          {
+            headers: {
+              Authorization: `Bearer ${getTokenFromStorage()}`,
+            },
+          },
+        )
+        //after click re-render icon based on boolean state
+        if (data.msg === 'Product added to favorites') {
+          setIsFavorite(true)
+        } else {
+          setIsFavorite(false)
+        }
+      } catch (error) {
+        console.log(error)
+      }
     }
+  }
+
+  const checkFavorite = () => {
+    console.log('favoritesArray', favoritesArray)
+    favoritesArray.map((item) => {
+      if (item._id === user._id) {
+        setIsFavorite(true)
+      } else {
+        setIsFavorite(false)
+      }
+    })
   }
 
   //after fetching data set states
   useEffect(() => {
     if (data) {
       setProduct(data.product)
+
+      //set comments and favorites array to internal states for re-renderOnUpdates
       setCommentsArray(data.product.comments)
-      setFavorite(product.favorites)
+      setFavoritesArray(product.favorites)
     }
+
+    //if there is something on favorites array check if this user has favorited
+    if (favoritesArray) {
+      checkFavorite()
+    }
+
     if (isProductOnCart) setActive(false)
-  }, [data, isProductOnCart])
+  }, [data, isProductOnCart, favoritesArray])
 
   return (
     <MainContainer>
@@ -190,7 +231,7 @@ const ProductDetail = () => {
                   <i
                     className={`col-span-1 text-5xl cursor-pointer 
                     ${
-                      favorite
+                      isFavorite
                         ? 'fa-solid fa-heart text-red-700'
                         : 'fa-regular fa-heart text-slate-700'
                     }`}
