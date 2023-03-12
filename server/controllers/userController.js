@@ -80,7 +80,7 @@ export const createUser = async (req, res) => {
   }
 }
 
-// @desc login user
+// @desc login user (no populates orders/favorites)
 // @route POST /api/users
 // @access Public
 export const login = async (req, res) => {
@@ -97,19 +97,7 @@ export const login = async (req, res) => {
     //check if there is a user with the email, if not return a msg and a 404 and RETURN
     const existingUser = await userModel
       .findOne({ email: email })
-      .populate({
-        path: 'orders',
-        populate: {
-          path: 'orderItems',
-          select: '_id name image category categoryName',
-          populate: { path: 'category' },
-        },
-      })
-      .populate({
-        path: 'favorites',
-        model: 'product',
-        select: '_id name image category categoryName',
-      })
+      .select('-orders -favorites')
       .exec()
     if (!existingUser) {
       res.status(404).json({
@@ -149,7 +137,7 @@ export const login = async (req, res) => {
   }
 }
 
-// @desc login user and populate orders field array and sub field from order categories
+// @desc auto login user when token (no populates orders/favorites)
 // @route POST /api/users
 // @access Protected
 export const loginWithToken = async (req, res) => {
@@ -159,10 +147,7 @@ export const loginWithToken = async (req, res) => {
       const decoded = jwt.verify(token, process.env.SECRET)
       const user = await userModel
         .findById(decoded.sub)
-        .populate({
-          path: 'orders',
-          populate: { path: 'orderItems', populate: { path: 'category' } },
-        })
+        .select('-password -orders -favorites')
         .exec()
       if (user) {
         res.status(200).json({
@@ -263,7 +248,7 @@ export const getAllUsers = async (req, res) => {
   }
 }
 
-// @desc get user Profile
+// @desc get the whole user profile (populated orders/favorites)
 // @route GET /api/users/profile
 // @access public
 export const getUserProfile = async (req, res) => {
@@ -282,14 +267,15 @@ export const getUserProfile = async (req, res) => {
       .populate({
         path: 'favorites',
         model: 'product',
-        select: '_id name image category categoryName',
+        select: '_id name image category categoryName price',
       })
       .exec()
-    if (user)
+    if (user) {
       res.status(200).json({
         user,
       })
-    else {
+      console.log('user', user)
+    } else {
       res.status(500).json({
         msg: 'there was an error fetching all',
       })
