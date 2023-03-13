@@ -10,8 +10,8 @@ const Header = ({ title, subtitle, typeWritter, height }) => {
       }`}
     >
       <h1 className='lg:text-7xl font-bold capitalize'>{title}</h1>
-      {subtitle && <p className='lg:text-3xl mt-3'>{subtitle}</p>}
-      <div className='absolute'>
+      {subtitle && <span className='lg:text-3xl'>{subtitle}</span>}
+      <div className='absolute hidden lg:block'>
         {typeWritter && (
           <TypeWriterEffect
             textStyle={{

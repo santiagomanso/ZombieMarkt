@@ -37,13 +37,15 @@ const HomePage = () => {
           <Loading />
         ) : (
           data.categories && (
-            <ItemList
-              array={data.categories}
-              gridOpt='grid-cols-2  lg:grid-cols-4 gap-y-10 lg:gap-y-20 gap-x-5 lg:gap-x-40'
-              itemContainerOpt='lg:w-56 h-40'
-              itemImg='w-40 h-40 object-scale-down'
-              redirectToDetail={false}
-            />
+            <div className='mt-5 lg:m-0'>
+              <ItemList
+                array={data.categories}
+                gridOpt='grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-5 md:gap-x-20 lg:gap-y-20 lg:gap-x-40'
+                itemContainerOpt='lg:w-56 h-40'
+                itemImg='w-40 h-40 object-scale-down'
+                redirectToDetail={false}
+              />
+            </div>
           )
         )}
       </RightContainer>

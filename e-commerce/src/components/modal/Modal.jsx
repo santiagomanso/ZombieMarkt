@@ -44,7 +44,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
         />
         <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-full lg:h-[80vh] lg:w-[50vw]  rounded-md'>
           <div
-            className={`bg-gradient-to-br from-amber-100  to-slate-900  w-full h-full rounded-md  outline outline-4 outline-pink-700/80 relative`}
+            className={`bg-gradient-to-br from-amber-100  to-black  w-full h-full rounded-md  outline outline-4 outline-gray-700 relative`}
           >
             <button
               className='absolute top-0 right-5'
@@ -53,14 +53,14 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
               <i className='fa-solid fa-xmark text-7xl text-gray-800'></i>
             </button>
             <section
-              className={`overflow-auto rounded duration-500 h-full gap-0 pt-12 p-9`}
+              className={`overflow-auto rounded duration-500 h-full gap-0 pt-12 p-20`}
             >
               {array.length > 0 ? (
                 array.map((item, index) => {
                   return (
                     <div
                       key={index}
-                      className={`mt-10 flex h-[200px] rounded-md outline outline-1 outline-stone-900 hover:shadow-2xl transition-all ease-in-out duration-300 relative w-full ${
+                      className={`mt-10 flex h-[200px] rounded-md outline outline-1 outline-stone-900 hover:shadow-xl hover:shadow-gray-700 transition-all ease-in-out duration-300 relative w-full opacity-90 hover:opacity-100 ${
                         index % 2 === 0
                           ? 'bg-gradient-to-tl from-slate-500/80 via-neutral-600/70 to-gray-900/80 '
                           : 'bg-gradient-to-br from-gray-800/80 to-slate-700/80'
@@ -104,7 +104,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                           >
                             <i
                               className={
-                                'col-span-1 text-5xl cursor-pointer fa-solid fa-heart text-red-700'
+                                'col-span-1 text-5xl cursor-pointer fa-solid fa-heart text-orange-500'
                               }
                             ></i>
                           </button>
