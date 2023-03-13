@@ -18,7 +18,7 @@ const authMiddleware = async (req, res, next) => {
         .findById(decoded.sub)
         .select('-password')
         .exec()
-      next()
+      next() //calls next method
     } catch (error) {
       res.status(500).json({
         msg: 'Not authorized, token failed',
