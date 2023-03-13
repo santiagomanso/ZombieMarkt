@@ -1,12 +1,13 @@
 {
-  "name": "server",
+  "name": "index",
   "version": "1.0.0",
   "description": "Backend for inventory-manager MERN stack",
-  "main": "server.js",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "server": "nodemon server.js",
-    "fullstack": "concurrently \"nodemon server.js\" \"cd../cms && npm start\"",
+    "start": "nodemon index.js",
+    "server": "nodemon index.js",
+    "fullstack": "concurrently \"nodemon index.js\" \"cd../cms && npm start\"",
     "data:import": "node seeder",
     "data:destroy": "node seeder -d"
   },
@@ -24,7 +25,9 @@
     "moment": "^2.29.4",
     "mongoose": "^6.9.1",
     "multer": "^1.4.5-lts.1",
-    "nodemon": "^2.0.20"
+    "nodemon": "^2.0.20",
+    "passport": "^0.6.0",
+    "passport-google-oauth20": "^2.0.0"
   },
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.1"
