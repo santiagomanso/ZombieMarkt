@@ -156,9 +156,9 @@ const ProductDetail = () => {
     console.log('favoritesArray', favoritesArray)
     favoritesArray.map((item) => {
       if (item._id === user._id) {
-        setIsFavorite(true)
+        return setIsFavorite(true)
       } else {
-        setIsFavorite(false)
+        return setIsFavorite(false)
       }
     })
   }
