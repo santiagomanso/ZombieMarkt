@@ -290,7 +290,7 @@ export const getUserProfile = async (req, res) => {
       res.status(200).json({
         user,
       })
-      console.log('user', user)
+      // console.log('user', user)
     } else {
       res.status(500).json({
         msg: 'there was an error fetching all',
