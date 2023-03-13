@@ -3,9 +3,7 @@ import { useEffect, useState } from 'react'
 import ReactDom from 'react-dom'
 import getTokenFromStorage from '../../utils/getTokenFromStorage'
 
-const Modal = ({ dataType, active, setActive, array, email }) => {
-  const [state, setState] = useState(array)
-
+const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
   useEffect(() => {
     const detectKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -15,16 +13,10 @@ const Modal = ({ dataType, active, setActive, array, email }) => {
     document.documentElement.addEventListener('keydown', detectKeyDown)
 
     console.log('array', array)
-    console.log('state', state)
     // console.log('dataType', dataType)
   }, [])
 
   const removeFavorite = async (_id) => {
-    const headers = {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${getTokenFromStorage()}`,
-    }
-
     try {
       const response = await axios.post(
         `http://localhost:5500/api/users/newFavoriteProduct/${_id}`,
@@ -35,8 +27,10 @@ const Modal = ({ dataType, active, setActive, array, email }) => {
           },
         },
       )
+      const newArray = array.filter((item) => item._id !== _id)
+      setFavorites(newArray)
     } catch (error) {
-      // Handle error
+      console.log(error)
     }
   }
 
@@ -61,8 +55,8 @@ const Modal = ({ dataType, active, setActive, array, email }) => {
             <section
               className={`overflow-auto rounded duration-500 h-full gap-0 pt-12 p-9`}
             >
-              {state ? (
-                state.map((item, index) => {
+              {array.length > 0 ? (
+                array.map((item, index) => {
                   return (
                     <div
                       key={index}
@@ -125,7 +119,8 @@ const Modal = ({ dataType, active, setActive, array, email }) => {
                 <div className='flex items-center justify-center'>
                   <div className='flex flex-col items-center'>
                     <p className='text-7xl text-gray-800'>
-                      You dont have orders yet
+                      You dont have any{' '}
+                      {dataType === 'orders' ? 'orders' : 'favorites'} yet
                     </p>
                     <i className='fa-solid fa-heart-crack text-8xl text-rose-700'></i>
                   </div>
