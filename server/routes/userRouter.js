@@ -13,6 +13,7 @@ import customErrorHandler from '../middleware/customErrorHandler.js'
 const userRouter = express.Router()
 
 //POSTS
+//userRouter.get('/google/callback')
 userRouter.post('/create', customErrorHandler, createUser) //new user
 userRouter.post('/login', login) //login email/password
 userRouter.post('/loginWithToken', loginWithToken) //auto login when token
