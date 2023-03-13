@@ -18,7 +18,8 @@ const Profile = () => {
   const navigate = useNavigate()
 
   //internal states
-
+  const [favorites, setFavorites] = useState('')
+  const [orders, setOrders] = useState('')
   const [active, setActive] = useState('')
 
   useEffect(() => {
@@ -26,7 +27,6 @@ const Profile = () => {
     if (!user) navigate('/')
 
     const getProfile = async () => {
-      console.log('SEEEE')
       const myHeaders = {
         authorization: `Bearer ${getTokenFromStorage()}`,
       }
@@ -38,16 +38,25 @@ const Profile = () => {
           },
         )
         setUser(data.user)
-        // console.log('user', user)
+        console.log('data.user.favorites', data.user.favorites)
+        setFavorites(data.user.favorites)
+        setOrders(data.user.orders)
       } catch (error) {
         console.log('error', error)
       }
     }
 
-    if (!user.orders || !user.favorites) {
-      getProfile()
+    if (user) {
+      if (!orders || !favorites) {
+        getProfile()
+      }
     }
-  }, [])
+
+    //FIXME cleanUp orders/Favorites properties to not drag across platform heavy json
+    // return()=>{
+    //   setUser({...user, user.orders:[], user.favorites:[]})
+    // }
+  }, [user])
 
   return (
     <MainContainer>
@@ -58,7 +67,7 @@ const Profile = () => {
             dataType='orders'
             active={active}
             setActive={setActive}
-            array={user.orders}
+            array={orders}
             email={user.email}
           />
         ) : active === 'favorites' ? (
@@ -66,7 +75,8 @@ const Profile = () => {
             dataType='favorites'
             active={active}
             setActive={setActive}
-            array={user.favorites}
+            array={favorites}
+            setFavorites={setFavorites}
             email={user.email}
           />
         ) : (
