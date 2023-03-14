@@ -8,9 +8,12 @@ const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
       key={item.id}
       className={`bg-gradient-to-tl to-amber-100/10 
       from-slate-900/80 outline outline-2 outline-amber-100/50   rounded-2xl flex      
-        flex-col justify-center items-center relative group cursor-pointer ${itemContainerOpt}`}
+        flex-col justify-center items-center relative  group cursor-pointer ${itemContainerOpt}`}
     >
-      <span className='text-center transition-all ease-in-out duration-300 scale-0 group-hover:scale-100 text-3xl lg:text-5xl font-zombie tracking-wider'>
+      <span className='hidden lg:block text-center transition-all ease-in-out duration-300 scale-0 group-hover:scale-100 text-3xl lg:text-5xl font-zombie tracking-wider'>
+        {item.name}
+      </span>
+      <span className='text-3xl self-start pl-5 font-bold lg:hidden'>
         {item.name}
       </span>
       {redirectToDetail && (
@@ -18,7 +21,9 @@ const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
           <Rating rating={item.rating} />
         </div>
       )}
-      <div className='absolute top-[50%] group-hover:-top-5 transition-all ease-in-out  duration-350 -translate-y-[50%]  w-40  right-[50%] translate-x-[50%] group-hover:rotate-[20deg]'>
+      <div
+        className={`absolute group-hover:-top-5 transition-all ease-in-out  duration-350 -translate-y-[50%] top-[50%] right-[50%]  md:right-[40%] lg:right-[50%] translate-x-[50%] group-hover:rotate-[20deg]  `}
+      >
         <img src={item.image} alt='' className={itemImg} />
       </div>
     </Link>
