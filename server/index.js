@@ -8,6 +8,7 @@ import cloudinaryConfig from './config/cloudinary.js'
 import categoriesRouter from './routes/categoriesRouter.js'
 import userRouter from './routes/userRouter.js'
 import orderRouter from './routes/orderRouter.js'
+import authRouter from './routes/authRouter.js'
 dotenv.config()
 
 const app = express()
@@ -40,6 +41,7 @@ const addMiddlewares = () => {
 }
 
 const loadRoutes = () => {
+  app.use('/api/auth', authRouter)
   app.use('/api/products', productRouter)
   app.use('/api/categories', categoriesRouter)
   app.use('/api/users', userRouter)
