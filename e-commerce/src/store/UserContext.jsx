@@ -32,7 +32,7 @@ const UserProvider = ({ children }) => {
     // console.log('userObj', userObj)
     try {
       const { data } = await axios.post(
-        'http://localhost:5500/api/users/login',
+        'http://localhost:5500/api/auth/login',
         userObj,
       )
       // console.log('data.user', data.user)
@@ -64,7 +64,7 @@ const UserProvider = ({ children }) => {
   const loginWithToken = async (token) => {
     try {
       const { data } = await axios.post(
-        'http://localhost:5500/api/users/loginWithToken',
+        'http://localhost:5500/api/auth/loginWithToken',
         { token },
       )
       // console.log('data.user', data.user)
