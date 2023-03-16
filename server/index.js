@@ -2,13 +2,19 @@ import express from 'express'
 import cors from 'cors'
 import colors from 'colors'
 import dotenv from 'dotenv'
-import productRouter from './routes/productRouter.js'
+
+//configs
 import connectDB from './config/connectDB.js'
 import cloudinaryConfig from './config/cloudinary.js'
-import categoriesRouter from './routes/categoriesRouter.js'
-import userRouter from './routes/userRouter.js'
-import orderRouter from './routes/orderRouter.js'
+import './config/passport.js'
+
+// Routers
 import authRouter from './routes/authRouter.js'
+import userRouter from './routes/userRouter.js'
+import productRouter from './routes/productRouter.js'
+import categoriesRouter from './routes/categoriesRouter.js'
+import orderRouter from './routes/orderRouter.js'
+
 dotenv.config()
 
 const app = express()
