@@ -2,6 +2,10 @@ import mongoose from 'mongoose'
 import moment from 'moment'
 
 const userSchema = mongoose.Schema({
+  googleId: {
+    type: String,
+    unique: true,
+  },
   name: {
     type: String,
     required: false,
