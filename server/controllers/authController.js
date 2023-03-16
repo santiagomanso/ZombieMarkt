@@ -5,9 +5,12 @@ import userModel from '../models/userModel.js'
 import productModel from '../models/productModel.js'
 
 // @desc GOOGLE signIn (redirect to googleServers)
-// @route POST /api/auth/
+// @route POST callback
 // @access Public
-export const googleLogin = async (req, res) => {}
+export const googleLogin = async (req, res) => {
+  //res.redirect
+  res.redirect('http://localhost:3000')
+}
 
 // @desc login user (no populates orders/favorites)
 // @route POST /api/auth/
