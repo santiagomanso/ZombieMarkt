@@ -8,8 +8,16 @@ import productModel from '../models/productModel.js'
 // @route POST callback
 // @access Public
 export const googleLogin = async (req, res) => {
-  console.log('req', req)
-  // res.redirect('http://localhost:3000')
+  if (req.user) {
+    const user = await userModel
+      .findById(req.user.id)
+      .select('-password -orders -favorites -googleId')
+    const token = generateToken(req.user._id)
+    res.status(200).json({
+      user,
+      token,
+    })
+  }
 }
 
 // @desc login user (no populates orders/favorites)
