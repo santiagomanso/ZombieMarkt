@@ -14,7 +14,8 @@ import { guestAccounts } from '../utils/guestsAccounts'
 
 const Login = () => {
   //context states extractions
-  const { loginUser, msg, errorContext, user } = useContext(UserContext)
+  const { loginUser, msg, errorContext, user, loginGoogle } =
+    useContext(UserContext)
   const { setAnimation } = useContext(AnimationContext)
   const { path } = useContext(RedirectContext)
 
@@ -213,7 +214,7 @@ const Login = () => {
               </div>
 
               <button
-                // onClick={handleGoogle}
+                onClick={loginGoogle}
                 className='shadow-md bg-white w-full rounded-lg py-2 mt-5 flex justify-center items-center gap-2 border border-gray-400 text-gray-500 font-semibold hover:scale-105 duration-300'
               >
                 <svg
