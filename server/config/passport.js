@@ -23,10 +23,13 @@ passport.use(
         const newUser = await new userModel({
           googleId: profile.id,
           email: profile.emails[0].value,
+          image: profile.photos[0].value,
           password: await passwordEncription(':P'), //encrypt password with bcrypt
         })
+
         const savedUser = await newUser.save()
         done(null, savedUser)
+        console.log('savedUser', savedUser)
       }
     },
   ),
