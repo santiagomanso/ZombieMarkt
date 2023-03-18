@@ -1,10 +1,12 @@
 import axios from 'axios'
 import { createContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 export const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
+  const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [errorContext, setErrorContext] = useState('')
   const [msg, setMsg] = useState('')
@@ -61,6 +63,23 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const loginGoogle = async () => {
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+    const windowSize =
+      windowWidth >= 768 ? 'width=500,height=600' : 'fullscreen=yes'
+    const left = windowWidth / 2 - 250
+    const top = windowHeight / 2 - 300
+
+    const authWindow = window.open(
+      'http://localhost:5500/api/auth/google',
+      'GoogleLoginWindow',
+      `${windowSize},left=${left},top=${top}`,
+    )
+
+    console.log('authWindow', authWindow)
+  }
+
   const loginWithToken = async (token) => {
     try {
       const { data } = await axios.post(
@@ -97,6 +116,7 @@ const UserProvider = ({ children }) => {
     user,
     errorContext,
     msg,
+    loginGoogle,
     setUser,
     createUser,
     loginUser,
