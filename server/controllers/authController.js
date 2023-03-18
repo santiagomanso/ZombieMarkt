@@ -8,8 +8,8 @@ import productModel from '../models/productModel.js'
 // @route POST callback
 // @access Public
 export const googleLogin = async (req, res) => {
-  //res.redirect
-  res.redirect('http://localhost:3000')
+  console.log('req', req)
+  // res.redirect('http://localhost:3000')
 }
 
 // @desc login user (no populates orders/favorites)
