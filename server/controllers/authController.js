@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
 import productModel from '../models/productModel.js'
 
-// @desc GOOGLE signIn (redirect to googleServers)
+// @desc GOOGLE signIn (redirect from googleServers)
 // @route POST callback
 // @access Public
 export const googleLogin = async (req, res) => {
@@ -13,11 +13,27 @@ export const googleLogin = async (req, res) => {
       .findById(req.user.id)
       .select('-password -orders -favorites -googleId')
     const token = generateToken(req.user._id)
-    res.status(200).json({
-      user,
-      token,
+    req.session.user = user // Set the session user data
+    req.session.token = token // Set the session token data
+    res.cookie('token', token)
+    res.redirect(`http://localhost:3000`)
+
+    // res.redirect(`http://localhost:3000?token=${token}`)
+  } else {
+    res.json({
+      msg: 'there is no current user',
     })
   }
+}
+
+export const currentUser = async (req, res) => {
+  console.log('req.user', req.user)
+  console.log('req.session', req.session)
+  res.status(200).json({
+    user: req.user,
+    token: req.session.token,
+    shouldCloseWindow: true,
+  })
 }
 
 // @desc login user (no populates orders/favorites)
