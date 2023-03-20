@@ -13,7 +13,7 @@ const Cart = () => {
         justifyCenter={false}
         relative={false}
         overflowHidden={false}
-        lgPadding='lg:p-5'
+        padding='lg:p-5'
       >
         <Header
           title='Checkout Page'
