@@ -1,7 +1,13 @@
 import { Link } from 'react-router-dom'
 import Rating from '../rating/Rating'
 
-const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
+const Item = ({
+  item,
+  itemContainerOpt,
+  itemImg,
+  redirectToDetail,
+  shortName,
+}) => {
   return (
     <Link
       to={redirectToDetail ? `/products/details/${item._id}` : item.path}
@@ -13,7 +19,11 @@ const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
       <span className='hidden lg:block text-center transition-all ease-in-out duration-300 scale-0 group-hover:scale-100 text-3xl lg:text-5xl font-zombie tracking-wider'>
         {item.name}
       </span>
-      <span className='text-3xl self-start pl-5 font-bold lg:hidden'>
+      <span
+        className={`text-3xl self-start pl-5 font-bold lg:hidden ${
+          shortName ? 'w-1/2' : ''
+        }`}
+      >
         {item.name}
       </span>
       {redirectToDetail && (
@@ -22,7 +32,7 @@ const Item = ({ item, itemContainerOpt, itemImg, redirectToDetail }) => {
         </div>
       )}
       <div
-        className={`absolute group-hover:-top-5 transition-all ease-in-out  duration-350 -translate-y-[50%] top-[50%] right-[50%]  md:right-[40%] lg:right-[50%] translate-x-[50%] group-hover:rotate-[20deg]  `}
+        className={`absolute group-hover:-top-5 transition-all ease-in-out  duration-350 -translate-y-[50%] top-[50%] right-[25%] lg:right-[50%] translate-x-[50%] group-hover:rotate-[20deg]  `}
       >
         <img src={item.image} alt='' className={itemImg} />
       </div>
