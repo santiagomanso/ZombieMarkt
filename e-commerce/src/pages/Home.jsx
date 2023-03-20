@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Header from '../components/header/Header'
 import RightContainer from '../components/containers/RightContainer'
@@ -7,16 +5,11 @@ import MainContainer from '../components/containers/MainContainer'
 import ItemList from '../components/lists/ItemList'
 import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
-import { AnimationContext } from '../store/AnimationContext'
 
 const HomePage = () => {
-  const navigate = useNavigate()
-  const { setAnimation } = useContext(AnimationContext)
-
   const { loading, data, error } = useFetch(
     'http://localhost:5500/api/categories/all',
   )
-  // console.log('data.categories', data.categories)
 
   return (
     <MainContainer>
