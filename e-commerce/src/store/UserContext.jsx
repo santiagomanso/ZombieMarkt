@@ -1,4 +1,5 @@
 import axios from 'axios'
+import cookies from 'js-cookie'
 import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
@@ -51,6 +52,7 @@ const UserProvider = ({ children }) => {
   //NOTE logout
   const logOut = () => {
     window.localStorage.removeItem('token')
+    cookies.remove('token')
     setUser(null)
   }
 
@@ -64,20 +66,7 @@ const UserProvider = ({ children }) => {
   }
 
   const loginGoogle = async () => {
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-    const windowSize =
-      windowWidth >= 768 ? 'width=500,height=600' : 'fullscreen=yes'
-    const left = windowWidth / 2 - 250
-    const top = windowHeight / 2 - 300
-
-    const authWindow = window.open(
-      'http://localhost:5500/api/auth/google',
-      'GoogleLoginWindow',
-      `${windowSize},left=${left},top=${top}`,
-    )
-
-    console.log('authWindow', authWindow)
+    window.location.href = 'http://localhost:5500/api/auth/google'
   }
 
   const loginWithToken = async (token) => {
