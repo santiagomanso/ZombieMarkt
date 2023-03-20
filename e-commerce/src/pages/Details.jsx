@@ -184,7 +184,7 @@ const ProductDetail = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer relative gap='lg:gap-0' lgPadding='lg:p-10'>
+      <RightContainer relative gap='p-5 lg:gap-0' padding='lg:p-10'>
         {msg && (
           <FloatingMsg
             msg={msg}
@@ -210,7 +210,12 @@ const ProductDetail = () => {
               error || msg ? 'blur-lg' : 'blur-0'
             }`}
           >
-            <Header title={product.name} typeWritter={false} height='h-[10%]' />
+            <Header
+              title={product.name}
+              typeWritter={false}
+              height='h-[10%]'
+              goBack
+            />
             <div className='self-start  h-[90%] p-2'>
               <div className='grid h-[14%] grid-cols-3 place-items-center  gap-5'>
                 <span className='text-2xl  w-full text-center font-bold text-gray-700 '>
