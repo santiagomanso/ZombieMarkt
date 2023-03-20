@@ -1,12 +1,15 @@
-import express from 'express'
-import cors from 'cors'
-import colors from 'colors'
-import dotenv from 'dotenv'
-
 //configs
+import express from 'express'
+import colors from 'colors'
+
+import session from 'express-session'
+import cookieSession from 'cookie-session'
 import connectDB from './config/connectDB.js'
 import cloudinaryConfig from './config/cloudinary.js'
 import './config/passport.js'
+import cors from 'cors'
+import dotenv from 'dotenv'
+import passport from 'passport'
 
 // Routers
 import authRouter from './routes/authRouter.js'
@@ -31,10 +34,20 @@ const startServer = () => {
 
 const addMiddlewares = () => {
   const corsOption = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     credentials: true,
   }
-  // app.use(cors(corsOption))
+  app.use(cors(corsOption))
+  app.use(
+    cookieSession({
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      keys: [process.env.COOKIE_KEY],
+    }),
+  )
+
+  app.use(passport.initialize())
+  app.use(passport.session())
+
   app.use(cors())
   app.use(express.json())
   app.use(
