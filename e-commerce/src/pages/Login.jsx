@@ -39,19 +39,19 @@ const Login = () => {
       case object === null: {
         setError('ERROR - Complete all fields')
         setActive(false)
-        console.log('objeto nulo')
+        // console.log('null object')
         break
       }
 
       case !object.email || !object.password: {
         setError('ERROR - Complete all fields')
         setActive(false)
-        console.log('campos vacios')
+        console.log('empty fields')
         break
       }
 
       case object.email && object.password: {
-        console.log('TODO OK')
+        // console.log('all good')
         return setActive(true)
       }
 
