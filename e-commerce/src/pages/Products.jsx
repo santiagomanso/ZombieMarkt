@@ -27,15 +27,16 @@ const ProductsPage = () => {
     <MainContainer>
       <LeftPanel bottomCard />
 
-      <RightContainer gap='lg:gap-20'>
-        <Header title={category} typeWritter={false} />
+      <RightContainer gap='gap-5 lg:gap-20' padding='p-5 lg:p-0' overflowAuto>
+        <Header title={category} typeWritter={false} goBack />
         {loading ? (
           <Loading />
         ) : products.length > 0 ? (
           <>
             <ItemList
               array={products}
-              gridOpt='grid-cols-2  lg:grid-cols-3 gap-y-10 lg:gap-y-10 gap-x-5 lg:gap-x-10'
+              shortName
+              gridOpt='grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-y-10 lg:gap-y-10 gap-x-5 lg:gap-x-10'
               itemContainerOpt='lg:w-[340px] h-64'
               itemImg='w-56 h-56 object-scale-down'
               redirectToDetail
@@ -44,7 +45,7 @@ const ProductsPage = () => {
             <img
               src={products[0].category.image}
               alt={products[0].category.name}
-              className='absolute bottom-0 right-3'
+              className='hidden lg:block absolute bottom-0 right-3'
             />
           </>
         ) : (
