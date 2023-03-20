@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer justifyCenter lgPadding='lg:p-20'>
+      <RightContainer justifyCenter padding='lg:p-20'>
         {active === 'orders' ? (
           <Modal
             dataType='orders'
