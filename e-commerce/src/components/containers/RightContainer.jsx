@@ -5,15 +5,17 @@ const RightContainer = ({
   overflowHidden,
   overflowAuto,
   justifyCenter,
-  lgPadding,
+  padding,
 }) => {
   return (
     <section
-      className={`flex flex-col items-center lg:bg-black/10 w-full h-full ${lgPadding} rounded
-       ${gap ? gap : ''} ${relative ? 'relative' : ''}
+      className={`flex flex-col items-center lg:bg-black/10 w-full h-full rounded
+       ${padding ? padding : ''}
+       ${gap ? gap : ''}
+       ${relative ? 'relative' : ''}
        ${overflowHidden ? 'overflow-hidden' : ''}
-       ${overflowAuto ? 'overflow-auto' : ''}
-       ${justifyCenter && 'justify-center'}
+       ${overflowAuto ? 'overflow-y-auto overflow-x-hidden' : ''}
+       ${justifyCenter ? 'justify-center' : ''}
        `}
     >
       {children}
