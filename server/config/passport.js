@@ -5,6 +5,17 @@ import userModel from '../models/userModel.js'
 import { passwordEncription } from '../utils/bcrypt.js'
 dotenv.config()
 
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser(async (id, done) => {
+  const user = await userModel
+    .findById(id)
+    .select('-password -orders -favorites')
+  done(null, user)
+})
+
 passport.use(
   new GoogleStrategy(
     {
@@ -13,10 +24,12 @@ passport.use(
       callbackURL: 'http://localhost:5500/api/auth/google/callback',
     },
     async (accessToken, refreshToken, profile, done) => {
-      const existingUser = await userModel.findOne({ googleId: profile.id })
+      const existingUser = await userModel
+        .findOne({ googleId: profile.id })
+        .select('-password -orders -favorites')
       if (existingUser) {
         //log in with existing user
-        console.log('existingUser', existingUser)
+        // console.log('existingUser', existingUser)
         done(null, existingUser)
       } else {
         // NEW USER, save it to db
@@ -29,7 +42,7 @@ passport.use(
 
         const savedUser = await newUser.save()
         done(null, savedUser)
-        console.log('savedUser', savedUser)
+        // console.log('savedUser', savedUser)
       }
     },
   ),
