@@ -1,12 +1,14 @@
 import { useContext, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { CartContext } from '../../store/CartContext'
 import { RedirectContext } from '../../store/RedirectContext'
 import { UserContext } from '../../store/UserContext'
+import { setPathOnStorage } from '../../utils/localStoragePaths'
 import Badge from '../Badge/Badge'
 import Dropdown from '../dropdown/Dropdown'
 
 const Navbar = () => {
+  const location = useLocation()
   const [active, setActive] = useState(true)
   const { cart } = useContext(CartContext)
   const { user, logOut } = useContext(UserContext)
@@ -33,7 +35,10 @@ const Navbar = () => {
           onClick={() => setActive(!active)}
           className='fixed top-3 right-5 z-10'
         >
-          <i className='fa-solid fa-burger text-4xl text-amber-800'></i>
+          <i className='fa-solid fa-burger text-4xl text-amber-800 '></i>
+          {cart.length > 0 && location.pathname !== '/cart' && (
+            <Badge position='absolute -top-0 -right-0' />
+          )}
         </button>
 
         <aside
@@ -45,6 +50,9 @@ const Navbar = () => {
             onClick={() => setActive(!active)}
             className='fixed top-3 right-5'
           >
+            {cart.length > 0 && location.pathname !== '/cart' && (
+              <Badge position='absolute -top-0 -right-0' />
+            )}
             <i className='fa-solid fa-burger text-4xl text-amber-800'></i>
           </button>
           {user && (
@@ -68,10 +76,19 @@ const Navbar = () => {
               Home
             </Link>
             <Link
-              onClick={() => setActive(!active)}
-              className='text-2xl font-medium tracking-wider'
+              to='/cart'
+              onClick={() => {
+                if (!user) {
+                  setPathOnStorage('/cart')
+                }
+                setActive(!active)
+              }}
+              className='text-2xl font-medium tracking-wider relative'
             >
               cart
+              {cart.length > 0 && location.pathname !== '/cart' && (
+                <Badge position='absolute -top-2 -right-5' />
+              )}
             </Link>
             <Link
               to='/profile'
