@@ -3,7 +3,7 @@ import { CartContext } from '../../store/CartContext'
 import { UserContext } from '../../store/UserContext'
 import FloatingMsg from '../floatingMsg/FloatingMsg'
 
-const RightColumn = () => {
+const RightColumn = ({ hideOnPhones }) => {
   const { cart, placeOrder, msg } = useContext(CartContext)
   const { user } = useContext(UserContext)
 
@@ -28,12 +28,16 @@ const RightColumn = () => {
   }
 
   return (
-    <article className={`${msg ? 'blur' : 'blur-noneS'}`}>
+    <article
+      className={`${
+        hideOnPhones ? 'hidden lg:block' : 'block lg:hidden'
+      }  bg-gree-400 ${msg ? 'blur' : 'blur-noneS'}`}
+    >
       {cart.length > 0 ? (
         <div
-          className={`w-full overflow-auto bg-gradient-to-b from-slate-700/40 rounded-lg  to-slate-800  lg:h-full outline-2 outline outline-slate-400 lg:outline-none duration-300`}
+          className={`w-full bg-gradient-to-b  from-slate-600 rounded-lg  to-slate-800  lg:h-full outline-2 outline outline-slate-400 lg:outline-none duration-300`}
         >
-          <div className='flex flex-col  dark:bg-transparent p-4 rounded h-full'>
+          <div className='flex flex-col  dark:bg-transparent p-4 rounded h-full relative'>
             <div className='bg-gray-800 dark:bg-gray-700/50 py-3 px-4 rounded w-full flex justify-between items-center'>
               <h2 className='text-gray-200'>Checkout</h2>
               <i className='fa-solid fa-wallet text-gray-200 text-2xl'></i>
@@ -71,7 +75,7 @@ const RightColumn = () => {
             <h2 className='mt-10 font-semibold text-gray-100 uppercase'>
               Shipping Adress
             </h2>
-            <div className='flex flex-col gap-y-3 divide-y-2 divide-gray-400 bg-white/80 dark:bg-gray-700/50 p-4 rounded'>
+            <div className='flex flex-col gap-y-3 divide-y-2 divide-gray-400 bg-white/80 dark:bg-gray-700/50 p-4 rounded '>
               <span className='flex justify-between'>
                 <span>Customer</span>
                 <span>{user.email}</span>
@@ -91,7 +95,7 @@ const RightColumn = () => {
             </div>
             <button
               onClick={() => placeOrder(user, calculateSemitotals())}
-              className='bg-gradient-to-br from-slate-500 to-gray-700 rounded mt-24 text-gray-200 font-bold'
+              className='absolute -bottom-10 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold'
             >
               PLACE ORDER NOW !
             </button>

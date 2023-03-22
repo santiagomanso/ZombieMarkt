@@ -16,8 +16,9 @@ const Cart = () => {
         padding='lg:p-5'
       >
         <Header
+          opt='px-5 lg:px-0 mt-1 lg:mt-0'
           title='Checkout Page'
-          subtitle='Edit your amounts and hit checkout before the the zombie wave'
+          subtitle='Edit your amounts and hit checkout'
         />
         <CheckoutGrid />
       </RightContainer>

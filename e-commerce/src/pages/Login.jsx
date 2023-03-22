@@ -95,7 +95,6 @@ const Login = () => {
   }
 
   const handleGuest = () => {
-    console.log(guestAccounts())
     loginUser(guestAccounts())
   }
 
@@ -110,8 +109,9 @@ const Login = () => {
         topBtnPath='/signUp'
         bottomCard={false}
       />
-      <RightContainer gap='gap-10' relative>
+      <RightContainer gap='gap-5 lg:gap-10' relative>
         <Header
+          opt='px-5 lg:px-0 mt-4 lg:mt-0'
           title='Sign in'
           subtitle="Provide your survivor's credentials"
         />
@@ -131,10 +131,12 @@ const Login = () => {
             text='text-gray-200 font-medium'
           />
         )}
-        <section className={` flex items-start lg:items-center justify-center`}>
+        <section
+          className={` w-full lg:w-auto flex items-start lg:items-center justify-center`}
+        >
           <div className='flex rounded-md  md:p-5 shadow-2xl items-stretch   md:h-auto w-full'>
             {/* form container */}
-            <div className='w-full md:w-[45%] p-5  md:px-10 flex flex-col justify-center'>
+            <div className='w-full md:w-[45%] p-5 md:px-10 flex flex-col justify-center'>
               <h2 className='font-bold text-slate-700 select-none'>Login</h2>
 
               <form className='flex flex-col gap-2 mt-4 relative'>

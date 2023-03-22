@@ -25,12 +25,13 @@ const HomePage = () => {
           title='ZombieMarkt Groceries'
           subtitle='Where prices are dropped dead'
           typeWritter
+          opt='px-5 lg:px-0  mt-5 lg:mt-0'
         />
         {loading ? (
           <Loading />
         ) : (
           data.categories && (
-            <div className='mt-5 lg:m-0 '>
+            <div className='lg:m-0 '>
               <ItemList
                 array={data.categories}
                 gridOpt='grid-cols-1  lg:grid-cols-4 gap-y-10 gap-x-5 md:gap-x-20 lg:gap-y-20 lg:gap-x-40 p-10 lg:p-0'

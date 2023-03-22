@@ -28,7 +28,12 @@ const ProductsPage = () => {
       <LeftPanel bottomCard />
 
       <RightContainer gap='gap-5 lg:gap-20' padding='p-5 lg:p-0' overflowAuto>
-        <Header title={category} typeWritter={false} goBack />
+        <Header
+          title={category}
+          typeWritter={false}
+          goBack
+          opt='pl-3 lg:pl-0'
+        />
         {loading ? (
           <Loading />
         ) : products.length > 0 ? (

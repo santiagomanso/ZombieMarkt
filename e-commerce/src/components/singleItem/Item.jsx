@@ -16,11 +16,14 @@ const Item = ({
       from-slate-900/80 outline outline-2 outline-amber-100/50   rounded-2xl flex      
         flex-col justify-center items-center relative  group cursor-pointer ${itemContainerOpt}`}
     >
+      {/* NAME FOR LARGE SCREENS */}
       <span className='hidden lg:block text-center transition-all ease-in-out duration-300 scale-0 group-hover:scale-100 text-3xl lg:text-5xl font-zombie tracking-wider'>
         {item.name}
       </span>
+
+      {/* NAME FOR SMALL SCREENS */}
       <span
-        className={`text-3xl self-start pl-5 font-bold lg:hidden ${
+        className={`text-3xl self-start pl-5 font-medium tracking-wider lg:hidden font-zombie ${
           shortName ? 'w-1/2' : ''
         }`}
       >

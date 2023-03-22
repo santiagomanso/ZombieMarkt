@@ -77,8 +77,9 @@ const SignUp = () => {
   return (
     <MainContainer>
       <LeftPanel />
-      <RightContainer gap='gap-10' relative>
+      <RightContainer gap='gap-5 lg:gap-10' relative>
         <Header
+          opt='px-3 mt-7 lg:px-0 lg:mt-0'
           title='Sign up'
           subtitle="The undead can't shop here, but you can. Sign in now!"
         />
@@ -98,10 +99,7 @@ const SignUp = () => {
             text='text-red-900 font-medium'
           />
         )}
-        <div
-          className='h-screen w-full max-w-3xl md:h-auto  md:min-w-auto  flex rounded-2xl  md:p-5 shadow-xl shadow-slate-800 bg-gradient-to-br  items-stretch 
-        from-gray-500 dark:via-slate-900 dark:to-slate-900 '
-        >
+        <div className=' w-full max-w-3xl md:h-auto  md:min-w-auto  flex rounded-2xl  md:p-5 shadow-xl lg:shadow-gray-900'>
           {/* form container */}
           <div className='w-full px-5 md:px-10 flex flex-col justify-center'>
             <span

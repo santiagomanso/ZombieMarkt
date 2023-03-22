@@ -62,9 +62,9 @@ const LeftColumn = () => {
   const { cart, setCart } = useContext(CartContext)
   return (
     <article
-      className={`${
+      className={` ${
         msg ? 'blur-xl' : 'blur-none'
-      } flex flex-col gap-7 overflow-auto p-2 pr-6`}
+      } flex flex-col gap-7 overflow-auto px-2 mb-10 mt-5 lg:mt-2 lg:mb-0 pr-6`}
     >
       {!cart.length > 0 ? (
         <div className={`${msg ? 'blur-xl' : 'blur-none'}`}>
@@ -81,7 +81,7 @@ const LeftColumn = () => {
         cart.map((item) => {
           return (
             <div
-              className='bg-gradient-to-b from-slate-900 h-1/4 flex rounded-lg border-[1px] outline outline-4 outline-amber-100/50 mt-6'
+              className='bg-gradient-to-b from-slate-900 min-h-[150px] lg:min-h-[200px] flex rounded-lg border-[1px] outline outline-4 outline-amber-100/50 mt-6'
               key={item._id}
             >
               <div className='w-1/4 h-full to-slate-800 rounded-lg'>
@@ -92,37 +92,37 @@ const LeftColumn = () => {
                 />
               </div>
               <div className='w-3/4 relative'>
-                <div className='flex justify-around w-full items-baseline px-2'>
-                  <div className='w-2/3'>
-                    <h2 className='text-gray-100 font-bold uppercase font-poppins tracking-widest text-2xl'>
+                <div className='grid grid-cols-1 lg:grid-cols-4 w-full'>
+                  <div className='lg:col-span-3'>
+                    <h2 className='text-gray-100 font-bold uppercase font-poppins tracking-widest text-xl lg:text-2xl'>
                       {item.name}
                     </h2>
                   </div>
-                  <div className='w-1/4'>
+                  <div className='col-span-2 flex items-center justify-start lg:justify-between gap-1 lg:gap-20 w-full'>
                     <span className='text-white font-medium'>
-                      ${item.price}
+                      Price ${item.price}
                     </span>
-                  </div>
-                  <div className='flex items-center gap-2'>
-                    <button onClick={() => handleClick('-', item)}>
-                      <i className='text-xl fa-solid fa-minus text-white'></i>
-                    </button>
-                    <span className='bg-slate-100 font-bold px-2 py-1 rounded'>
-                      {item.quantity}
+                    <span className='lg:col-span-4 lg:text-xl font-bold text-gray-100'>
+                      Stock: {item.countInStock}
                     </span>
-                    <button onClick={() => handleClick('+', item)}>
-                      <i className='text-xl fa-solid fa-plus text-white'></i>
-                    </button>
+
+                    <div className='-translate-y-3 lg:translate-y-0 flex justify-center gap-2 items-center'>
+                      <button onClick={() => handleClick('-', item)}>
+                        <i className='text-xl text-orange-400 fa-solid fa-minus'></i>
+                      </button>
+                      <span className='bg-slate-100 font-bold px-2 py-1 rounded'>
+                        {item.quantity}
+                      </span>
+                      <button onClick={() => handleClick('+', item)}>
+                        <i className='text-xl text-orange-400 fa-solid fa-plus'></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <span className='text-xl font-bold text-gray-100'>
-                    Stock: {item.countInStock}
-                  </span>
-                </div>
+
                 <button
                   onClick={() => handleRemove(item)}
-                  className=' absolute right-6 bottom-0 md:bottom-5 lg:bottom-[5%] duration-200 hover:scale-125 p-0'
+                  className='absolute right-2 lg:top-0 bottom-2 md:bottom-5 lg:bottom-[75%] duration-200 hover:scale-125 p-0'
                 >
                   <i className='fa-solid fa-trash text-gray-200 text-2xl '></i>
                 </button>

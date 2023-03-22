@@ -184,7 +184,7 @@ const ProductDetail = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer relative gap='p-5 lg:gap-0' padding='lg:p-10'>
+      <RightContainer relative gap='lg:gap-0' padding='py-10 lg:p-10'>
         {msg && (
           <FloatingMsg
             msg={msg}
@@ -213,28 +213,30 @@ const ProductDetail = () => {
             <Header
               title={product.name}
               typeWritter={false}
-              height='h-[10%]'
+              height='lg:h-[10%]'
               goBack
             />
-            <div className='self-start  h-[90%] p-2'>
-              <div className='grid h-[14%] grid-cols-3 place-items-center  gap-5'>
-                <span className='text-2xl  w-full text-center font-bold text-gray-700 '>
+            <div className='self-start h-[90%] p-2'>
+              <div className=' grid h-[14%] grid-cols-3 place-items-center  gap-5'>
+                <span className='lg:text-2xl  w-full text-center font-bold text-gray-700 '>
                   Price: ${product.price}
                 </span>
                 <Rating rating={product.rating} />
 
-                <span className='text-2xl w-full font-bold text-gray-700'>
+                <span className='lg:text-2xl w-full font-bold text-gray-700'>
                   No. Reviews {product.numReviews}
                 </span>
 
-                <ButtonCta
-                  active={active}
-                  addToCart={addToCart}
-                  product={product}
-                />
+                <div className='col-span-2 w-full'>
+                  <ButtonCta
+                    active={active}
+                    addToCart={addToCart}
+                    product={product}
+                  />
+                </div>
                 <button className='p-0' onClick={() => handleFavorite(product)}>
                   <i
-                    className={`col-span-1 text-5xl cursor-pointer 
+                    className={`col-span-1 text-3xl lg:text-5xl cursor-pointer 
                     ${
                       isFavorite
                         ? 'fa-solid fa-heart text-red-700'
@@ -295,19 +297,21 @@ const ProductDetail = () => {
                     <div
                       className={`flex gap-2 h-full items-center self-center`}
                     >
-                      <div className='bg-gradient-to-br from-slate-700 to-emerald-500 via-gray-800 border-2 border-gray-200 rounded-full p-2'>
+                      <div className='bg-gradient-to-br from-slate-700 to-emerald-500 via-gray-800 border-2 border-gray-200 rounded-full lg:p-2'>
                         <img
                           src='https://i.ibb.co/Vqx2StJ/basureando-laptop-open-with-a-zombie-logo-cartoon-zombie-style-ffc8c64e-859d-4623-82ce-157f87ffd060.png'
                           alt='system'
-                          className='h-32 w-32 rounded-full object-scale-down'
+                          className='h-24 w-24 lg:h-32 lg:w-32 rounded-full object-scale-down'
                         />
                       </div>
                       <div className='flex flex-col'>
-                        <span className='font-bold text-3xl'>ZombieMarkt</span>
-                        <span className='text-xl'>
+                        <span className='font-bold text-2xl lg:text-3xl'>
+                          ZombieMarkt
+                        </span>
+                        <span className='text-lg lg:text-xl'>
                           There are no comments yet
                         </span>
-                        <span className='text-xl'>
+                        <span className='text-lg lg:text-xl'>
                           Be the first to comment!
                         </span>
                       </div>

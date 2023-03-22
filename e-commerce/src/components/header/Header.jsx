@@ -2,19 +2,19 @@ import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TypeWriterEffect from 'react-typewriter-effect'
 import { CartContext } from '../../store/CartContext'
-const Header = ({ title, subtitle, typeWritter, height, goBack }) => {
+const Header = ({ title, subtitle, typeWritter, height, goBack, opt }) => {
   const { msg } = useContext(CartContext)
   const navigate = useNavigate()
   return (
     <article
-      className={`lg:self-start ${height && height} ${
+      className={`lg:self-start ${height ? height : ''} ${
         msg ? 'blur' : 'blur-none'
       }`}
     >
       <div
-        className={`flex items-center gap-5 w-screen md:w-auto ${
-          goBack ? 'px-5' : ''
-        }`}
+        className={`${
+          opt ? opt : ''
+        } flex items-center gap-5 w-screen md:w-auto`}
       >
         {goBack && (
           <i
@@ -28,7 +28,9 @@ const Header = ({ title, subtitle, typeWritter, height, goBack }) => {
         )}
         <h1 className='lg:text-7xl font-bold capitalize'>{title}</h1>
       </div>
-      {subtitle && <span className='lg:text-3xl'>{subtitle}</span>}
+      {subtitle && (
+        <span className={`${opt ? opt : ''} lg:text-3xl`}>{subtitle}</span>
+      )}
       <div className='absolute hidden lg:block'>
         {typeWritter && (
           <TypeWriterEffect
