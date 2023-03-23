@@ -23,7 +23,7 @@ const Header = ({ title, subtitle, typeWritter, height, goBack, opt }) => {
                 navigate(-1)
               }, 250)
             }}
-            className='cursor-pointer transition-all duration-150 active:translate-y-2 fa-solid fa-arrow-left text-gray-700 text-xl lg:text-6xl'
+            className='pl-3 cursor-pointer transition-all duration-150 active:translate-y-2 fa-solid fa-arrow-left text-gray-700 text-xl lg:text-6xl'
           ></i>
         )}
         <h1 className='lg:text-7xl font-bold capitalize'>{title}</h1>
@@ -31,7 +31,7 @@ const Header = ({ title, subtitle, typeWritter, height, goBack, opt }) => {
       {subtitle && (
         <span className={`${opt ? opt : ''} lg:text-3xl`}>{subtitle}</span>
       )}
-      <div className='absolute hidden lg:block'>
+      <div className='absolute hidden lg:block px-8'>
         {typeWritter && (
           <TypeWriterEffect
             textStyle={{
