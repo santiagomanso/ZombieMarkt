@@ -18,6 +18,7 @@ export const CartProvider = ({ children }) => {
   //states
   const [cart, setCart] = useState(getCartFromStorage())
   const [msg, setMsg] = useState('')
+  const [error, setError] = useState('')
 
   //functions
   const setCartToStorage = () => {
@@ -25,9 +26,8 @@ export const CartProvider = ({ children }) => {
   }
 
   //NOTE - PLACE ORDER
-  const placeOrder = async (user, price) => {
+  const placeOrder = async (price) => {
     const token = getTokenFromStorage()
-
     //headers
     const headers = {
       headers: {
@@ -50,18 +50,27 @@ export const CartProvider = ({ children }) => {
     }
 
     //NOTE axios post with URL, BODY and HEADERS
-    const { data } = axios.post(
+    const { data } = await axios.post(
       'http://localhost:5500/api/orders/newOrder',
       body,
       headers,
     )
 
-    setCart([])
-    setMsg('Order placed')
-    setTimeout(() => {
-      navigate('/')
-      setMsg('')
-    }, 2000)
+    console.log('data', data)
+
+    if (data) {
+      setCart([])
+      setMsg('Order placed')
+      setTimeout(() => {
+        navigate('/')
+        setMsg('')
+      }, 2000)
+    } else {
+      setError('Fatal Error')
+      setTimeout(() => {
+        setError('')
+      }, 2000)
+    }
   }
 
   useEffect(() => {
@@ -72,6 +81,7 @@ export const CartProvider = ({ children }) => {
   const data = {
     cart,
     msg,
+    error,
     setCart,
     placeOrder,
   }
