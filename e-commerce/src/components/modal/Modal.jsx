@@ -40,9 +40,9 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
       <>
         <div
           className='absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-br from-black/95 via-black/80 to-slate-900/60'
-          onClick={() => setActive(!active)}
+          onClick={() => setActive(false)}
         />
-        <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-full lg:h-[80vh] lg:w-[50vw]  rounded-md'>
+        <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]  w-screen h-full lg:h-[80vh] lg:w-[50vw]  rounded-md'>
           <div
             className={`bg-gradient-to-br from-amber-100  to-black  w-full h-full rounded-md  outline outline-4 outline-gray-700 relative`}
           >
