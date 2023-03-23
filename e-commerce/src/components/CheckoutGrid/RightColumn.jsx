@@ -3,44 +3,57 @@ import { CartContext } from '../../store/CartContext'
 import { UserContext } from '../../store/UserContext'
 import FloatingMsg from '../floatingMsg/FloatingMsg'
 
-const RightColumn = ({ hideOnPhones }) => {
-  const { cart, placeOrder, msg } = useContext(CartContext)
+const RightColumn = ({
+  hideOnPhones,
+  setActive,
+  calculateQty,
+  calculateSemitotals,
+}) => {
+  const { cart, placeOrder, msg, error } = useContext(CartContext)
   const { user } = useContext(UserContext)
-
-  //NOTE - calculate semiTotals
-  const calculateSemitotals = () => {
-    let result = 0
-    cart.forEach((item) => {
-      result += Math.floor(item.price * 100) * item.quantity
-    })
-    return (result / 100).toFixed(2)
-  }
-
-  //NOTE calculate quantities
-  const calculateQty = () => {
-    if (cart.length > 0) {
-      let qty = 0
-      cart.forEach((item) => {
-        qty += item.quantity
-      })
-      return qty
-    }
-  }
 
   return (
     <article
       className={`${
         hideOnPhones ? 'hidden lg:block' : 'block lg:hidden'
-      }  bg-gree-400 ${msg ? 'blur' : 'blur-noneS'}`}
+      }  bg-gree-400 ${msg && !setActive ? 'blur' : 'blur-noneS'}`}
     >
+      {error && (
+        <FloatingMsg
+          msg={error}
+          text='text-4xl lg:text-7xl text-red-700'
+          icon='fa-solid fa-triangle-exclamation text-6xl lg:text-6xl text-red-700'
+          opt=' bg-red-200 p-10 rounded outline outline-1 outline-red-500
+         top-[25%] lg:top-[50%] lg:-translate-y-[50%] left-[50%] lg:left-[50%] z-10  -translate-x-[50%] flex flex-col lg:flex-row items-center lg:items-center gap-2 lg:gap-4 w-5/6'
+        />
+      )}
+
+      {msg && setActive && (
+        <FloatingMsg
+          msg={msg}
+          text='text-4xl lg:text-7xl text-green-700'
+          icon='fa-solid fa-file-circle-check text-6xl lg:text-6xl text-green-700'
+          opt=' bg-emerald-100 p-10 rounded outline outline-1 outline-green-500
+           top-[25%] lg:top-[50%] lg:-translate-y-[50%] left-[50%] lg:left-[50%] z-10  -translate-x-[50%] flex flex-col lg:flex-row items-center lg:items-center gap-2 lg:gap-4 w-5/6'
+        />
+      )}
       {cart.length > 0 ? (
         <div
-          className={`w-full bg-gradient-to-b  from-slate-600 rounded-lg  to-slate-800  lg:h-full outline-2 outline outline-slate-400 lg:outline-none duration-300`}
+          className={`${
+            (msg || error) && setActive ? 'blur' : 'blur-noneS'
+          } w-full bg-gradient-to-b  from-slate-600 rounded-none lg:rounded-md to-slate-800  lg:h-full outline-2 outline outline-slate-400 lg:outline-none duration-300 h-screen`}
         >
           <div className='flex flex-col  dark:bg-transparent p-4 rounded h-full relative'>
             <div className='bg-gray-800 dark:bg-gray-700/50 py-3 px-4 rounded w-full flex justify-between items-center'>
               <h2 className='text-gray-200'>Checkout</h2>
-              <i className='fa-solid fa-wallet text-gray-200 text-2xl'></i>
+              {setActive ? (
+                <i
+                  onClick={() => setActive(false)}
+                  className='fa-regular fa-rectangle-xmark text-gray-200 text-3xl'
+                ></i>
+              ) : (
+                <i className='fa-solid fa-wallet text-gray-200 text-2xl'></i>
+              )}
             </div>
             <span className='text-start text-gray-100'>
               Get ready to break the bank, because your cart is loaded with
@@ -94,8 +107,13 @@ const RightColumn = ({ hideOnPhones }) => {
               </span>
             </div>
             <button
-              onClick={() => placeOrder(user, calculateSemitotals())}
-              className='absolute -bottom-10 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold'
+              onClick={() => {
+                placeOrder(calculateSemitotals())
+                setTimeout(() => {
+                  // setActive(false)
+                }, 2000)
+              }}
+              className='absolute bottom-2 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold'
             >
               PLACE ORDER NOW !
             </button>
