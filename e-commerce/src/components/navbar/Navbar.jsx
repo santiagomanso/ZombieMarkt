@@ -92,7 +92,12 @@ const Navbar = () => {
             </Link>
             <Link
               to='/profile'
-              onClick={() => setActive(!active)}
+              onClick={() => {
+                if (!user) {
+                  setPathOnStorage('/profile')
+                }
+                setActive(!active)
+              }}
               className='text-2xl font-medium tracking-wider'
             >
               Profile
