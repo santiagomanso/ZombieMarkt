@@ -20,22 +20,22 @@ const HomePage = () => {
         bottomCard
       />
 
-      <RightContainer gap='lg:gap-32' padding='lg:p-10' overflowAuto>
+      <RightContainer gap='gap-5 lg:gap-32' padding='p-5 lg:p-0' overflowAuto>
         <Header
           title='ZombieMarkt Groceries'
           subtitle='Where prices are dropped dead'
           typeWritter
-          opt='px-5 lg:px-0  mt-5 lg:mt-0'
+          opt='px-5 lg:py-5 lg:px-8  mt-0 lg:mt-0'
         />
         {loading ? (
           <Loading />
         ) : (
           data.categories && (
-            <div className='lg:m-0 '>
+            <div className='lg:m-0 w-full lg:w-auto'>
               <ItemList
                 array={data.categories}
-                gridOpt='grid-cols-1  lg:grid-cols-4 gap-y-10 gap-x-5 md:gap-x-20 lg:gap-y-20 lg:gap-x-40 p-10 lg:p-0'
-                itemContainerOpt='w-[300px] h-[150px]  lg:w-[270px] lg:h-[200px] '
+                gridOpt='grid-cols-1  lg:grid-cols-4 gap-y-10 gap-x-5 md:gap-x-20 lg:gap-y-20 lg:gap-x-40 p-0 lg:p-0'
+                itemContainerOpt='w-full h-[150px]  lg:w-[270px] lg:h-[200px] '
                 itemImg='w-32 h-32  lg:w-48 lg:h-48 object-scale-down'
                 redirectToDetail={false}
               />

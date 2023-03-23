@@ -27,12 +27,12 @@ const ProductsPage = () => {
     <MainContainer>
       <LeftPanel bottomCard />
 
-      <RightContainer gap='gap-5 lg:gap-20' padding='p-5 lg:p-0' overflowAuto>
+      <RightContainer gap='gap-5 lg:gap-20' padding='p-5 lg:p-10' overflowAuto>
         <Header
           title={category}
           typeWritter={false}
           goBack
-          opt='pl-3 lg:pl-0'
+          opt='pl-3 lg:pl-0 lg:pt-3'
         />
         {loading ? (
           <Loading />
@@ -41,8 +41,8 @@ const ProductsPage = () => {
             <ItemList
               array={products}
               shortName
-              gridOpt='grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-y-10 lg:gap-y-10 gap-x-5 lg:gap-x-10'
-              itemContainerOpt='lg:w-[340px] h-64'
+              gridOpt='grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-y-10 lg:gap-y-10 gap-x-5 lg:gap-x-10 w-full'
+              itemContainerOpt='lg:w-[340px] h-64 w-full'
               itemImg='w-56 h-56 object-scale-down'
               redirectToDetail
             />

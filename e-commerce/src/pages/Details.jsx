@@ -184,7 +184,7 @@ const ProductDetail = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer relative gap='lg:gap-0' padding='py-10 lg:p-10'>
+      <RightContainer relative gap='lg:gap-0' padding='pt-5 pb-10 lg:p-10'>
         {msg && (
           <FloatingMsg
             msg={msg}
@@ -279,7 +279,7 @@ const ProductDetail = () => {
                             <img
                               src={comment.user.image}
                               alt={comment.user.email}
-                              className='h-20 w-20 rounded-full object-scale-down'
+                              className='h-10 w-10 lg:h-20 lg:w-20 rounded-full object-scale-down'
                             />
                           </div>
                           <div className='flex flex-col'>
