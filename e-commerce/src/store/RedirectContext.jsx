@@ -16,15 +16,18 @@ export const RedirectProvider = (props) => {
 
   //navigate hook
   const navigate = useNavigate()
+  const pathFromStorage = getPathFromStorage()
 
   useEffect(() => {
     //NOTE - The following functionallity works as follows: if a user clicks on what is a protected component, it will trigger a set path on localStorage i use localStorage because the redirect to google server on login oath removes all states from context because it unmounts the whole app This way we store the path on localStorage and after redirect we can still the path, detect it on useEffect and trigger a redirect where the user wanted to go in the first place, and then we remove the path to be ready for the next redirect if needed
-    const pathFromStorage = getPathFromStorage()
-    if (pathFromStorage && user) {
+    // console.log('test')
+    // console.log('pathFromStorage', pathFromStorage)
+    // console.log('user', user)
+    if (pathFromStorage) {
       navigate(pathFromStorage)
       removePathFromStorage()
     }
-  }, [path])
+  }, [])
 
   return (
     <RedirectContext.Provider value={{ path, setPath }}>
