@@ -1,4 +1,3 @@
-import moment from 'moment'
 import mongoose from 'mongoose'
 
 const orderSchema = mongoose.Schema({
@@ -22,7 +21,6 @@ const orderSchema = mongoose.Schema({
   ],
   createdAt: {
     type: String,
-    default: moment().format('DD-MM-YYYY HH:mm'),
   },
 })
 

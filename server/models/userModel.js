@@ -29,7 +29,6 @@ const userSchema = mongoose.Schema({
   },
   joined: {
     type: String,
-    default: moment().format('DD-MM-YYYY'),
   },
   orders: [
     {
