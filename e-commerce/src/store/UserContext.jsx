@@ -31,6 +31,7 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  //NOTE - login
   const loginUser = async (userObj) => {
     // console.log('userObj', userObj)
     try {
@@ -56,19 +57,12 @@ const UserProvider = ({ children }) => {
     setUser(null)
   }
 
-  const saveTokenToLocalStorage = (token) => {
-    if (!token) {
-      return
-    } else {
-      window.localStorage.removeItem('token')
-      window.localStorage.setItem('token', token)
-    }
-  }
-
+  //NOTE google oauth can't use RRD to redirect outside of localhost so window.location
   const loginGoogle = async () => {
     window.location.href = 'http://localhost:5500/api/auth/google'
   }
 
+  //NOTE login with token
   const loginWithToken = async (token) => {
     try {
       const { data } = await axios.post(
@@ -82,6 +76,14 @@ const UserProvider = ({ children }) => {
       setErrorContext(error)
       setErrorContext(error.response.data.msg)
       //FIXME - hacer error msg floating
+    }
+  }
+  const saveTokenToLocalStorage = (token) => {
+    if (!token) {
+      return
+    } else {
+      window.localStorage.removeItem('token')
+      window.localStorage.setItem('token', token)
     }
   }
 
