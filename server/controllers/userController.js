@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import userModel from '../models/userModel.js'
 import productModel from '../models/productModel.js'
 import { randomImg } from '../utils/randomImg.js'
+import moment from 'moment'
 
 // @desc Create user
 // @route POST /api/users
@@ -33,6 +34,7 @@ export const createUser = async (req, res) => {
         email: req.body.email,
         password: await passwordEncription(req.body.password), //NOTE bcrypt encription
         image: randomImg(),
+        joined: moment().format('DD-MM-YYYY'),
       })
       // console.log('newUser', newUser)
       const savedUser = await newUser.save()
