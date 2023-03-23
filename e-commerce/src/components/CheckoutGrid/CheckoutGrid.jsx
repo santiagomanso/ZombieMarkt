@@ -7,9 +7,30 @@ import RightColumn from './RightColumn'
 
 const CheckoutGrid = () => {
   const { msg } = useContext(CartContext)
+  const { cart } = useContext(CartContext)
 
   //modal states
   const [active, setActive] = useState(false)
+
+  //NOTE - calculate semiTotals
+  const calculateSemitotals = () => {
+    let result = 0
+    cart.forEach((item) => {
+      result += Math.floor(item.price * 100) * item.quantity
+    })
+    return (result / 100).toFixed(2)
+  }
+
+  //NOTE calculate quantities
+  const calculateQty = () => {
+    if (cart.length > 0) {
+      let qty = 0
+      cart.forEach((item) => {
+        qty += item.quantity
+      })
+      return qty
+    }
+  }
 
   return (
     <section className={`grid grid-cols-1 md:grid-cols-2 w-full h-[88%]`}>
@@ -23,18 +44,27 @@ const CheckoutGrid = () => {
         />
       )}
       <LeftColumn />
-      <RightColumn hideOnPhones />{' '}
+      <RightColumn
+        hideOnPhones
+        calculateSemitotals={calculateSemitotals}
+        calculateQty={calculateQty}
+      />
       {/* this component is hidden on phone-tablets */}
       <button
         onClick={() => setActive(!active)}
         className='lg:hidden fixed w-[300px] bottom-4 left-[50%] -translate-x-[50%] bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded font-bold uppercase  flex justify-around text-gray-200 tracking-wider'
       >
-        <span>Checkout</span>
-        <span>$434.12 </span>
+        <span>to checkout</span>
+        <span>${calculateSemitotals()} </span>
       </button>
       {active && (
         <ModalCheckout active={active} setActive={setActive}>
-          <RightColumn hideOnPhones={false} />
+          <RightColumn
+            hideOnPhones={false}
+            setActive={setActive}
+            calculateSemitotals={calculateSemitotals}
+            calculateQty={calculateQty}
+          />
         </ModalCheckout>
       )}
     </section>
