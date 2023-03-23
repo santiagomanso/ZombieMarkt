@@ -1,3 +1,4 @@
+import moment from 'moment'
 import orderModel from '../models/orderModel.js'
 import productModel from '../models/productModel.js'
 import userModel from '../models/userModel.js'
@@ -56,6 +57,7 @@ export const createOrder = async (req, res) => {
         quantity: orderItems.length, //NOTE quantity does not arrive from body
         price: price,
         orderItems: orderItems,
+        createdAt: moment().format('DD-MM-YYYY HH:mm'),
       })
 
       //PUSH ORDER TO EXISTING USER
@@ -74,7 +76,6 @@ export const createOrder = async (req, res) => {
       console.log('error', error)
       res.status(500).json({
         msg: 'Error while creating the oder',
-        error,
       })
     }
   }
