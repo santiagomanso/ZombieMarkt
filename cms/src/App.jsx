@@ -10,6 +10,8 @@ import DeletePage from './pages/deletePage/DeletePage'
 import UsersPage from './pages/users/UsersPage'
 import AllProducts from './pages/products/AllProducts'
 import OrdersPage from './pages/orders/OrdersPage'
+import UpdateWithParams from './pages/updatePage/UpdateWithParams'
+import CreatePageWithParams from './pages/createPage/CreatePageWithParams'
 
 const App = () => {
   return (
@@ -20,7 +22,9 @@ const App = () => {
           <Routes>
             <Route path='/' element={<HomePage />} />
             <Route path='/create' element={<CreatePage />} />
+            <Route path='/create/:id' element={<CreatePageWithParams />} />
             <Route path='/update' element={<UpdatePage />} />
+            <Route path='/update/:id' element={<UpdateWithParams />} />
             <Route path='/details/:id' element={<Details />} />
             <Route path='/delete' element={<DeletePage />} />
             <Route path='/users' element={<UsersPage />} />
