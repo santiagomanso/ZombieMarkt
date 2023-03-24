@@ -13,12 +13,35 @@ const UpdatePage = () => {
   const { productFromContext, setProductFromContext } =
     useContext(ProductContext)
 
-  const handleChange = (e) => {
+  const getCategoryByName = async (name) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5500/api/categories/${name}`,
+      )
+      if (data) {
+        return data.category
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  const handleChange = async (e) => {
+    console.log('e.target.name', e.target.name)
+    console.log('e.target.value', e.target.value)
+    if (e.target.name === 'category') {
+      const category = await getCategoryByName(e.target.value)
+      setProductFromContext({
+        ...productFromContext,
+        category: category,
+      })
+    } else {
+      setProductFromContext({
+        ...productFromContext,
+        [e.target.name]: e.target.value,
+      })
+    }
     setEnabled(true)
-    setProductFromContext({
-      ...productFromContext,
-      [e.target.name]: e.target.value,
-    })
   }
 
   const handleUpdate = async () => {
