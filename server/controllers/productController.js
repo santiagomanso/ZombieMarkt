@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary'
+import categoryModel from '../models/categoryModel.js'
 import productModel from '../models/productModel.js'
 
 //NOTE GET ALL
@@ -25,17 +26,19 @@ export const getAllProducts = async (req, res) => {
 //NOTE GET by category
 export const getProductsByCategory = async (req, res) => {
   // console.log('req.params', req.params)
-
   try {
-    const products = await productModel
-      .find({
-        categoryName: req.params.category,
+    const test = await categoryModel.findOne({ name: req.params.category })
+    if (test) {
+      const products = await productModel
+        .find({
+          category: test._id,
+        })
+        .populate({ path: 'category' })
+        .exec()
+      res.status(200).json({
+        products,
       })
-      .populate({ path: 'category' })
-      .exec()
-    res.status(200).json({
-      products,
-    })
+    }
   } catch (error) {
     res.status(500).json({
       msg: 'Fatal error',
@@ -47,7 +50,11 @@ export const getProductsByCategory = async (req, res) => {
 export const getProductsByName = async (req, res) => {
   const { name } = req.params
   try {
-    const products = await productModel.find({ name: { $regex: name } })
+    const products = await productModel
+      .find({ name: { $regex: name } })
+      .populate({
+        path: 'category',
+      })
     res.status(200).json(products)
   } catch (error) {
     res.status(400).json({
@@ -70,6 +77,7 @@ export const getProductById = async (req, res) => {
         .findById(_id)
         .populate({ path: 'comments.user', select: 'email image' })
         .populate({ path: 'favorites', select: 'email' })
+        .populate({ path: 'category' })
       res.status(200).json({
         product: product,
       })
@@ -84,7 +92,7 @@ export const getProductById = async (req, res) => {
 //NOTE GET BY EAN
 export const getProductsByEAN = async (req, res) => {
   const { ean } = req.params
-  console.log('EAN: ', ean)
+  // console.log('EAN: ', ean)
   try {
     const products = await productModel.find({ ean: ean })
     res.status(200).json(products)
@@ -103,7 +111,6 @@ export const postNewProduct = async (req, res) => {
     sku,
     category,
     countInStock,
-    categoryName,
     price,
     image,
     shelf,
@@ -112,20 +119,20 @@ export const postNewProduct = async (req, res) => {
 
   // console.log(req.body)
 
-  if (!name || !ean || !sku || !category || !countInStock || !price) {
-    res.status(400).json({
-      msg: 'error empty field/s detected',
-      fields: {
-        name: name,
-        ean: ean,
-        sku: sku,
-        category: category,
-        countInStock: countInStock,
-        price: price,
-      },
-    })
-    return
-  }
+  // if (!name || !ean || !sku || !category || !countInStock || !price) {
+  //   res.status(400).json({
+  //     msg: 'error empty field/s detected',
+  //     fields: {
+  //       name: name,
+  //       ean: ean,
+  //       sku: sku,
+  //       category: category,
+  //       countInStock: countInStock,
+  //       price: price,
+  //     },
+  //   })
+  //   return
+  // }
 
   // let imageUrl
   // if (req.file) {
@@ -138,9 +145,8 @@ export const postNewProduct = async (req, res) => {
   // console.log('req.body', req.body)
 
   try {
-    // console.log('ean', ean)
     const existingProduct = await productModel.findOne({ ean: ean })
-    // console.log('existingProduct->', existingProduct)
+
     if (existingProduct) {
       // console.log('error product already exists')
       res.status(501).json({ msg: 'error: product already exists' })
@@ -152,7 +158,6 @@ export const postNewProduct = async (req, res) => {
         countInStock: countInStock,
         price: price,
         image: image,
-        categoryName: categoryName,
         category: category,
         shelf: shelf,
         backstock: backstock,
@@ -186,9 +191,9 @@ export const postNewComment = async (req, res) => {
   const { comment } = req.body
   const { _id } = req.params
 
-  console.log('req.user', req.user)
-  console.log('comment', comment)
-  console.log('product._id', _id)
+  // console.log('req.user', req.user)
+  // console.log('comment', comment)
+  // console.log('product._id', _id)
 
   if (!comment) {
     res.status(400).json({
@@ -206,14 +211,14 @@ export const postNewComment = async (req, res) => {
   }
 
   if (product.comments.length > 0) {
-    console.log('product.comments', product.comments)
+    // console.log('product.comments', product.comments)
     //NOTE check if the user has already commented on the product
     const alreadyCommented = product.comments.some(
       (c) => c.user.toString() === req.user._id.toString(),
     )
 
     if (alreadyCommented) {
-      console.log('alreadyCommented', alreadyCommented)
+      // console.log('alreadyCommented', alreadyCommented)
       res.status(400).json({
         msg: "can't comment twice",
       })
@@ -319,7 +324,7 @@ export const updateProduct = async (req, res) => {
   if (price) newProduct.price = price
   if (backstock) newProduct.backstock = backstock
 
-  console.log('newProduct', newProduct)
+  // console.log('newProduct', newProduct)
 
   try {
     //try to get an existing product
