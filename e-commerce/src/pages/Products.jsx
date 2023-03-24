@@ -55,15 +55,16 @@ const ProductsPage = () => {
           </>
         ) : (
           <article className='flex flex-col items-center gap-2'>
-            <span className='text-3xl'>
+            <span className='text-xl lg:text-3xl'>
               Uh oh, looks like the zombies got to our{' '}
-              <span className='font-bold text-3xl'>{category}</span> category
-              before we did.
+              <span className='font-bold text-xl lg:text-3xl'>{category}</span>{' '}
+              category before we did.
             </span>
             <Link
-              to={`http://localhost:3006/create/`}
+              to={`http://localhost:3006/create/${category}`}
               target='_blank'
-              className='text-3xl bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded flex gap-1 items-baseline outline outline-2 outline-orange-900/40 px-6 py-4 text-gray-200'
+              className='text-lg lg:text-3xl bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded flex gap-1 items-baseline outline outline-2 outline-orange-900/40  
+              px-4 text-center lg:px-6 lg:py-4 text-gray-200'
             >
               Click here to add a new product and help us restock!
             </Link>

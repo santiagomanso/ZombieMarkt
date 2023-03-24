@@ -15,7 +15,7 @@ const RightContainer = ({
        ${relative ? 'relative' : ''}
        ${overflowHidden ? 'overflow-hidden' : ''}
        ${overflowAuto ? 'overflow-y-auto overflow-x-hidden' : ''}
-       ${justifyCenter ? 'justify-center' : ''}
+       ${justifyCenter ? 'lg:justify-center' : ''}
        `}
     >
       {children}

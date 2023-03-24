@@ -84,11 +84,11 @@ const LeftColumn = () => {
               className='bg-gradient-to-b from-slate-900 min-h-[150px] lg:min-h-[200px] flex rounded-lg border-[1px] outline outline-4 outline-amber-100/50 mt-6'
               key={item._id}
             >
-              <div className='w-1/4 h-full to-slate-800 rounded-lg'>
+              <div className='w-1/4 h-full to-slate-800 rounded-lg p-4'>
                 <img
                   src={item.image}
                   alt={item.name}
-                  className='w-full h-full object-scale-down rounded-lg -translate-y-[30px]'
+                  className='w-full h-full lg:max-w-[100px] object-scale-down rounded-lg lg:-translate-y-[30px]'
                 />
               </div>
               <div className='w-3/4 relative'>

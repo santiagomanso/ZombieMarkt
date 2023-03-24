@@ -61,7 +61,7 @@ const Profile = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer justifyCenter padding='lg:p-20'>
+      <RightContainer justifyCenter padding='py-20 lg:p-20'>
         {active === 'orders' ? (
           <Modal
             dataType='orders'
@@ -83,17 +83,17 @@ const Profile = () => {
           ''
         )}
         {user && (
-          <article className='w-full shadow-2xl rounded-lg flex outline outline-1 outline-gray-600 '>
-            <div className='w-1/3 h-full bg-gradient-to-tl rounded p-10'>
+          <article className='w-full shadow-2xl lg:rounded-lg flex flex-col lg:flex-row lg:outline lg:outline-1 lg:outline-gray-600 '>
+            <div className='w-full lg:w-1/3 h-full bg-gradient-to-tl rounded p-10'>
               <img
                 src={user.image}
                 alt={user.email}
                 className='w-full h-full object-scale-down rounded max-h-[500px]'
               />
             </div>
-            <div className='w-2/3 bg-gray-700/10 grid grid-cols-3  p-10 place-content-center gap-20'>
+            <div className='w-full lg:w-2/3 bg-gray-700/10 grid grid-cols-2 lg:grid-cols-3 px-2 py-3 lg:p-10 place-content-center gap-x-10 gap-y-5 lg:gap-20'>
               <div className='flex flex-col'>
-                <label className='font-medium' htmlFor='name'>
+                <label className='font-medium text-gray-100' htmlFor='name'>
                   Email
                 </label>
                 <input
@@ -105,7 +105,7 @@ const Profile = () => {
                 />
               </div>
               <div className='flex flex-col'>
-                <label className='font-medium' htmlFor='sku'>
+                <label className='font-medium text-gray-100' htmlFor='sku'>
                   Image
                 </label>
                 <input
@@ -116,18 +116,13 @@ const Profile = () => {
                   value={user.image}
                 />
               </div>
-              <div className='flex flex-col'>
-                <label className='font-medium' htmlFor='ean'>
-                  Joined on
-                </label>
-                <input
-                  readOnly={true}
-                  className='outline outline-1 outline-gray-300 text-gray-200 font-medium'
-                  type='text'
-                  name='ean'
-                  value={user.joined}
-                  disabled
-                />
+              <div className='flex flex-col order-last lg:order-none'>
+                <span className='font-medium text-gray-100' htmlFor='ean'>
+                  Joined
+                </span>
+                <span className='px-1 py-[0.35rem] rounded outline outline-1 outline-gray-300 font-medium bg-white text-gray-800'>
+                  {user.joined}
+                </span>
               </div>
               <div className='flex flex-col'>
                 <button
