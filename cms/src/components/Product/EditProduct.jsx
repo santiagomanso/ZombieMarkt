@@ -1,4 +1,27 @@
-const EditProduct = ({ product, handleChange }) => {
+import axios from 'axios'
+import { useState } from 'react'
+
+const EditProduct = ({ product, handleChange, stockOpt, labelOpt }) => {
+  const [categories, setCategories] = useState('')
+  const [loading, setLoading] = useState(false)
+
+  const handleFetch = async () => {
+    if (!categories) {
+      setLoading(true)
+      try {
+        const { data } = await axios.get(
+          'http://localhost:5500/api/categories/all',
+        )
+        if (data.categories) setCategories(data.categories)
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
+  }
+
   return (
     <article className='bg-gradient-to-tl from-gray-200 w-full outline outline-3 outline-red-500 rounded flex '>
       <div className='w-1/3 h-full bg-gradient-to-tl from-slate-400 p-10'>
@@ -40,12 +63,19 @@ const EditProduct = ({ product, handleChange }) => {
           />
         </div>
         <div className='flex flex-col'>
-          <label htmlFor='countInStock'>Stock</label>
+          <label
+            htmlFor='countInStock'
+            className={`${labelOpt ? labelOpt : ''}`}
+          >
+            Stock
+          </label>
           <input
             onChange={handleChange}
             type='number'
             name='countInStock'
-            className='outline outline-1 outline-gray-300'
+            className={`${
+              stockOpt ? stockOpt : 'outline outline-1 outline-gray-300'
+            }`}
             value={product.countInStock}
           />
         </div>
@@ -69,20 +99,25 @@ const EditProduct = ({ product, handleChange }) => {
             type='text'
             name='category'
             id='category'
-            disabled
+            onChange={handleChange}
+            onClick={handleFetch}
           >
-            <option value={product.category}>{product.category}</option>
-            <option value='bevergages'>bevergages</option>
-            <option value='snacks'>snacks</option>
-            <option value='fruits'>fruits</option>
-            <option value='vegetables'>vegetables</option>
-            <option value='household'>household</option>
-            <option value='breakfast'>breakfast</option>
-            <option value='meat'>meat</option>
-            <option value='sweet'>sweet</option>
-            <option value='icecream'>icecream</option>
-            <option value='books'>books</option>
-            <option value='hygiene'>hygiene</option>
+            <option value=''>{product?.category.name}</option>
+            {!loading && categories ? (
+              categories.map((item) => {
+                return (
+                  <option
+                    value={item.name}
+                    key={item._id}
+                    data-productid={item._id}
+                  >
+                    {item.name}
+                  </option>
+                )
+              })
+            ) : (
+              <option value='loading'>Loading . . .</option>
+            )}
           </select>
         </div>
         <div className='flex flex-col lg:col-span-1 w-full'>
