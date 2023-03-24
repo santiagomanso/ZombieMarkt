@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import useFetch from '../../hooks/UseFetch'
 import { useParams } from 'react-router-dom'
+import UseFetch from '../../hooks/UseFetch'
 
 const CreatePage = () => {
   const [newProduct, setNewProduct] = useState('')
@@ -11,6 +12,7 @@ const CreatePage = () => {
   const [enabled, setEnabled] = useState(false)
   const [categories, setCategories] = useState('')
   const [selectedCategory, setSelectedCategory] = useState('beverages')
+  const [loading, setLoading] = useState(false)
 
   //select
   const nameRef = useRef(null)
@@ -20,30 +22,68 @@ const CreatePage = () => {
     createProduct()
   }
 
-  const { data } = useFetch('http://localhost:5500/api/categories/all')
+  const { data } = UseFetch('http://localhost:5500/api/categories/all')
 
-  const handleChange = (e) => {
-    // console.log('selectedCategory', selectedCategory)
-    const category = categories.find((item) => {
-      return item.name === selectedCategory
-    })
-    setNewProduct({
-      ...newProduct,
-      [e.target.name]: e.target.value,
-      category: category?._id,
-    })
-    // console.log('newProduct', newProduct)
+  const handleFetch = async () => {
+    if (!categories) {
+      setLoading(true)
+      try {
+        const { data } = await axios.get(
+          'http://localhost:5500/api/categories/all',
+        )
+        if (data.categories) setCategories(data.categories)
+        setTimeout(() => {
+          setLoading(false)
+        }, 500)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
   }
 
-  const handleCategoryName = (e) => {
-    // console.log('e.target', e)
-    setSelectedCategory(e.target.value)
-    setNewProduct({ ...newProduct, [e.target.name]: e.target.value })
+  const getCategoryByName = async (name) => {
+    try {
+      const { data } = await axios.get(
+        `http://localhost:5500/api/categories/${name}`,
+      )
+      if (data) {
+        return data.category
+      }
+    } catch (error) {
+      console.log('error', error)
+    }
+  }
+
+  const handleChange = async (e) => {
+    if (e.target.name === 'category') {
+      const category = await getCategoryByName(e.target.value)
+      setNewProduct({
+        ...newProduct,
+        category: category,
+      })
+    } else {
+      setNewProduct({
+        ...newProduct,
+        [e.target.name]: e.target.value,
+      })
+    }
+    setEnabled(true)
+  }
+
+  const firstLoadCategory = async () => {
+    setNewProduct({
+      ...newProduct,
+      category: await getCategoryByName('beverages'),
+    })
   }
 
   useEffect(() => {
     if (data) setCategories(data.categories)
-    // console.log('categories', categories)
+
+    if (!newProduct.category) {
+      firstLoadCategory()
+    }
+
     validate()
   }, [data, newProduct])
 
@@ -79,15 +119,7 @@ const CreatePage = () => {
       formdata.append('name', newProduct.name)
       formdata.append('sku', newProduct.sku)
       formdata.append('ean', newProduct.ean)
-
-      //FIXME - default category beverages starts as undefined 08/03
-      if (!newProduct.categoryName) {
-        formdata.append('categoryName', 'beverages')
-      } else {
-        formdata.append('categoryName', newProduct.categoryName)
-      }
-
-      formdata.append('category', newProduct.category)
+      formdata.append('category', newProduct.category._id)
       formdata.append('price', newProduct.price)
       formdata.append('image', newProduct.image)
       formdata.append('countInStock', newProduct.countInStock)
@@ -212,26 +244,29 @@ const CreatePage = () => {
               <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
                 <label htmlFor='category'>category</label>
                 <select
-                  className='bg-gray-100 outline outline-1 outline-gray-300'
-                  type='number'
-                  value={selectedCategory}
-                  name='categoryName'
+                  readOnly={true}
+                  className='bg-white outline outline-1 outline-gray-300'
+                  type='text'
+                  name='category'
                   id='category'
-                  onChange={handleCategoryName}
+                  onChange={handleChange}
+                  onClick={handleFetch}
                 >
-                  {categories.length > 0
-                    ? categories.map((item) => {
-                        return (
-                          <option
-                            value={item.name}
-                            key={item._id}
-                            data-productid={item._id}
-                          >
-                            {item.name}
-                          </option>
-                        )
-                      })
-                    : ''}
+                  {!loading && categories ? (
+                    categories.map((item) => {
+                      return (
+                        <option
+                          value={item.name}
+                          key={item._id}
+                          data-productid={item._id}
+                        >
+                          {item.name}
+                        </option>
+                      )
+                    })
+                  ) : (
+                    <option value='loading'>Loading . . .</option>
+                  )}
                 </select>
               </div>
               <div className='flex flex-col col-span-3 lg:col-span-1 w-full'>
