@@ -186,6 +186,9 @@ export const getUserProfile = async (req, res) => {
         path: 'favorites',
         model: 'product',
         select: '_id name image category categoryName price',
+        populate: {
+          path: 'category',
+        },
       })
       .exec()
     if (user) {
