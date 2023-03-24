@@ -8,6 +8,7 @@ const Item = ({
   redirectToDetail,
   shortName,
 }) => {
+  //function to check which path the <Link> component should use
   const checkPath = () => {
     switch (true) {
       case redirectToDetail && item.countInStock > 0:
@@ -18,7 +19,7 @@ const Item = ({
       }
 
       case item.countInStock === 0: {
-        return `http://localhost:3006/update`
+        return `http://localhost:3006/update/${item._id}`
       }
 
       default:
@@ -26,6 +27,7 @@ const Item = ({
     }
   }
 
+  //function to check if it should open in a new tab or not
   const checkTarget = () => {
     switch (true) {
       case redirectToDetail && item.countInStock > 0:
