@@ -50,13 +50,15 @@ const CheckoutGrid = () => {
         calculateQty={calculateQty}
       />
       {/* this component is hidden on phone-tablets */}
-      <button
-        onClick={() => setActive(!active)}
-        className='lg:hidden fixed w-[300px] bottom-4 left-[50%] -translate-x-[50%] bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded font-bold uppercase  flex justify-around text-gray-200 tracking-wider'
-      >
-        <span>to checkout</span>
-        <span>${calculateSemitotals()} </span>
-      </button>
+      {cart.length > 0 && (
+        <button
+          onClick={() => setActive(!active)}
+          className='lg:hidden fixed w-[300px] bottom-4 left-[50%] -translate-x-[50%] bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded font-bold uppercase  flex justify-around text-gray-200 tracking-wider'
+        >
+          <span>to checkout</span>
+          <span>${calculateSemitotals()} </span>
+        </button>
+      )}
       {active && (
         <ModalCheckout active={active} setActive={setActive}>
           <RightColumn
