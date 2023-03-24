@@ -30,7 +30,7 @@ const OrdersPage = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    console.log('productFromContext', productFromContext)
+    // console.log('productFromContext', productFromContext)
 
     try {
       await axios.put(

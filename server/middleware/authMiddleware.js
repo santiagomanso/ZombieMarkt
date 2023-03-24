@@ -3,7 +3,7 @@ import userModel from '../models/userModel.js'
 
 const authMiddleware = async (req, res, next) => {
   // console.log('req', req)
-  console.log(req.headers.authorization)
+  // console.log(req.headers.authorization)
   let token
   if (
     req.headers.authorization &&

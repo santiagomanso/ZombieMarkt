@@ -27,8 +27,8 @@ export const googleLogin = async (req, res) => {
 }
 
 export const currentUser = async (req, res) => {
-  console.log('req.user', req.user)
-  console.log('req.session', req.session)
+  // console.log('req.user', req.user)
+  // console.log('req.session', req.session)
   res.status(200).json({
     user: req.user,
     token: req.session.token,
