@@ -12,19 +12,19 @@ export const sampleProducts = [
     categoryName: 'beverages',
     category: '63f35eef60bb4581cd3a7a54',
   },
-  // {
-  //   name: 'lays salt & vinegar 120g',
-  //   sku: 2431313,
-  //   ean: 123123435,
-  //   countInStock: 3,
-  //   price: 1.21,
-  //   rating: 3.5,
-  //   numReviews: 1,
-  //   image:
-  //     'https://lays.de/images/default-source/default-album/products/packshots/1.-core-nutri/03-core-saltvinegar.png?sfvrsn=9d67efa5_2',
-  // categoryName:'beverages',//
-  // category: 'snacks',
-  // },
+  {
+    name: 'lays salt & vinegar 120g',
+    sku: 2431313,
+    ean: 123123435,
+    countInStock: 3,
+    price: 1.21,
+    rating: 3.5,
+    numReviews: 1,
+    image:
+      'https://lays.de/images/default-source/default-album/products/packshots/1.-core-nutri/03-core-saltvinegar.png?sfvrsn=9d67efa5_2',
+    categoryName: 'beverages', //
+    category: 'snacks',
+  },
   {
     name: 'pepsi cola 333 dose',
     sku: 132343,
