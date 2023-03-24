@@ -125,7 +125,11 @@ const AllProducts = () => {
           {products ? (
             products.map((product, index) => {
               return (
-                <div
+                <article
+                  onDoubleClick={() => {
+                    setProductFromContext(product)
+                    window.location.href = 'http://localhost:3006/update'
+                  }}
                   className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
                       ? 'bg-gradient-to-tl from-purple-500/80  to-slate-900/80 outline-sky-900'
@@ -150,7 +154,7 @@ const AllProducts = () => {
                       Comments: {product.comments.length}
                     </span>
                   </div>
-                </div>
+                </article>
               )
             })
           ) : (
