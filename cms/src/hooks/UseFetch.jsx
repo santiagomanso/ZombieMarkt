@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 
-const useFetch = (url) => {
+const UseFetch = (url) => {
   const [loading, setLoading] = useState('')
   const [data, setData] = useState('')
   const [error, setError] = useState('')
@@ -32,4 +32,6 @@ const useFetch = (url) => {
   return { loading, data, error }
 }
 
-export default useFetch
+//FIXME - research custom fetch hook apollo react}
+//FIXME . https://www.apollographql.com/docs/react/api/react/hooks#uselazyquery
+export default UseFetch
