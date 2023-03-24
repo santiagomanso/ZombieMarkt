@@ -47,7 +47,7 @@ const Product = ({
           </p>
         </div>
         <div className='grid grid-cols-3'>
-          <span className='font-medium'>{product.category}</span>
+          <span className='font-medium'>{product.category.name}</span>
           <p>
             Stock: #
             <span className='font-semibold'>{product.countInStock}</span>
