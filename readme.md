@@ -2,7 +2,7 @@
 
 ## Description
 
-### These are **two** front end applications e-commerce + **inventory manager**(CRUD), that together emulates on a very small scale how i imagine a proper shopping application works. on One hand the **Inventory Manager** perfoms CRUD operations such as creating products, edit them, and deleting products; and the **e-commerce** creates an order entry and creates users
+### These are **two** front end applications e-commerce + **inventory manager**(CRUD), that interacts between each other via a third application, a nodeJs rest api server; all together emulates on a very small scale how i imagine a propper shopping application works. on One hand the **Inventory Manager** perfoms CRUD operations such as creating products, edit them, and deleting products; and the **e-commerce** creates an order entry and creates users
 
 ---
 
@@ -26,7 +26,7 @@
 
 ---
 
-## _Application C_ - **Node server - Backend**
+## _Application C_ - **Node server - Backend**💾
 
 ### The **server** side of my Zombiemakrt app (MongoDB, Express, React, Node.js) application is built using _Node.js_ with _Express_ framework. It serves functions based on different endpoints, which are implemented following the **REST** (Representational State Transfer) architectural style; and by using _mongoose's_ schemas and methods perfom the necessary operations to push, edit or delete documents in the mongoDB database.
 
