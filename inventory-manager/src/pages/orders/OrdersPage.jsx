@@ -2,16 +2,17 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import Modal from '../../components/modal/Modal'
+
 import EditProduct from '../../components/Product/EditProduct'
 import { ProductContext } from '../../context/ProductContext'
 import useFetch from '../../hooks/UseFetch'
 
-const AllProducts = () => {
+const OrdersPage = () => {
   const [active, setActive] = useState(false) //modal logic
   const [enabled, setEnabled] = useState(false) //update button logic
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
-  const [products, setProducts] = useState([])
+  const [orders, setOrders] = useState([])
   const { productFromContext, setProductFromContext } =
     useContext(ProductContext)
 
@@ -29,7 +30,7 @@ const AllProducts = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    console.log('productFromContext', productFromContext)
+    // console.log('productFromContext', productFromContext)
 
     try {
       await axios.put(
@@ -50,11 +51,11 @@ const AllProducts = () => {
   }
 
   //TODO evaluate if the product has indeed change the values or not in order to enable update button
-  const { data } = useFetch('http://localhost:5500/api/products/all')
+  const { data } = useFetch('http://localhost:5500/api/orders/all')
 
   useEffect(() => {
-    setProducts(data.products)
-    console.log('products', products)
+    setOrders(data.orders)
+    // console.log('users', orders)
 
     return () => {}
   }, [data])
@@ -110,51 +111,47 @@ const AllProducts = () => {
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
         </section>
-        {products && (
+        {orders && (
           <span className='mt-5 text-xl text-slate-600 font-medium'>
-            Products:{products.length}
+            Orders:{orders.length}
           </span>
         )}
         <section
           className={`py-0  px-0 md:px-14 md:py-10 overflow-auto rounded  bg-white   grid duration-500 outline outline-1 outline-gray-300 shadow-md ${
-            products
-              ? 'grid-cols-1 lg:grid-cols-3 mt-1 h-[700px] gap-20'
+            orders
+              ? 'grid-cols-1 lg:grid-cols-2 mt-1 h-[700px] gap-20'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5 h-[500px]'
           } `}
         >
-          {products ? (
-            products.map((product, index) => {
+          {orders ? (
+            orders.map((order, index) => {
               return (
-                <article
-                  onDoubleClick={() => {
-                    setProductFromContext(product)
-                    window.location.href = 'http://localhost:3006/update'
-                  }}
+                <div
+                  key={index}
                   className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
-                      ? 'bg-gradient-to-tl from-purple-500/80  to-slate-900/80 outline-sky-900'
-                      : 'bg-gradient-to-br from-indigo-500/80 to-slate-800/80 outline-violet-800'
+                      ? 'bg-gradient-to-tl from-slate-500/80 via-neutral-600/70 to-gray-900/80 outline-sky-900'
+                      : 'bg-gradient-to-br from-rose-500/80 to-fuchsia-700/80 outline-violet-800'
                   }`}
                 >
-                  <div className='h-full w-1/3'>
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className='h-full object-scale-down'
-                    />
+                  <div className='flex items-center p-2'>
+                    <i className='fa-regular fa-folder-open text-6xl text-gray-200'></i>
                   </div>
-                  <div className='grid grid-cols-2 gap-x-10 p-5 w-2/3'>
-                    <span className='text-2xl font-medium text-white'>
-                      {product.name}
+                  <div className='grid grid-cols-2 gap-x-10 p-5'>
+                    <span className='text-2xl font-medium text-gray-200'>
+                      {order.user.email}
                     </span>
-                    <span className='text-2xl font-medium text-white'>
-                      ${product.price}
+                    <span className='text-2xl font-medium text-gray-200'>
+                      {order.createdAt}
                     </span>
-                    <span className='text-2xl font-medium text-white'>
-                      Comments: {product.comments.length}
+                    <span className='text-2xl font-medium text-gray-200'>
+                      Items: {order.quantity}
+                    </span>
+                    <span className='text-2xl font-medium text-gray-200'>
+                      ${order.price}
                     </span>
                   </div>
-                </article>
+                </div>
               )
             })
           ) : (
@@ -163,18 +160,9 @@ const AllProducts = () => {
             </p>
           )}
         </section>
-
-        <div className='flex justify-center'>
-          <input
-            type='button'
-            value='Check in'
-            className={` bottom-4 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12                  
-                text-white font-bold text-lg`}
-          />
-        </div>
       </main>
     </>
   )
 }
 
-export default AllProducts
+export default OrdersPage

@@ -2,17 +2,16 @@ import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import Modal from '../../components/modal/Modal'
-
 import EditProduct from '../../components/Product/EditProduct'
 import { ProductContext } from '../../context/ProductContext'
 import useFetch from '../../hooks/UseFetch'
 
-const OrdersPage = () => {
+const UsersPage = () => {
   const [active, setActive] = useState(false) //modal logic
   const [enabled, setEnabled] = useState(false) //update button logic
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')
-  const [orders, setOrders] = useState([])
+  const [users, setUsers] = useState([])
   const { productFromContext, setProductFromContext } =
     useContext(ProductContext)
 
@@ -30,7 +29,7 @@ const OrdersPage = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    // console.log('productFromContext', productFromContext)
+    console.log('productFromContext', productFromContext)
 
     try {
       await axios.put(
@@ -51,11 +50,11 @@ const OrdersPage = () => {
   }
 
   //TODO evaluate if the product has indeed change the values or not in order to enable update button
-  const { data } = useFetch('http://localhost:5500/api/orders/all')
+  const { data } = useFetch('http://localhost:5500/api/users/all')
 
   useEffect(() => {
-    setOrders(data.orders)
-    // console.log('users', orders)
+    setUsers(data.users)
+    console.log('users', users)
 
     return () => {}
   }, [data])
@@ -111,44 +110,42 @@ const OrdersPage = () => {
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
         </section>
-        {orders && (
+        {users && (
           <span className='mt-5 text-xl text-slate-600 font-medium'>
-            Orders:{orders.length}
+            Users:{users.length}
           </span>
         )}
         <section
           className={`py-0  px-0 md:px-14 md:py-10 overflow-auto rounded  bg-white   grid duration-500 outline outline-1 outline-gray-300 shadow-md ${
-            orders
-              ? 'grid-cols-1 lg:grid-cols-2 mt-1 h-[700px] gap-20'
+            users
+              ? 'grid-cols-1 lg:grid-cols-3 mt-1 h-[700px] gap-20'
               : 'grid-cols-1 place-items-center mt-6 sm:mt-1 lg:mt-5 h-[500px]'
           } `}
         >
-          {orders ? (
-            orders.map((order, index) => {
+          {users ? (
+            users.map((user, index) => {
               return (
                 <div
-                  key={index}
                   className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
-                      ? 'bg-gradient-to-tl from-slate-500/80 via-neutral-600/70 to-gray-900/80 outline-sky-900'
+                      ? 'bg-gradient-to-tl from-sky-500/80 via-violet-500/70 to-purple-900/80 outline-sky-900'
                       : 'bg-gradient-to-br from-rose-500/80 to-fuchsia-700/80 outline-violet-800'
                   }`}
                 >
-                  <div className='flex items-center p-2'>
-                    <i className='fa-regular fa-folder-open text-6xl text-gray-200'></i>
+                  <div className='h-full'>
+                    <img
+                      src={user.image}
+                      alt={user.email}
+                      className='h-full object-scale-down'
+                    />
                   </div>
-                  <div className='grid grid-cols-2 gap-x-10 p-5'>
-                    <span className='text-2xl font-medium text-gray-200'>
-                      {order.user.email}
+                  <div className='grid grid-cols-1 gap-0 p-5'>
+                    <span className='text-2xl font-medium'>{user.email}</span>
+                    <span className='text-2xl font-medium'>
+                      Orders: {user.orders.length}
                     </span>
-                    <span className='text-2xl font-medium text-gray-200'>
-                      {new Date(order.createdAt).toLocaleString('en-GB')}
-                    </span>
-                    <span className='text-2xl font-medium text-gray-200'>
-                      Items: {order.quantity}
-                    </span>
-                    <span className='text-2xl font-medium text-gray-200'>
-                      ${order.price}
+                    <span className='text-2xl font-medium'>
+                      Joined: {user.joined}
                     </span>
                   </div>
                 </div>
@@ -160,18 +157,9 @@ const OrdersPage = () => {
             </p>
           )}
         </section>
-
-        <div className='flex justify-center'>
-          <input
-            type='button'
-            value='Check in'
-            className={` bottom-4 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12                  
-                text-white font-bold text-lg`}
-          />
-        </div>
       </main>
     </>
   )
 }
 
-export default OrdersPage
+export default UsersPage

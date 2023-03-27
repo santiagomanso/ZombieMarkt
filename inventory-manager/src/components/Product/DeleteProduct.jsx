@@ -56,7 +56,7 @@ const DeleteProduct = ({ product, handleChange }) => {
             Category
           </label>
           <span className='outline outline-1 outline-gray-300 lg:text-2xl p-3 bg-slate-400 rounded-md text-white font-semibold'>
-            {product.category}
+            {product.category.name}
           </span>
         </div>
       </div>
