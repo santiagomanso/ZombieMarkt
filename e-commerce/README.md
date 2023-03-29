@@ -32,6 +32,41 @@ tailwindcss: A utility-first CSS framework that provides a set of pre-defined CS
 
 ---
 
+### 🔥**reuse components on different pages**: by passing props like arrays or even tailwind styling i managed to reuse some component like modals, grids (with items), headers, containers. It was so satisfying when this came together. the following diagram showcase some of the examples i mentioned above. _i still have to study higher order components HOC_
+
+<img src="https://raw.githubusercontent.com/santiagomanso/ZombieMarkt/main/e-commerce/e-commerce_reusable-components.drawio.png"
+     alt="reusable-components" />
+
+### one can see here how the page, details, home and profile page are all sending different props such as padding, relative (for absolute positioning) overflows, gap to the rightContainer component. and on the example below the first chart; we see how the cartPage and the homePage are sending different props to a component called itemList (a grid), that is also passing the same props to its children (item), i know that this is called **prop tunneling**, and it's not meant to be done all over the app, maybe this would be a case for a _HOC_. both pages send different arrays and get the ITEM to behave different, on home page the array passed to itemList is an array of categories with the prop redirectToDetail false, so that results in the <Item> component rendering all categories and redirecting to the product detalis with the name of the category
+
+Products.jsx
+
+```
+  const checkPath = () => {
+    switch (true) {
+      case redirectToDetail && item.countInStock > 0:
+        return `/products/details/${item._id}`
+
+      case redirectToDetail === false: {
+        return item.path
+      }
+
+      case item.countInStock === 0: {
+        return `http://localhost:3006/update/${item._id}`
+      }
+
+      default:
+        return ''
+    }
+  }
+```
+
+### _another important feature i want to showcase that makes me proud of, is that when the stock of the product is 0 the item redirect to the inventory-manager for the sole purpose of re-stocking the item (check-it out!)_.
+
+### **on the products page**, the array is a result of fetching all products by category and passing to itemList, the <Item> component will now redirect to the detail alongside the product.\_id thanks to redirectToDetail beeing passed to the <ItemList>.
+
+---
+
 ### 🔥**Google Oauth2.0 implementation** : to achieve the popular login using google, i added the same button i used on my rich-simulator app, the functionallity is the following: the button triggers a function that resides on the userContext component. Problem: react-router-dom does not provide functionallity to redirect to an external url (outside of the localhost), so i had to use the window.location
 
 src/store/userContext.jsx
