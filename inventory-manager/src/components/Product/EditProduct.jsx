@@ -10,7 +10,7 @@ const EditProduct = ({ product, handleChange, stockOpt, labelOpt }) => {
       setLoading(true)
       try {
         const { data } = await axios.get(
-          'http://localhost:5500/api/categories/all',
+          `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
         )
         if (data.categories) setCategories(data.categories)
         setTimeout(() => {

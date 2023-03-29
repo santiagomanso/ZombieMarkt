@@ -9,9 +9,9 @@ const getProducts = (arg, setData, setError) => {
   }
 
   if (isStrOrNum(arg) === 'string') {
-    fetchData(`http://localhost:5500/api/products/name/${arg}`)
+    fetchData(`${process.env.REACT_APP_SERVER_URL}/api/products/name/${arg}`)
   } else {
-    fetchData(`http://localhost:5500/api/products/ean/${arg}`)
+    fetchData(`${process.env.REACT_APP_SERVER_URL}/api/products/ean/${arg}`)
   }
 }
 

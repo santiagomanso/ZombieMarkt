@@ -25,7 +25,7 @@ const OrdersPage = () => {
 
     try {
       await axios.put(
-        `http://localhost:5500/api/products/update/${productFromContext._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/products/update/${productFromContext._id}`,
         productFromContext,
         { headers: myHeaders },
       )
@@ -42,7 +42,9 @@ const OrdersPage = () => {
   }
 
   //TODO evaluate if the product has indeed change the values or not in order to enable update button
-  const { data } = useFetch('http://localhost:5500/api/orders/all')
+  const { data } = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/orders/all`,
+  )
 
   useEffect(() => {
     setOrders(data.orders)

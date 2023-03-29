@@ -12,7 +12,7 @@ const ProductsPage = () => {
   const { category } = useParams()
   const [products, setProducts] = useState([])
 
-  const url = `http://localhost:5500/api/products/category/${category}`
+  const url = `${process.env.REACT_APP_SERVER_URL}/api/products/category/${category}`
 
   const { loading, data } = useFetch(url)
 

@@ -23,7 +23,7 @@ const UpdateWithParams = () => {
   const getCategoryByName = async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5500/api/categories/${name}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/categories/${name}`,
       )
       if (data) {
         return data.category
@@ -35,7 +35,7 @@ const UpdateWithParams = () => {
 
   const fetchData = async (id) => {
     const { data } = await axios.get(
-      `http://localhost:5500/api/products/detail/${id}`,
+      `${process.env.REACT_APP_SERVER_URL}/api/products/detail/${id}`,
     )
     if (data) setProductFromContext(data.product)
   }
@@ -72,7 +72,7 @@ const UpdateWithParams = () => {
 
     try {
       await axios.put(
-        `http://localhost:5500/api/products/update/${productFromContext._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/products/update/${productFromContext._id}`,
         productFromContext,
         { headers: myHeaders },
       )

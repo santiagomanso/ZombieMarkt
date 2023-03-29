@@ -21,14 +21,16 @@ const CreatePageWithParams = () => {
     createProduct()
   }
 
-  const { data } = UseFetch('http://localhost:5500/api/categories/all')
+  const { data } = UseFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
+  )
 
   const handleFetch = async () => {
     if (!categories) {
       setLoading(true)
       try {
         const { data } = await axios.get(
-          'http://localhost:5500/api/categories/all',
+          `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
         )
         if (data.categories) setCategories(data.categories)
         setTimeout(() => {
@@ -43,7 +45,7 @@ const CreatePageWithParams = () => {
   const getCategoryByName = async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5500/api/categories/${name}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/categories/${name}`,
       )
       if (data) {
         return data.category
@@ -133,7 +135,7 @@ const CreatePageWithParams = () => {
 
       try {
         const response = await fetch(
-          'http://localhost:5500/api/products/create',
+          `${process.env.REACT_APP_SERVER_URL}/api/products/create`,
           requestOptions,
         )
 

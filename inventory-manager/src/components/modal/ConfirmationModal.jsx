@@ -33,7 +33,9 @@ const ConfirmationModal = ({
   const handleDelete = async (id) => {
     if (!enable) return
     try {
-      await axios.delete(`http://localhost:5500/api/products/delete/${id}`)
+      await axios.delete(
+        `${process.env.REACT_APP_SERVER_URL}/api/products/delete/${id}`,
+      )
       setMsg('Product was sucessfully deleted')
       setActiveConfirmation(false)
       setProductFromContext('')

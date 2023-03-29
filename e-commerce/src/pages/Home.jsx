@@ -7,7 +7,9 @@ import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
 
 const HomePage = () => {
-  const { loading, data } = useFetch('http://localhost:5500/api/categories/all')
+  const { loading, data } = useFetch(
+    `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
+  )
 
   return (
     <MainContainer>

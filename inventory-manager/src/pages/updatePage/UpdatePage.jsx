@@ -16,7 +16,7 @@ const UpdatePage = () => {
   const getCategoryByName = async (name) => {
     try {
       const { data } = await axios.get(
-        `http://localhost:5500/api/categories/${name}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/categories/${name}`,
       )
       if (data) {
         return data.category
@@ -54,7 +54,7 @@ const UpdatePage = () => {
 
     try {
       await axios.put(
-        `http://localhost:5500/api/products/update/${productFromContext._id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/products/update/${productFromContext._id}`,
         productFromContext,
         { headers: myHeaders },
       )

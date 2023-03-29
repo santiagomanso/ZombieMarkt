@@ -15,7 +15,7 @@ const UserProvider = ({ children }) => {
     // console.log('newUser', newUser)
     try {
       const { data } = await axios.post(
-        'http://localhost:5500/api/users/create',
+        `${process.env.REACT_APP_SERVER_URL}/api/users/create`,
         newUser,
       )
       // console.log('data', data)
@@ -34,7 +34,7 @@ const UserProvider = ({ children }) => {
     // console.log('userObj', userObj)
     try {
       const { data } = await axios.post(
-        'http://localhost:5500/api/auth/login',
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
         userObj,
       )
       // console.log('data.user', data.user)
@@ -57,14 +57,14 @@ const UserProvider = ({ children }) => {
 
   //NOTE google oauth can't use RRD to redirect outside of localhost so window.location
   const loginGoogle = () => {
-    window.location.href = 'http://localhost:5500/api/auth/google'
+    window.location.href = `${process.env.REACT_APP_SERVER_URL}/api/auth/google`
   }
 
   //NOTE login with token
   const loginWithToken = async (token) => {
     try {
       const { data } = await axios.post(
-        'http://localhost:5500/api/auth/loginWithToken',
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/loginWithToken`,
         { token },
       )
       // console.log('data.user', data.user)

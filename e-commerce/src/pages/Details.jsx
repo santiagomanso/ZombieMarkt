@@ -31,7 +31,7 @@ const ProductDetail = () => {
 
   //custom hook for fetching
   const { loading, data } = useFetch(
-    `http://localhost:5500/api/products/detail/${_id}`,
+    `${process.env.REACT_APP_SERVER_URL}/api/products/detail/${_id}`,
   )
 
   //MAIN STATE PRODUCT
@@ -96,7 +96,7 @@ const ProductDetail = () => {
 
         try {
           const { data } = await axios.post(
-            `http://localhost:5500/api/products/newComment/${_id}`,
+            `${process.env.REACT_APP_SERVER_URL}/api/products/newComment/${_id}`,
             body,
             headers,
           )
@@ -132,7 +132,7 @@ const ProductDetail = () => {
     } else {
       try {
         const { data } = await axios.post(
-          `http://localhost:5500/api/users/newFavoriteProduct/${_id}`,
+          `${process.env.REACT_APP_SERVER_URL}/api/users/newFavoriteProduct/${_id}`,
           null,
           {
             headers: {
