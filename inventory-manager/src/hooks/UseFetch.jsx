@@ -5,6 +5,7 @@ const UseFetch = (url) => {
   const [loading, setLoading] = useState('')
   const [data, setData] = useState('')
   const [error, setError] = useState('')
+  //eslint-disable-next-line
   const [msg, setMsg] = useState('')
 
   useEffect(() => {

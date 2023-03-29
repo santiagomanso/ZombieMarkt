@@ -26,7 +26,6 @@ const Login = () => {
   //component states
   const [error, setError] = useState('')
   const [newUser, setNewUser] = useState(null)
-  const [active, setActive] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
   const handleSubmit = async (e) => {
@@ -38,21 +37,14 @@ const Login = () => {
     switch (true) {
       case object === null: {
         setError('ERROR - Complete all fields')
-        setActive(false)
         // console.log('null object')
         break
       }
 
       case !object.email || !object.password: {
         setError('ERROR - Complete all fields')
-        setActive(false)
         console.log('empty fields')
         break
-      }
-
-      case object.email && object.password: {
-        // console.log('all good')
-        return setActive(true)
       }
 
       //submit to userContext and trigger create user function only when everything goes ok
@@ -88,6 +80,7 @@ const Login = () => {
         }
       }
     }, 1200)
+    //eslint-disable-next-line
   }, [user])
 
   const handleShowPassword = () => {

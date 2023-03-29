@@ -1,18 +1,14 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   getPathFromStorage,
   removePathFromStorage,
 } from '../utils/localStoragePaths'
-import { UserContext } from './UserContext'
 
 export const RedirectContext = createContext()
 
 export const RedirectProvider = (props) => {
   const [path, setPath] = useState('')
-
-  //extraction of user from userContext
-  const { user } = useContext(UserContext)
 
   //navigate hook
   const navigate = useNavigate()
@@ -27,6 +23,7 @@ export const RedirectProvider = (props) => {
       navigate(pathFromStorage)
       removePathFromStorage()
     }
+    //eslint-disable-next-line
   }, [])
 
   return (

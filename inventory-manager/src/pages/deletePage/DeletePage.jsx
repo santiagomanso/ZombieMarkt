@@ -1,15 +1,14 @@
-import axios from 'axios'
 import { useContext, useEffect, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import ConfirmationModal from '../../components/modal/ConfirmationModal'
 import Modal from '../../components/modal/Modal'
 import DeleteProduct from '../../components/Product/DeleteProduct'
-import EditProduct from '../../components/Product/EditProduct'
 import { ProductContext } from '../../context/ProductContext'
 
 const DeletePage = () => {
   const [active, setActive] = useState(false) //modal logic
   const [activeConfirmation, setActiveConfirmation] = useState(false) //modal confirmation logic
+  //eslint-disable-next-line
   const [enabled, setEnabled] = useState(false) //button logic
   const [error, setError] = useState('')
   const [msg, setMsg] = useState('')

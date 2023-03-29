@@ -7,6 +7,7 @@ const Navbar = () => {
   const location = useLocation()
   useEffect(() => {
     changeTitle()
+    //eslint-disable-next-line
   }, [location])
 
   const changeTitle = () => {

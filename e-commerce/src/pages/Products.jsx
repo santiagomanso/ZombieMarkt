@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Header from '../components/header/Header'
 import MainContainer from '../components/containers/MainContainer'
@@ -10,12 +10,11 @@ import { useEffect, useState } from 'react'
 
 const ProductsPage = () => {
   const { category } = useParams()
-  const navigate = useNavigate()
   const [products, setProducts] = useState([])
 
   const url = `http://localhost:5500/api/products/category/${category}`
 
-  const { loading, data, error } = useFetch(url)
+  const { loading, data } = useFetch(url)
 
   useEffect(() => {
     if (data) setProducts(data.products)

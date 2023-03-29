@@ -75,6 +75,7 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     setCartToStorage()
+    //eslint-disable-next-line
   }, [cart])
 
   //provider object

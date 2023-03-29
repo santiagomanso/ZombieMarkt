@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { useEffect, useRef, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
-import useFetch from '../../hooks/UseFetch'
-import { useParams } from 'react-router-dom'
 import UseFetch from '../../hooks/UseFetch'
 
 const CreatePage = () => {
@@ -11,6 +9,7 @@ const CreatePage = () => {
   const [msg, setMsg] = useState('')
   const [enabled, setEnabled] = useState(false)
   const [categories, setCategories] = useState('')
+  //eslint-disable-next-line
   const [selectedCategory, setSelectedCategory] = useState('beverages')
   const [loading, setLoading] = useState(false)
 
@@ -85,6 +84,7 @@ const CreatePage = () => {
     }
 
     validate()
+    //eslint-disable-next-line
   }, [data, newProduct])
 
   const validate = () => {

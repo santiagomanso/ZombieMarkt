@@ -19,6 +19,7 @@ const ConfirmationModal = ({
       }
     }
     document.documentElement.addEventListener('keydown', detectKeyDown)
+    //eslint-disable-next-line
   }, [])
 
   const handleChange = (e) => {

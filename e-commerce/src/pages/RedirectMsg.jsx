@@ -26,6 +26,7 @@ const RedirectMsg = () => {
     return () => {
       clearInterval(timerId.current)
     }
+    //eslint-disable-next-line
   }, [seconds])
 
   return (

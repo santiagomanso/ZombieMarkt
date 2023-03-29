@@ -179,6 +179,7 @@ const ProductDetail = () => {
     }
 
     if (isProductOnCart) setActive(false)
+    //eslint-disable-next-line
   }, [data, isProductOnCart, favoritesArray])
 
   return (

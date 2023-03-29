@@ -23,6 +23,7 @@ const ModalCheckout = ({ active, setActive, children }) => {
       document.removeEventListener('mousedown', handler)
     }
     // console.log('dataType', dataType)
+    //eslint-disable-next-line
   }, [])
 
   if (!active) return ''

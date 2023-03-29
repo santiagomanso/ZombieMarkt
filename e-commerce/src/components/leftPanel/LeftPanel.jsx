@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import zombie from '../../assets/zombie2.png'
 import zombieCalculate from '../../assets/zombieCalculate.png'
@@ -6,7 +6,6 @@ import { AnimationContext } from '../../store/AnimationContext'
 
 const LeftPanel = ({
   imgTop,
-  imgBot,
   title,
   subtitle,
   topImgOpt,

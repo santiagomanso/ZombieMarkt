@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { ProductContext } from '../../context/ProductContext'
 
 const Product = ({
@@ -10,8 +10,7 @@ const Product = ({
   setActive,
   setInput,
 }) => {
-  const { productFromContext, setProductFromContext } =
-    useContext(ProductContext)
+  const { setProductFromContext } = useContext(ProductContext)
 
   const handleAdd = () => {
     setError('')

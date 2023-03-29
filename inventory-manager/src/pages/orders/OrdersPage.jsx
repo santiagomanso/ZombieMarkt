@@ -3,7 +3,6 @@ import { useContext, useEffect, useState } from 'react'
 import FloatingMsg from '../../components/floatingMsg/FloatingMsg'
 import Modal from '../../components/modal/Modal'
 
-import EditProduct from '../../components/Product/EditProduct'
 import { ProductContext } from '../../context/ProductContext'
 import useFetch from '../../hooks/UseFetch'
 
@@ -15,14 +14,6 @@ const OrdersPage = () => {
   const [orders, setOrders] = useState([])
   const { productFromContext, setProductFromContext } =
     useContext(ProductContext)
-
-  const handleChange = (e) => {
-    setEnabled(true)
-    setProductFromContext({
-      ...productFromContext,
-      [e.target.name]: e.target.value,
-    })
-  }
 
   const handleUpdate = async () => {
     if (!enabled) return

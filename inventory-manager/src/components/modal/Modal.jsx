@@ -27,6 +27,7 @@ const Modal = ({ active, setActive }) => {
     if (debouncedText.length > 0) {
       getProducts(debouncedText, setData, setError)
     }
+    //eslint-disable-next-line
   }, [debouncedText, input])
 
   if (!active) return ''

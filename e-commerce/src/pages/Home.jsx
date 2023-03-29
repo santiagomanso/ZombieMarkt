@@ -7,9 +7,7 @@ import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
 
 const HomePage = () => {
-  const { loading, data, error } = useFetch(
-    'http://localhost:5500/api/categories/all',
-  )
+  const { loading, data } = useFetch('http://localhost:5500/api/categories/all')
 
   return (
     <MainContainer>

@@ -16,7 +16,6 @@ const SignUp = () => {
   //component states
   const [error, setError] = useState('')
   const [newUser, setNewUser] = useState(null)
-  const [active, setActive] = useState(false)
 
   const navigate = useNavigate()
 
@@ -29,21 +28,14 @@ const SignUp = () => {
     switch (true) {
       case object === null: {
         setError('ERROR - Complete all fields')
-        setActive(false)
         console.log('objeto nulo')
         break
       }
 
       case !object.email || !object.password: {
         setError('ERROR - Complete all fields')
-        setActive(false)
         console.log('campos vacios')
         break
-      }
-
-      case object.email && object.password: {
-        console.log('TODO OK')
-        return setActive(true)
       }
 
       //submit to userContext and trigger create user function only when everything goes ok
@@ -72,6 +64,7 @@ const SignUp = () => {
     if (user) {
       navigate('/')
     }
+    //eslint-disable-next-line
   }, [user])
 
   return (

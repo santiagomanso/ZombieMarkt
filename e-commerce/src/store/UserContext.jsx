@@ -1,13 +1,11 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
 import { createContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
 
 export const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
-  const navigate = useNavigate()
   const [user, setUser] = useState('')
   const [errorContext, setErrorContext] = useState('')
   const [msg, setMsg] = useState('')

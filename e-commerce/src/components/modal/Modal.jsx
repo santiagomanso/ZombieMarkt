@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ReactDom from 'react-dom'
 import getTokenFromStorage from '../../utils/getTokenFromStorage'
 
@@ -14,11 +14,12 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
 
     console.log('array', array)
     // console.log('dataType', dataType)
+    //eslint-disable-next-line
   }, [])
 
   const removeFavorite = async (_id) => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `http://localhost:5500/api/users/newFavoriteProduct/${_id}`,
         null,
         {
@@ -27,6 +28,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
           },
         },
       )
+
       const newArray = array.filter((item) => item._id !== _id)
       setFavorites(newArray)
     } catch (error) {

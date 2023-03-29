@@ -56,6 +56,7 @@ const Profile = () => {
     // return()=>{
     //   setUser({...user, user.orders:[], user.favorites:[]})
     // }
+    //eslint-disable-next-line
   }, [user])
 
   return (
