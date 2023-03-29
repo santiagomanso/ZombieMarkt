@@ -16,7 +16,7 @@ export const googleLogin = async (req, res) => {
     req.session.user = user // Set the session user data
     req.session.token = token // Set the session token data
     res.cookie('token', token)
-    res.redirect(`http://localhost:3000`)
+    res.redirect(`${process.env.CLIENT_URL}`)
 
     // res.redirect(`http://localhost:3000?token=${token}`)
   } else {
