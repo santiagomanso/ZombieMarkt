@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import ReactDom from 'react-dom'
-import UseGetProducts from '../../hooks/UseGetProducts'
+
 import { useDebounce } from 'use-debounce'
 import Product from '../Product/Product'
 import FloatingMsg from '../floatingMsg/FloatingMsg'
+import getProducts from '../../utils/getProducts'
 
 const Modal = ({ active, setActive }) => {
   const [input, setInput] = useState('')
@@ -24,7 +25,7 @@ const Modal = ({ active, setActive }) => {
 
     //set data gets passed to the component to set the data after fetching
     if (debouncedText.length > 0) {
-      UseGetProducts(debouncedText, setData, setError)
+      getProducts(debouncedText, setData, setError)
     }
   }, [debouncedText, input])
 
