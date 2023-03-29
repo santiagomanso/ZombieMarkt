@@ -35,10 +35,6 @@ const Navbar = () => {
         return setTitle('all_orders')
       }
 
-      case location.pathname === '/delete': {
-        return setTitle('delete_product')
-      }
-
       default:
         return setTitle('Inventory_Manager')
     }
