@@ -73,3 +73,5 @@ const loadRoutes = () => {
   loadRoutes()
   startServer()
 })()
+
+export default app
