@@ -15,6 +15,7 @@ import Profile from './pages/Profile'
 import Cart from './pages/Cart'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { RedirectProvider } from './store/RedirectContext'
+import Footer from './components/footer/Footer'
 const App = () => {
   return (
     <BrowserRouter>
@@ -53,6 +54,7 @@ const App = () => {
                     }
                   />
                 </Routes>
+                <Footer />
               </AppContainer>
             </AnimationProvider>
           </RedirectProvider>
