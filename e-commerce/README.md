@@ -7,7 +7,7 @@
 ## **Installation**
 
 ```
-zombiemarkt/e-commerce: npx install
+zombiemarkt/e-commerce: npm install
 ```
 
 ---

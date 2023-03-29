@@ -11,7 +11,7 @@ _The seeder file was used as a rapid way to automatically input data and quickly
 ## **Installation**
 
 ```
-zombiemarkt/server: npx install
+zombiemarkt/server: npm install
 ```
 
 ### **Environmental variables**
