@@ -34,8 +34,10 @@ tailwindcss: A utility-first CSS framework that provides a set of pre-defined CS
 
 ### 🔥**Google Oauth2.0 implementation** : to achieve the popular login using google, i added the same button i used on my rich-simulator app, the functionallity is the following: the button triggers a function that resides on the userContext component. Problem: react-router-dom does not provide functionallity to redirect to an external url (outside of the localhost), so i had to use the window.location
 
+src/store/userContext.jsx
+
 ```
-  const loginGoogle = async () => {
+  const loginGoogle = () => {
     window.location.href = 'http://localhost:5500/api/auth/google'
   }
 ```

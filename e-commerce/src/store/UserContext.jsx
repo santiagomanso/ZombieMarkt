@@ -58,7 +58,7 @@ const UserProvider = ({ children }) => {
   }
 
   //NOTE google oauth can't use RRD to redirect outside of localhost so window.location
-  const loginGoogle = async () => {
+  const loginGoogle = () => {
     window.location.href = 'http://localhost:5500/api/auth/google'
   }
 
