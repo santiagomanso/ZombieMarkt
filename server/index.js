@@ -35,7 +35,6 @@ const startServer = () => {
 const addMiddlewares = () => {
   const corsOption = {
     origin: '*',
-    credentials: true,
   }
   app.use(cors(corsOption))
   app.use(
