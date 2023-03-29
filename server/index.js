@@ -68,13 +68,13 @@ const loadRoutes = () => {
 }
 
 ;(async function controller() {
+  loadRoutes()
+  addMiddlewares()
   try {
     await connectDB()
   } catch (error) {
     console.log('error', error)
   }
-  addMiddlewares()
-  loadRoutes()
   startServer()
 })()
 
