@@ -33,10 +33,7 @@ const startServer = () => {
 }
 
 const addMiddlewares = () => {
-  const corsOption = {
-    origin: '*',
-  }
-  app.use(cors(corsOption))
+  app.use(cors())
   app.use(
     cookieSession({
       maxAge: 30 * 24 * 60 * 60 * 1000,
