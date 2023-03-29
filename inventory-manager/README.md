@@ -1,70 +1,83 @@
-# Getting Started with Create React App
+# Inventory Manager - Server 💾
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+### This is the frontend application that a warehouse worker would use in order to modify the products that our company sells, among those operations, the employee would find inbounding products(create), inventory check (search/edit products), and delete products.
 
-In the project directory, you can run:
+_I included in this application a screen(page) to display all users, all orders, all products so that anyone using this app could have a more pleasant experience._
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## **Installation**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+zombiemarkt/inventory-manager: npm install
+```
 
-### `npm test`
+### **Dependencies**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The following dependencies are needed for the inventory-manager
 
-### `npm run build`
+```
+axios:   package used for making HTTP requests and handling responses.
+react-router-dom:  A library for routing in React applications, providing navigation between different pages
+tailwindcss: A utility-first CSS framework that provides a set of pre-defined CSS classes.
+use-debounce: package to help improve performance by reducing the number of function calls triggered by user inputs.
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## **Things i learnt**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### The following are some examples of things that made me feel happy about understanding how they work, or how to implement.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 🔥**Implement use-debounce to minimize api queries**: i wanted to create a modal component that when mounted, the user would be ready to start typing a name, or a EAN (barcode on products with barcode scanner) and with no submit button, it should trigger a single query to my API. _⚠️Problem_: in order to be able to put aside the submit button, the api call must be done on a **onChange** event, thus resulting in multiple queries due to the fact that every typed letter would trigger the api-call.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### _✅Solution_: install use-debounce and have the useEffect() listen to changes in the **debouncedText** and only then trigger the api-call
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+src/components/modal/Modal.jsx
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+const [input, setInput] = useState('')
+const [debouncedText] = useDebounce(input, 1000)
+const inputRef = useRef(null)
 
-## Learn More
+useEffect(() => {
+    inputRef.current.focus()
+    const detectKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setActive(!active)
+      }
+    }
+    document.documentElement.addEventListener('keydown', detectKeyDown)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    //set data gets passed to the component to set the data after fetching
+    if (debouncedText.length > 0) {
+      UseGetProducts(debouncedText, setData, setError)
+    }
+}, [debouncedText, input])
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+src/utils/getProducts.js
 
-### Code Splitting
+```
+const getProducts = (arg, setData, setError) => {
+  const fetchData = async (url) => {
+    const { data } = await axios.get(url)
+    // console.log('data: ', data)
+    setData(data)
+  }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+  if (isStrOrNum(arg) === 'string') {
+    fetchData(`http://localhost:5500/api/products/name/${arg}`)
+  } else {
+    fetchData(`http://localhost:5500/api/products/ean/${arg}`)
+  }
+}
+```
 
-### Analyzing the Bundle Size
+#### a state input is declared, as well as a debounced state, initialized to the input value, and with a 1000ms delayed to be setted: meaning that after the user types and store letters or numbers into the input state, the debounced text will wait for 1s to fully set the string with the letters or numbers the user has typed. after the **debouncedText** value mutates, it gets picked up by the useEffect and after checking if there is something inside of debouncedText, it fires a helper function with the debouncedText, the setData, and setError functions. From there the helper function will determine if the first character of the argument is a string or is a number, **(A) if it is a number** it will use axios to post a request to getByEan, for the backend to search a product by using the barcode on the product, **(B)If the argument is a string** it will use axios to post a request to getByName, where the backend will look for something related to the name of the product based on what the user typed on the input
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---

@@ -1,70 +1,119 @@
-# Getting Started with Create React App
+# E-Commerce - Frontend 💻
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Description
 
-## Available Scripts
+### This is the front end application that a Client would use to place an order and buy products from our company.
 
-In the project directory, you can run:
+## **Installation**
 
-### `npm start`
+```
+zombiemarkt/e-commerce: npx install
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **Dependencies**
 
-### `npm test`
+The following dependencies are needed for the server
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+axios:   package used for making HTTP requests and handling responses.
+js-cookie: A library for handling cookies in the browser.
+react-router-dom:  A library for routing in React applications, providing navigation between different pages
+react-typewriter-effect: A React component for creating a typewriter effect, allowing text to be animated
+tailwindcss: A utility-first CSS framework that provides a set of pre-defined CSS classes.
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## **What i learnt whilist coding this app**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### The following are some examples of things that made me feel happy about understanding how they work, or how to implement.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+### 🔥**Google Oauth2.0 implementation** : to achieve the popular login using google, i added the same button i used on my rich-simulator app, the functionallity is the following: the button triggers a function that resides on the userContext component. Problem: react-router-dom does not provide functionallity to redirect to an external url (outside of the localhost), so i had to use the window.location
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```
+  const loginGoogle = async () => {
+    window.location.href = 'http://localhost:5500/api/auth/google'
+  }
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Now google will prompt the user with the window to select the desirable account to proceed, after that the user will be redirect back to my backend bearing the google profile, where i create a new user and redirect from the backend to the root path of the e-commerce app. **Notice: at this point the redirect will bring along a cookie that is set into the browser**. Now, by default i have a useEffect() with no dependencies array, that translate to a componentDidMount(), meaning that when the component (the userContext) gets mounted it will try to pull a token either from the localStorage(normal email/password login), or from the cookies (google login), and if the token exists it will then trigger a loginWithToken function that will authenticate the user based on that JWT(email/password) or the Cookie(googleLogin)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+<img src="https://raw.githubusercontent.com/santiagomanso/ZombieMarkt/main/FlowChart-Google-Oauth-20.drawio.png"
+     alt="Google-Oauth-20"
+     style="float: left; margin-right: 10px;" />
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+  useEffect(() => {
+    const token = getTokenFromStorage()
+    if (token) {
+      loginWithToken(token)
+    }
+  }, [])
+```
 
-## Learn More
+---
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### 🔥**Avoid unnecessary API calls**: on the cartScreen, if the buttons + and - where to trigger an API call per click, it could potentially result in many problems: if the hosting platforms charges the company PER API CALL, the clicking will lead into a **severe money lost** for the company, possible lag and lack of sync when trying to update/modify multiple products. **My Solution**: when ever the user clicks on the + and - buttons, i increment a field on the product object called **quantity** and it cannot be more that the product.stock and less than 1, in this way the user only modifies the products (multiples) on the front end, and after everything is ready, a single API-call gets trigger to post 1 order and then the server recieves and array of prodcts with the field quantity that uses to set the stock to the difference between the substraction between quantity and stock.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+const handleClick = (operation, item) => {
+    switch (operation) {
+      case '+': {
+        if (item.quantity === undefined || item.quantity < item.countInStock) {
+          const updatedCart = [...cart]
+          const itemIndex = updatedCart.findIndex(
+            (cartItem) => cartItem._id === item._id,
+          )
+          const updatedItem = { ...updatedCart[itemIndex] }
+          updatedItem.quantity = (updatedItem.quantity || 0) + 1
+          updatedCart[itemIndex] = updatedItem
+          setCart(updatedCart)
+        }
+        break
+      }
 
-### Code Splitting
+      case '-': {
+        if (item.quantity === undefined || item.quantity > 1) {
+          const updatedCart = [...cart]
+          const itemIndex = updatedCart.findIndex(
+            (cartItem) => cartItem._id === item._id,
+          )
+          const updatedItem = { ...updatedCart[itemIndex] }
+          updatedItem.quantity = (updatedItem.quantity || 0) - 1
+          updatedCart[itemIndex] = updatedItem
+          setCart(updatedCart)
+        }
+        break
+      }
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+      default:
+        break
+    }
+  }
+```
 
-### Analyzing the Bundle Size
+### **Related problem**: when navigating to a different page and returning to this cartScreen the quantities would be gone because at first i was not saving (updating) the new product item into the cart context, so i had to find a way of updating the whole cart.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### **Related problem#2**: when first loading the component there is no quantity property inside of the items of the cart, so i use the useEffect() hook with no dependency array, like componentDidMount() to map through the cart and add the quantity = 1 property to all elements of the cart.
 
-### Making a Progressive Web App
+```
+  useEffect(() => {
+    //NOTE - add property quantity to EVERY item, only when there are items inside
+    if (cart.length > 0) {
+      const updatedCart = cart.map((item) => {
+        if (item.quantity === undefined) {
+          return { ...item, quantity: 1 }
+        } else {
+          return item
+        }
+      })
+      setCart(updatedCart)
+    }
+  }, [])
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
