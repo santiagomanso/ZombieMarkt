@@ -18,7 +18,7 @@ const Modal = ({ active, setActive }) => {
     inputRef.current.focus()
     const detectKeyDown = (e) => {
       if (e.key === 'Escape') {
-        setActive(!active)
+        setActive(false)
       }
     }
     document.documentElement.addEventListener('keydown', detectKeyDown)
@@ -35,12 +35,18 @@ const Modal = ({ active, setActive }) => {
       <>
         <div
           className='absolute top-0 left-0 bottom-0 right-0 bg-gradient-to-br from-black/95 via-slate-900/95 to-slate-900'
-          onClick={() => setActive(!active)}
+          onClick={() => setActive(false)}
         />
         <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] w-screen h-full lg:h-[80vh] lg:w-[70vw]'>
           <div
-            className={`flex flex-col justify-start gap-5 lg:gap-y-10 bg-gray-100  w-full h-full rounded-md p-4 lg:px-8 lg:py-6  border-2 border-gray-700`}
+            className={`flex flex-col justify-start gap-5 lg:gap-y-10 bg-gray-100  w-full h-full rounded-md p-4 lg:px-8 lg:py-6  border-2 border-gray-700 relative`}
           >
+            <button
+              onClick={() => setActive(false)}
+              className='absolute bottom-5 left-2'
+            >
+              <i className=' lg:hidden fa-solid fa-chevron-left text-5xl'></i>
+            </button>
             <input
               type='text'
               ref={inputRef}
