@@ -57,6 +57,7 @@ const LeftColumn = () => {
       })
       setCart(updatedCart)
     }
+    //eslint-disable-next-line
   }, [])
 
   const { cart, setCart } = useContext(CartContext)
