@@ -1,9 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ReactDom from 'react-dom'
-import UseGetProducts from '../../hooks/UseGetProducts'
-import { useDebounce } from 'use-debounce'
-import Product from '../Product/Product'
-import FloatingMsg from '../floatingMsg/FloatingMsg'
 import axios from 'axios'
 
 const ConfirmationModal = ({
