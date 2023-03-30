@@ -15,7 +15,7 @@ const HomePage = () => {
     <MainContainer>
       <LeftPanel
         topImgOpt=''
-        topBtnText='calculator'
+        topBtnText='coming soon!'
         topBtnPath='/calculator'
         bottomCard
       />

@@ -30,7 +30,7 @@ const LeftPanel = ({
       }`}
     >
       <article
-        className={`flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px] lg:h-[370px] `}
+        className={`flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px] `}
       >
         <img
           src={imgTop || zombieCalculate}
@@ -43,14 +43,14 @@ const LeftPanel = ({
             <p className='font-medium'>
               {subtitle
                 ? subtitle
-                : 'Need to know how much food you need to wait until the zombies are gone?'}
+                : 'Calculate how much food you need to whitstand.'}
             </p>
             <div className='w-full flex justify-center mt-2 '>
               <button
                 className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center uppercase'
                 onClick={() => handleNavigate(topBtnPath || '/calculator')}
               >
-                {topBtnText || 'calculator'}
+                {topBtnText || 'comming soon'}
               </button>
             </div>
           </span>
@@ -58,7 +58,7 @@ const LeftPanel = ({
       </article>
 
       {bottomCard && (
-        <article className='flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px] lg:h-[370px]'>
+        <article className='flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px]'>
           <img
             src={zombie}
             alt='zombie'
@@ -72,10 +72,10 @@ const LeftPanel = ({
               </p>
               <div className='w-full flex justify-center mt-2 '>
                 <button
-                  className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center'
-                  onClick={() => handleNavigate('/survivor')}
+                  className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center uppercase'
+                  // onClick={() => handleNavigate('/survivor')}
                 >
-                  SURVIVE NOW!
+                  coming soon!
                 </button>
               </div>
             </span>
