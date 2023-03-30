@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "server": "nodemon index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "fullstack": "concurrently \"nodemon index.js\" \"cd../cms && npm start\"",
     "data:import": "node seeder",
     "data:destroy": "node seeder -d"
