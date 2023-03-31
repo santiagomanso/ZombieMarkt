@@ -48,7 +48,8 @@ const addMiddlewares = () => {
   // )
   app.use(
     cookieSession({
-      maxAge: 30 * 24 * 60 * 60 * 1000,
+      //
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
       keys: [process.env.COOKIE_KEY],
       sameSite: 'lax',
       httpOnly: false,
