@@ -20,7 +20,6 @@ export const googleLogin = async (req, res) => {
     res.cookie('token', token)
     console.log('token', token)
     console.log('req.user', req.user)
-    res.setHeader('Set-cookie', `token=${token}`)
     res.redirect(`${process.env.CLIENT_URL}`)
   } else {
     res.json({
