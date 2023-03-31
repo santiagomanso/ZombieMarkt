@@ -18,9 +18,10 @@ export const googleLogin = async (req, res) => {
 
     //NOTE cookie test with domain to get it to work on vercel
     res.cookie('token', token)
+    res.send('cookies info')
     console.log('token', token)
     console.log('req.user', req.user)
-    res.redirect(`${process.env.CLIENT_URL}`)
+    res.redirect(302, `${process.env.CLIENT_URL}`)
   } else {
     res.json({
       msg: 'there is no current user',
