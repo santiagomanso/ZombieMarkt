@@ -51,7 +51,7 @@ export const CartProvider = ({ children }) => {
 
     //NOTE axios post with URL, BODY and HEADERS
     const { data } = await axios.post(
-      '${process.env.REACT_APP_SERVER_URL}/api/orders/newOrder',
+      `${process.env.REACT_APP_SERVER_URL}/api/orders/newOrder`,
       body,
       headers,
     )
