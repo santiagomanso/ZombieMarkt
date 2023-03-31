@@ -35,6 +35,18 @@ const startServer = () => {
 const addMiddlewares = () => {
   app.use(cors())
   app.use(
+    session({
+      resave: false,
+      saveUninitialized: false,
+      secret: 'session',
+      cookie: {
+        maxAge: 1000 * 60 * 60,
+        sameSite: 'none',
+        secure: true,
+      },
+    }),
+  )
+  app.use(
     cookieSession({
       maxAge: 30 * 24 * 60 * 60 * 1000,
       keys: [process.env.COOKIE_KEY],
