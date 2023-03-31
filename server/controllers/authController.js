@@ -25,7 +25,7 @@ export const googleLogin = async (req, res) => {
     // res.send('cookies info')
     console.log('token', token)
     console.log('req.user', req.user)
-    res.redirect(302, `${process.env.CLIENT_URL}`)
+    // res.redirect(302, `${process.env.CLIENT_URL}`)
   } else {
     res.json({
       msg: 'there is no current user',
