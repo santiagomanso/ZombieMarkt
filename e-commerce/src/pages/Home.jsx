@@ -5,11 +5,15 @@ import MainContainer from '../components/containers/MainContainer'
 import ItemList from '../components/lists/ItemList'
 import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
+import { useParams } from 'react-router-dom'
 
 const HomePage = () => {
   const { loading, data } = useFetch(
     `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
   )
+
+  const { token } = useParams()
+  console.log('token', token)
 
   return (
     <MainContainer>
