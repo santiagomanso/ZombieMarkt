@@ -17,11 +17,8 @@ export const googleLogin = async (req, res) => {
     req.session.token = token // Set the session token data
 
     //NOTE cookie test with domain to get it to work on vercel
-    res.cookie('token', token, {
-      httpOnly: false,
-      sameSite: 'none',
-      secure: 'false',
-    })
+    console.log('req.session', req.session)
+    res.cookie('token', token)
     // res.send('cookies info')
     console.log('token', token)
     console.log('req.user', req.user)
