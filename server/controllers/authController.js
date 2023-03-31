@@ -18,7 +18,8 @@ export const googleLogin = async (req, res) => {
 
     //NOTE cookie test with domain to get it to work on vercel
     res.cookie('token', token, {
-      domain: process.env.CLIENT_URL,
+      domain: process.env.SERVER_URL,
+      httpOnly: true,
       path: '/',
     })
     console.log('token', token)
