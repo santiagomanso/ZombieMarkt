@@ -17,12 +17,12 @@ export const googleLogin = async (req, res) => {
     req.session.token = token // Set the session token data
 
     //NOTE cookie test with domain to get it to work on vercel
-    console.log('req.session', req.session)
-    res.cookie('token', token)
+    console.log('req.session SESSSSIIIIIOOOON', req.session)
+    // res.cookie('token', token)
     // res.send('cookies info')
-    console.log('token', token)
-    console.log('req.user', req.user)
-    res.redirect(`${process.env.CLIENT_URL}?token=${token}`)
+    // console.log('token', token)
+    // console.log('req.user', req.user)
+    res.redirect(`${process.env.CLIENT_URL}`)
   } else {
     res.json({
       msg: 'there is no current user',
@@ -30,13 +30,17 @@ export const googleLogin = async (req, res) => {
   }
 }
 
+export const logout = async (req, res) => {
+  console.log('req.session', req.session)
+  req.session = null
+  req.logout()
+  res.send(req.user)
+}
+
 export const currentUser = async (req, res) => {
-  // console.log('req.user', req.user)
-  // console.log('req.session', req.session)
   res.status(200).json({
-    user: req.user,
+    user: req.session.user,
     token: req.session.token,
-    shouldCloseWindow: true,
   })
 }
 

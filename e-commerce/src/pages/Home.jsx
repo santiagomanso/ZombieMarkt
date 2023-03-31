@@ -12,9 +12,6 @@ const HomePage = () => {
     `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
   )
 
-  const { token } = useParams()
-  console.log('token', token)
-
   return (
     <MainContainer>
       <LeftPanel

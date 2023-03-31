@@ -49,9 +49,14 @@ const UserProvider = ({ children }) => {
   }
 
   //NOTE logout
-  const logOut = () => {
+  const logOut = async () => {
+    const { data } = await axios.post(
+      `${process.env.REACT_APP_SERVER_URL}/api/auth/logout`,
+    )
+    console.log('data', data)
     window.localStorage.removeItem('token')
     cookies.remove('token')
+    cookies.remove('session')
     setUser(null)
   }
 
@@ -87,9 +92,26 @@ const UserProvider = ({ children }) => {
 
   //NOTE - to detect user on component mount
   useEffect(() => {
+    const fetchGoogle = async () => {
+      const { data } = await axios.get(
+        `${process.env.REACT_APP_SERVER_URL}/api/auth/currentUser`,
+        { withCredentials: true },
+      )
+      if (data.user) {
+        setUser(data.user)
+      }
+      console.log('data', data)
+    }
+
     const token = getTokenFromStorage()
     if (token) {
       loginWithToken(token)
+    } else {
+      try {
+        fetchGoogle()
+      } catch (error) {
+        console.log('error', error)
+      }
     }
   }, [])
 

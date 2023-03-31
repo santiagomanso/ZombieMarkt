@@ -4,6 +4,7 @@ import {
   googleLogin,
   login,
   loginWithToken,
+  logout,
 } from '../controllers/authController.js'
 import passport from 'passport'
 
@@ -18,6 +19,8 @@ authRouter.get(
     scope: ['profile', 'email'],
   }),
 )
+
+authRouter.post('/logout', passport.session({ session: true }), logout)
 
 //NOTE - session false object on routes otherwise session error
 authRouter.get('/google/callback', passport.authenticate('google'), googleLogin)

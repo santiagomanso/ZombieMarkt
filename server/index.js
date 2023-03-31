@@ -59,7 +59,12 @@ const addMiddlewares = () => {
   app.use(passport.initialize())
   app.use(passport.session())
 
-  app.use(cors())
+  app.use(
+    cors({
+      origin: process.env.CLIENT_URL,
+      credentials: true,
+    }),
+  )
   app.use(express.json())
   app.use(
     express.urlencoded({
