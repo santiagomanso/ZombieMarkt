@@ -122,19 +122,19 @@ const UsersPage = () => {
                       : 'bg-gradient-to-br from-rose-500/80 to-fuchsia-700/80 outline-violet-800'
                   }`}
                 >
-                  <div className='h-full'>
+                  <div className='h-full w-1/2'>
                     <img
                       src={user.image}
                       alt={user.email}
                       className='h-full object-scale-down'
                     />
                   </div>
-                  <div className='grid grid-cols-1 gap-0 p-5'>
-                    <span className='text-2xl font-medium'>{user.email}</span>
-                    <span className='text-2xl font-medium'>
+                  <div className='grid grid-cols-1 gap-0 py-10 px-2 w-full'>
+                    <span className='text-xl font-medium'>{user.email}</span>
+                    <span className='text-xl font-medium'>
                       Orders: {user.orders.length}
                     </span>
-                    <span className='text-2xl font-medium'>
+                    <span className='text-xl font-medium'>
                       Joined: {user.joined}
                     </span>
                   </div>
@@ -142,9 +142,7 @@ const UsersPage = () => {
               )
             })
           ) : (
-            <p className='text-3xl text-gray-600'>
-              Search or scan a product to start
-            </p>
+            <p className='text-3xl text-gray-600'>There are no users.</p>
           )}
         </section>
       </main>
