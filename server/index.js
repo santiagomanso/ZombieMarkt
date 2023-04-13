@@ -61,7 +61,10 @@ const addMiddlewares = () => {
 
   app.use(
     cors({
-      origin: process.env.CLIENT_URL,
+      origin: [
+        process.env.CLIENT_URL_ZOMBIEMARKT,
+        process.env.CLIENT_URL_INVENTORY_MANAGER,
+      ],
       credentials: true,
     }),
   )
