@@ -8,14 +8,6 @@
 
 ---
 
-## Installation
-
-### Fork / Clone this repository, then **you must cd into each application folder and run**
-
-> npx install
-
----
-
 ## _Application A_ - **Inventory Manager - Frontend**💻
 
 ### This application is meant to be used by the warehouse worker of the shop, where they would be able to inbound incomming products, outbound them when they expire, and for this demonstration i included other pages to check all the orders that users have created on the e-commerce, as well as listing all the existing users and also all products. **The delete page works fine but when deleting an item, it might break some pages of the e-commerce that feed from that product, ex: Profile page**.
