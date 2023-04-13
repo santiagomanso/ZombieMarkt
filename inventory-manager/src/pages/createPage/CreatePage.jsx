@@ -351,7 +351,7 @@ const CreatePage = () => {
           </div>
         </section>
 
-        <div className='flex justify-center'>
+        {/* <div className='flex justify-center'>
           <button
             onClick={handleSubmit}
             type='button'
@@ -360,7 +360,7 @@ const CreatePage = () => {
           >
             Create product
           </button>
-        </div>
+        </div> */}
       </main>
     </>
   )
