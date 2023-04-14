@@ -60,15 +60,15 @@ const LeftColumn = () => {
     //eslint-disable-next-line
   }, [])
 
-  const { cart, setCart } = useContext(CartContext)
+  const { cart, setCart, error } = useContext(CartContext)
   return (
     <article
       className={` ${
-        msg ? 'blur-xl' : 'blur-none'
+        error | msg ? 'blur-xl' : 'blur-none'
       } flex flex-col gap-7 overflow-auto px-2 mb-10 mt-5 lg:mt-2 lg:mb-0 pr-6`}
     >
       {!cart.length > 0 ? (
-        <div className={`${msg ? 'blur-xl' : 'blur-none'}`}>
+        <div className={`${msg | error ? 'blur-xl' : 'blur-none'}`}>
           <h2>There are no products on your cart</h2>
           <Link
             to='/'
