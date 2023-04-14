@@ -1,13 +1,19 @@
-const Footer = () => {
+const Footer = ({ display }) => {
   return (
     <a
       href='https://github.com/santiagomanso'
       target='_blank'
       rel='noreferrer'
-      className='w-full flex justify-center items-baseline gap-2 bg-neutral-700 lg:bg-inherit h-10 mt-2'
+      className={`fixed bottom-1 left-[50%] -translate-x-[50%] flex justify-center items-baseline gap-2 pt-2 ${
+        display === 'laptop'
+          ? 'hidden lg:block'
+          : 'fixed bottom-5 left-[50%] -translate-x-[50%] lg:hidden'
+      }`}
     >
-      <i className='fa-brands fa-github text-2xl  text-gray-300'></i>
-      <span className='text-2xl  text-gray-300'>by Santiago Manso Castro</span>
+      <i className='fa-brands fa-github lg:text-2xl  text-gray-300'></i>
+      <span className='lg:text-2xl  text-gray-300'>
+        by Santiago Manso Castro
+      </span>
     </a>
   )
 }
