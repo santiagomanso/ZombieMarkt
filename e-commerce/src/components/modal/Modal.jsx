@@ -45,7 +45,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
           onClick={() => setActive(false)}
         />
         <div className='absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]  w-screen h-full lg:h-[80vh] lg:w-[50vw] z-50 rounded-md'>
-          <div
+          <section
             className={`bg-gradient-to-br from-amber-100  to-black  w-full h-full rounded-md  outline outline-4 outline-gray-700 relative z-50`}
           >
             <button
@@ -60,7 +60,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
               {array.length > 0 ? (
                 array.map((item, index) => {
                   return (
-                    <div
+                    <article
                       key={index}
                       className={`lg:mt-10 flex flex-col lg:flex-row lg:h-[200px] rounded-md outline outline-1 outline-stone-900 hover:shadow-xl hover:shadow-gray-700 transition-all ease-in-out duration-300 relative w-full opacity-90 hover:opacity-100 ${
                         index % 2 === 0
@@ -81,7 +81,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                       </div>
 
                       <div className='grid grid-cols-1 lg:grid-cols-2 gap-x-10 p-5'>
-                        <span className='text-xl lg:text-2xl font-bold  text-gray-800'>
+                        <span className='lg:col-span-2 text-xl lg:text-2xl font-medium  text-gray-200'>
                           {dataType === 'orders' ? email : item.name}
                         </span>
                         <span className='text-xl lg:text-2xl font-medium text-gray-200'>
@@ -113,8 +113,11 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                         ) : (
                           ''
                         )}
+                        <span className='text-xl lg:text-2xl font-medium text-gray-200'>
+                          {dataType === 'orders' ? item.shippingAdress : ''}
+                        </span>
                       </div>
-                    </div>
+                    </article>
                   )
                 })
               ) : (
@@ -129,7 +132,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                 </div>
               )}
             </section>
-          </div>
+          </section>
         </div>
       </>,
       document.getElementById('portal'),
