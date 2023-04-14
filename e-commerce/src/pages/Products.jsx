@@ -58,7 +58,7 @@ const ProductsPage = () => {
               category before we did.
             </span>
             <Link
-              to={`http://localhost:3006/create/${category}`}
+              to={`${process.env.REACT_APP_INVENTORY_MANAGER}/create/${category}`}
               target='_blank'
               className='text-lg lg:text-3xl bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded flex gap-1 items-baseline outline outline-2 outline-orange-900/40  
               px-4 text-center lg:px-6 lg:py-4 text-gray-200'

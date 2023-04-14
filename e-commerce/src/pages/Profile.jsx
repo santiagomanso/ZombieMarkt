@@ -32,7 +32,7 @@ const Profile = () => {
       }
       try {
         const { data } = await axios.get(
-          `http://localhost:5500/api/users/profile`,
+          `${process.env.REACT_APP_SERVER_URL}/api/users/profile`,
           {
             headers: myHeaders,
           },
