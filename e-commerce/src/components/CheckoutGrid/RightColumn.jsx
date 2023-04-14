@@ -9,14 +9,41 @@ const RightColumn = ({
   calculateQty,
   calculateSemitotals,
 }) => {
-  const { cart, placeOrder, msg, error } = useContext(CartContext)
+  const {
+    cart,
+    placeOrder,
+    msg,
+    error,
+    setError,
+    shippingAdress,
+    setShippingAdress,
+  } = useContext(CartContext)
   const { user } = useContext(UserContext)
+
+  const handleChange = (e) => {
+    setShippingAdress(e.target.value)
+  }
+
+  const handleSubmit = () => {
+    if (!shippingAdress) {
+      setError('Please provide a shipping adress')
+      setTimeout(() => {
+        setError('')
+      }, 2500)
+    } else {
+      setError('')
+      placeOrder(calculateSemitotals())
+      setTimeout(() => {
+        // setActive(false)
+      }, 2000)
+    }
+  }
 
   return (
     <article
       className={`${
         hideOnPhones ? 'hidden lg:block' : 'block lg:hidden'
-      }  bg-gree-400 ${msg && !setActive ? 'blur' : 'blur-noneS'}`}
+      }  bg-gree-400 ${msg && !setActive | error ? 'blur' : 'blur-noneS'}`}
     >
       {error && (
         <FloatingMsg
@@ -94,25 +121,17 @@ const RightColumn = ({
                 <span>{user.email}</span>
               </span>
               <span className='flex justify-between'>
-                <span>Smitotal</span>
-                <span>$ 123144</span>
-              </span>
-              <span className='flex justify-between'>
-                <span>Discounts</span>
-                <span>30%</span>
-              </span>
-              <span className='font-semibold text-xl flex justify-between'>
-                <span>Total</span>
-                <span>$ 12314123</span>
+                <span>Adress</span>
+                <input
+                  value={shippingAdress}
+                  onChange={handleChange}
+                  placeholder='Enter your adress'
+                  className='bg-transparent py-0 outline outline-2 outline-slate-500 rounded-sm mt-2 h-full px-5'
+                />
               </span>
             </div>
             <button
-              onClick={() => {
-                placeOrder(calculateSemitotals())
-                setTimeout(() => {
-                  // setActive(false)
-                }, 2000)
-              }}
+              onClick={handleSubmit}
               className='absolute bottom-2 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold'
             >
               PLACE ORDER NOW !
