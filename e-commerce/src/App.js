@@ -16,6 +16,7 @@ import Cart from './pages/Cart'
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { RedirectProvider } from './store/RedirectContext'
 import Footer from './components/footer/Footer'
+import SplashScreen from './pages/SplashScreen'
 const App = () => {
   return (
     <BrowserRouter>
@@ -26,7 +27,8 @@ const App = () => {
               <AppContainer>
                 <Navbar />
                 <Routes>
-                  <Route path='/' element={<HomePage />} />
+                  <Route path='/' element={<SplashScreen />} />
+                  <Route path='/home' element={<HomePage />} />
                   <Route
                     path='/products/:category'
                     element={<ProductsPage />}
