@@ -20,7 +20,7 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
   const removeFavorite = async (_id) => {
     try {
       await axios.post(
-        `process.env.REACT_APP_SERVER_URL/api/users/newFavoriteProduct/${_id}`,
+        `${process.env.REACT_APP_SERVER_URL}/api/users/newFavoriteProduct/${_id}`,
         null,
         {
           headers: {
