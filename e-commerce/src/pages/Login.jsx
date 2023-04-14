@@ -76,7 +76,7 @@ const Login = () => {
         if (path) {
           navigate(path, { replace: true }) // reditection to attempted navigation after successful login
         } else {
-          navigate('/', { replace: true }) // redirection to home screen
+          navigate('/home', { replace: true }) // redirection to home screen
         }
       }
     }, 1200)
