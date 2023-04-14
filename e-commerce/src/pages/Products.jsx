@@ -20,8 +20,6 @@ const ProductsPage = () => {
     if (data) setProducts(data.products)
   }, [data])
 
-  //FIXME - category params con CMS
-
   return (
     <MainContainer>
       <LeftPanel bottomCard />
