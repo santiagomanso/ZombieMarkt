@@ -152,7 +152,7 @@ const ProductDetail = () => {
   }
 
   const checkFavorite = () => {
-    console.log('favoritesArray', favoritesArray)
+    // console.log('favoritesArray', favoritesArray)
     favoritesArray.map((item) => {
       if (item._id === user._id) {
         return setIsFavorite(true)
@@ -184,7 +184,12 @@ const ProductDetail = () => {
   return (
     <MainContainer>
       <LeftPanel bottomCard />
-      <RightContainer relative gap='lg:gap-0' padding='pt-5 pb-10 lg:p-10'>
+      <RightContainer
+        relative
+        gap='lg:gap-0'
+        overflowHidden
+        padding='pt-5 pb-10 lg:p-10'
+      >
         {msg && (
           <FloatingMsg
             msg={msg}
