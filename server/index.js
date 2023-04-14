@@ -2,7 +2,6 @@
 import express from 'express'
 import colors from 'colors'
 
-import session from 'express-session'
 import cookieSession from 'cookie-session'
 import connectDB from './config/connectDB.js'
 import cloudinaryConfig from './config/cloudinary.js'
@@ -34,18 +33,6 @@ const startServer = () => {
 
 const addMiddlewares = () => {
   app.use(cors())
-  // app.use(
-  //   session({
-  //     resave: false,
-  //     saveUninitialized: false,
-  //     secret: 'session',
-  //     cookie: {
-  //       maxAge: 1000 * 60 * 60,
-  //       sameSite: 'lax',
-  //       secure: true,
-  //     },
-  //   }),
-  // )
   app.use(
     cookieSession({
       //
