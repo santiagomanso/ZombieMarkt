@@ -19,6 +19,7 @@ export const CartProvider = ({ children }) => {
   const [cart, setCart] = useState(getCartFromStorage())
   const [msg, setMsg] = useState('')
   const [error, setError] = useState('')
+  const [shippingAdress, setShippingAdress] = useState('')
 
   //functions
   const setCartToStorage = () => {
@@ -44,7 +45,7 @@ export const CartProvider = ({ children }) => {
     //NOTE body
     const body = {
       cart, //the whole array of products
-      shippingAdress: 'Stephan str 60',
+      shippingAdress: shippingAdress,
       price: price,
       orderItems: orderIds, //array of _ids (only ids)
     }
@@ -83,8 +84,11 @@ export const CartProvider = ({ children }) => {
     cart,
     msg,
     error,
+    shippingAdress,
+    setError,
     setCart,
     placeOrder,
+    setShippingAdress,
   }
 
   return <CartContext.Provider value={data}>{children}</CartContext.Provider>
