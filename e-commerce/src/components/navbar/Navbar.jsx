@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { CartContext } from '../../store/CartContext'
 import { RedirectContext } from '../../store/RedirectContext'
@@ -11,6 +11,7 @@ import Footer from '../footer/Footer'
 const Navbar = () => {
   const location = useLocation()
   const [active, setActive] = useState(true)
+  const [splash, setSplash] = useState(false)
   const { cart } = useContext(CartContext)
   const { user, logOut } = useContext(UserContext)
   const { setPath } = useContext(RedirectContext)
@@ -28,10 +29,18 @@ const Navbar = () => {
     logOut()
   }
 
+  useEffect(() => {
+    if (location.pathname === '/') {
+      setSplash(true)
+    } else {
+      setSplash(false)
+    }
+  }, [location])
+
   return (
     <>
       {/* Phones - Tablet */}
-      <nav className=' lg:hidden'>
+      <nav className={`${splash ? 'hidden' : ' lg:hidden'}`}>
         <button
           onClick={() => setActive(!active)}
           className='fixed top-3 right-5 z-10'
@@ -70,7 +79,7 @@ const Navbar = () => {
           )}
           <ul className='flex flex-col items-center gap-10'>
             <Link
-              to='/'
+              to='/home'
               onClick={() => setActive(!active)}
               className='text-2xl font-medium tracking-wider'
             >
@@ -103,7 +112,7 @@ const Navbar = () => {
             >
               Profile
             </Link>
-            <Link
+            {/* <Link
               onClick={() => setActive(!active)}
               className='text-2xl font-medium tracking-wider'
             >
@@ -115,7 +124,7 @@ const Navbar = () => {
               className='text-2xl font-medium tracking-wider'
             >
               survivor's kit
-            </Link>
+            </Link> */}
             {!user && (
               <Link
                 to='/login'
@@ -139,8 +148,14 @@ const Navbar = () => {
       </nav>
 
       {/* PC */}
-      <nav className='hidden lg:flex justify-between bg-orange-100/20 py-5 items-center px-1 lg:px-20 shadow-md'>
-        <Link to='/' className='z-10'>
+      <nav
+        className={`${
+          splash
+            ? 'hidden'
+            : 'hidden lg:flex justify-between bg-orange-100/20 py-5 items-center px-1 lg:px-20 shadow-md z-10'
+        }`}
+      >
+        <Link to='/home' className='z-50'>
           <i className='fa-solid fa-burger text-orange-500 text-3xl'></i>
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
