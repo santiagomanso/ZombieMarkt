@@ -25,12 +25,12 @@ const LeftPanel = ({
   }
   return (
     <aside
-      className={`hidden bg-gray-800/20 w-[400px] h-full md:flex flex-col items-center px-2 lg:px-5 md:gap-y-24 lg:gap-20 py-20 ${
+      className={`hidden bg-gray-800/20 w-[400px] h-full md:flex flex-col items-center px-2 lg:px-5 md:gap-y-24 lg:gap-20 py-10 justify-start md:justify-center ${
         bottomCard ? '' : ''
       }`}
     >
       <article
-        className={`flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px] `}
+        className={`flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4  `}
       >
         <img
           src={imgTop || zombieCalculate}
@@ -43,7 +43,7 @@ const LeftPanel = ({
             <p className='font-medium'>
               {subtitle
                 ? subtitle
-                : 'Calculate how much food you need to whitstand.'}
+                : 'Calculate how much food you and your group needs.'}
             </p>
             <div className='w-full flex justify-center mt-2 '>
               <button
@@ -58,19 +58,19 @@ const LeftPanel = ({
       </article>
 
       {bottomCard && (
-        <article className='flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 md:h-[350px]'>
+        <article className='flex flex-col gap-5 items-center outline outline-4 outline-amber-100/50 relative bg-gradient-to-b from-slate-900 to-amber-100/70  rounded-md p-4 '>
           <img
             src={zombie}
             alt='zombie'
             className='absolute md:-top-20 lg:-top-24'
           />
-          <div className='mt-44'>
+          <div className='mt-36'>
             <h2 className='font-bold'>Survivor's kit!</h2>
             <span className='text-start'>
               <p className='font-medium'>
                 Everything you need to whitstand the infection
               </p>
-              <div className='w-full flex justify-center mt-2 '>
+              <div className='w-full flex justify-center mt-0 '>
                 <button
                   className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center uppercase'
                   // onClick={() => handleNavigate('/survivor')}
