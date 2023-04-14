@@ -106,13 +106,14 @@ const UserProvider = ({ children }) => {
     const token = getTokenFromStorage()
     if (token) {
       loginWithToken(token)
-    } else {
-      try {
-        fetchGoogle()
-      } catch (error) {
-        console.log('error', error)
-      }
     }
+    //  else {
+    //   try {
+    //     fetchGoogle()
+    //   } catch (error) {
+    //     console.log('error', error)
+    //   }
+    // }
   }, [])
 
   //NOTE - To clean the msgs
