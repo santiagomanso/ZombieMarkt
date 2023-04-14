@@ -63,7 +63,7 @@ export const CartProvider = ({ children }) => {
       setCart([])
       setMsg('Order placed')
       setTimeout(() => {
-        navigate('/')
+        navigate('/home')
         setMsg('')
       }, 2000)
     } else {
