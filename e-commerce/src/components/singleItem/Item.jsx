@@ -18,8 +18,9 @@ const Item = ({
         return item.path
       }
 
+      //FIXME - find a way to make react-router-dom to redirect to new tab using .env
       case item.countInStock === 0: {
-        return `${process.env.REACT_APP_INVENTORY_MANAGER}/update/${item._id}`
+        return `https://zombie-markt-gswm.vercel.app//update/${item._id}`
       }
 
       default:
