@@ -5,7 +5,7 @@ dotenv.config()
 const generateToken = (userId) => {
   const payload = { sub: userId }
   const options = {
-    expiresIn: '2d',
+    expiresIn: '30d',
     issuer: 'Zombie Markt',
   }
 
