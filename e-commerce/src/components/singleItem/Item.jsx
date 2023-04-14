@@ -19,7 +19,7 @@ const Item = ({
       }
 
       case item.countInStock === 0: {
-        return `http://localhost:3006/update/${item._id}`
+        return `${process.env.REACT_APP_INVENTORY_MANAGER}/update/${item._id}`
       }
 
       default:
