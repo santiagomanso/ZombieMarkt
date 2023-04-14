@@ -62,7 +62,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (user) {
-      navigate('/')
+      navigate('/home')
     }
     //eslint-disable-next-line
   }, [user])
