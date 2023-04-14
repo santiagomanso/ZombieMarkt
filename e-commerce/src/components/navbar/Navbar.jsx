@@ -6,6 +6,7 @@ import { UserContext } from '../../store/UserContext'
 import { setPathOnStorage } from '../../utils/localStoragePaths'
 import Badge from '../Badge/Badge'
 import Dropdown from '../dropdown/Dropdown'
+import Footer from '../footer/Footer'
 
 const Navbar = () => {
   const location = useLocation()
@@ -133,6 +134,7 @@ const Navbar = () => {
               </button>
             )}
           </ul>
+          <Footer display='phone' />
         </aside>
       </nav>
 
