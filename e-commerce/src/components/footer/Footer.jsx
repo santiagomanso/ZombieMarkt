@@ -10,8 +10,9 @@ const Footer = ({ display }) => {
           : 'fixed bottom-5 left-[50%] -translate-x-[50%] lg:hidden'
       }`}
     >
-      <i className='fa-brands fa-github lg:text-2xl  text-gray-300'></i>
-      <span className='lg:text-2xl  text-gray-300'>
+      <i className='fa-brands fa-github lg:text-lg  text-gray-300'></i>
+      <span className='lg:text-lg  text-gray-300'>
+        {' '}
         by Santiago Manso Castro
       </span>
     </a>
