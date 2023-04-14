@@ -9,23 +9,22 @@ const useFetch = (url) => {
   useEffect(() => {
     const fetchData = async (url) => {
       setLoading(true)
-      setTimeout(async () => {
-        try {
-          const { data } = await axios.get(url)
-          // console.log('data', data)
-          if (data) {
-            setData(data)
-            setLoading(false)
-          } else {
-            setData(null)
-            setLoading(false)
-          }
-        } catch (error) {
-          console.log('error', error)
-          setError(error)
+
+      try {
+        const { data } = await axios.get(url)
+        // console.log('data', data)
+        if (data) {
+          setData(data)
+          setLoading(false)
+        } else {
+          setData(null)
           setLoading(false)
         }
-      }, 500)
+      } catch (error) {
+        console.log('error', error)
+        setError(error)
+        setLoading(false)
+      }
     }
 
     fetchData(url)
