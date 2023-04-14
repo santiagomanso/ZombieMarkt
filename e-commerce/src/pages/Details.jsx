@@ -72,8 +72,7 @@ const ProductDetail = () => {
 
   //NOTE POST NEW COMMENT
   const submitComment = async (e) => {
-    // FIXME click icon not working 8/3
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.type === 'click') {
       if (!user) {
         setError('Login first')
         setTimeout(() => {
@@ -251,7 +250,7 @@ const ProductDetail = () => {
                   <i
                     name='sendIcon'
                     onClick={submitComment}
-                    className='fa-solid fa-paper-plane text-gray-700 absolute top-[50%] -translate-y-[50%] right-3 text-xl'
+                    className='fa-solid fa-paper-plane text-gray-700 absolute top-[50%] -translate-y-[50%] right-3 text-xl z-10 cursor-pointer'
                   ></i>
                   <input
                     onKeyDown={submitComment}
