@@ -7,7 +7,7 @@ const SplashScreen = () => {
   return (
     <MainContainer>
       <article className='h-screen lg:h-auto absolute top-[50%] -translate-y-[50%] md:left-[50%] md:-translate-x-[50%] flex flex-col items-center md:justify-center lg:max-w-lg z-10 bg-gradient-to-tl from-amber-100 w-full lg:w-auto to-slate-800 p-5 lg:p-10 rounded-md border-2 border-amber-200/20'>
-        <h1 className='font-zombie tracking-widest -rotate-3 text-slate-900 text-5xl'>
+        <h1 className='pt-10 lg:pt-0 font-zombie tracking-widest -rotate-3 text-slate-900 text-5xl'>
           Zombiemarkt!
         </h1>
         <img src={splash} alt='' />
