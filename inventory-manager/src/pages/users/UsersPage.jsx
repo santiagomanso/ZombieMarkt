@@ -20,7 +20,7 @@ const UsersPage = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    console.log('productFromContext', productFromContext)
+    // console.log('productFromContext', productFromContext)
 
     try {
       await axios.put(
@@ -45,7 +45,7 @@ const UsersPage = () => {
 
   useEffect(() => {
     setUsers(data.users)
-    console.log('users', users)
+    // console.log('users', users)
     //eslint-disable-next-line
   }, [data])
 
@@ -116,6 +116,7 @@ const UsersPage = () => {
             users.map((user, index) => {
               return (
                 <div
+                  key={user._id}
                   className={`flex h-[200px] rounded-sm outline outline-4 cursor-pointer hover:shadow-2xl hover:scale-[1.02] transition-all ease-in-out duration-300 ${
                     index % 2 === 0
                       ? 'bg-gradient-to-tl from-sky-500/80 via-violet-500/70 to-purple-900/80 outline-sky-900'

@@ -25,14 +25,14 @@ const Product = ({
   return (
     <article
       className={`${opt} p-3 rounded bg-gradient-to-br outline outline-1 outline-stone-300
-      from-white via-slate-200 to-stone-500/40 flex gap-5  shadow-lg cursor-pointer`}
+      from-white via-slate-200 to-stone-500/40 flex flex-col lg:flex-row gap-5  shadow-lg cursor-pointer`}
       onDoubleClick={handleAdd}
     >
-      <div className='w-28 h-28 place-self-center'>
+      <div className='w-28 h-1/2 place-self-center'>
         <img
           src={product.image}
           alt={product.name}
-          className='h-full w-full object-cover'
+          className='h-full w-full object-scale-down lg:object-contain'
         />
       </div>
       <div className='flex flex-col justify-start items-between w-full'>

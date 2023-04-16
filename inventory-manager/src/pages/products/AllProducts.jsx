@@ -20,7 +20,7 @@ const AllProducts = () => {
       'Content-Type': 'application/x-www-form-urlencoded',
     }
 
-    console.log('productFromContext', productFromContext)
+    // console.log('productFromContext', productFromContext)
 
     try {
       await axios.put(
@@ -47,7 +47,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     setProducts(data.products)
-    console.log('products', products)
+    // console.log('products', products)
 
     //eslint-disable-next-line
   }, [data])
@@ -117,7 +117,7 @@ const AllProducts = () => {
         {products ? (
           products.map((product, index) => {
             return (
-              <>
+              <div key={index}>
                 {/* PHONES CARDS */}
                 <article
                   key={product._id}
@@ -219,7 +219,7 @@ const AllProducts = () => {
                     </span>
                   </div>
                 </article>
-              </>
+              </div>
             )
           })
         ) : (

@@ -23,15 +23,15 @@ const EditProduct = ({ product, handleChange, stockOpt, labelOpt }) => {
   }
 
   return (
-    <article className='bg-gradient-to-tl from-gray-200 w-full outline outline-3 outline-red-500 rounded flex '>
-      <div className='w-1/3 h-full bg-gradient-to-tl from-slate-400 p-10'>
+    <article className='bg-gradient-to-tl from-gray-200 w-full outline outline-3 outline-red-500 rounded flex flex-col lg:flex-row'>
+      <div className=' lg:w-1/3 h-1/4 lg:h-full bg-gradient-to-tl from-slate-400 p-10'>
         <img
           src={product.image}
           alt={product.name}
           className='w-full h-full object-scale-down rounded max-h-[500px]'
         />
       </div>
-      <div className='w-2/3 grid grid-cols-3  p-10 place-content-center gap-20'>
+      <div className='w-full lg:w-2/3 grid grid-cols-1 px-5 py-5 lg:grid-cols-3  lg:p-10 place-content-center gap-5 lg:gap-20'>
         <div className='flex flex-col'>
           <label htmlFor='name'>Name</label>
           <input
@@ -91,7 +91,6 @@ const EditProduct = ({ product, handleChange, stockOpt, labelOpt }) => {
           />
         </div>
         <div className='flex flex-col'>
-          {/* FIXME detect category / update category */}
           <label htmlFor='category'>Category</label>
           <select
             readOnly={true}

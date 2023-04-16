@@ -52,7 +52,7 @@ const Modal = ({ active, setActive }) => {
               type='text'
               ref={inputRef}
               placeholder='Search SKU / EAN / Name'
-              className='p-7 md:text-lg sm:w-3/4 lg:w-full rounded-md outline outline-1 outline-gray-300 font-medium text-2xl h-14'
+              className='p-7 md:text-lg sm:w-3/4 lg:w-full rounded-md outline outline-1 outline-gray-300 font-medium text-2xl h-14 lowercase'
               onChange={(e) => setInput(e.target.value)}
             />
             <div>
@@ -84,7 +84,7 @@ const Modal = ({ active, setActive }) => {
                       <Product
                         product={item}
                         index={i}
-                        opt='h-[150px]'
+                        opt='h-[250px] lg:h-[150px]'
                         key={item._id}
                         setError={setError}
                         setMsg={setMsg}

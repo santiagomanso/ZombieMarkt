@@ -27,8 +27,8 @@ const UpdatePage = () => {
   }
 
   const handleChange = async (e) => {
-    console.log('e.target.name', e.target.name)
-    console.log('e.target.value', e.target.value)
+    // console.log('e.target.name', e.target.name)
+    // console.log('e.target.value', e.target.value)
     if (e.target.name === 'category') {
       const category = await getCategoryByName(e.target.value)
       setProductFromContext({
@@ -118,7 +118,6 @@ const UpdatePage = () => {
                 ? 'active:translate-y-2 bg-gradient-to-br from-green-400 to-emerald-700 cursor-pointer'
                 : 'active:translate-x-2 bg-gradient-to-br from-red-400 to-rose-700 cursor-not-allowed opacity-60 hover:opacity-100'
             }`}
-            //   onClick={handlerSubmit}
           >
             {enabled ? 'Update product' : 'Not allowed X'}
           </button>
@@ -144,12 +143,17 @@ const UpdatePage = () => {
         </section>
 
         <div className='flex justify-center'>
-          <input
-            type='button'
-            value='Check in'
-            className={` bottom-4 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12                  
-                text-white font-bold text-lg`}
-          />
+          <button
+            onClick={handleUpdate}
+            className={` bottom-0 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12 text-gray-100 font-bold uppercase                 
+            ${
+              enabled
+                ? 'block active:translate-y-2 bg-gradient-to-br from-green-400 to-emerald-700 cursor-pointer'
+                : 'hidden active:translate-x-2 bg-gradient-to-br from-red-400 to-rose-700 cursor-not-allowed'
+            }`}
+          >
+            {enabled ? 'Update product' : 'Not allowed X'}
+          </button>
         </div>
       </main>
     </>
