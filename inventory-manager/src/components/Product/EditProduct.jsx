@@ -24,7 +24,7 @@ const EditProduct = ({ product, handleChange, stockOpt, labelOpt }) => {
 
   return (
     <article className='bg-gradient-to-tl from-gray-200 w-full outline outline-3 outline-red-500 rounded flex flex-col lg:flex-row'>
-      <div className=' lg:w-1/3 h-1/4 lg:h-full bg-gradient-to-tl from-slate-400 p-10'>
+      <div className='lg:w-1/3 h-1/4 lg:h-full bg-gradient-to-tl from-slate-400 p-10'>
         <img
           src={product.image}
           alt={product.name}

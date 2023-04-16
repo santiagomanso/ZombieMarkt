@@ -96,7 +96,7 @@ const DeletePage = () => {
             }`}
             //   onClick={handlerSubmit}
           >
-            <span>Delete product</span>
+            <span>Delete</span>
             <i className='fa-solid fa-trash'></i>
           </button>
         </section>
@@ -114,19 +114,20 @@ const DeletePage = () => {
               handleChange={handleChange}
             />
           ) : (
-            <p className='text-3xl text-gray-600'>
+            <p className='px-2 lg:px-0 text-xl lg:text-3xl text-gray-600'>
               Search or scan a product to start
             </p>
           )}
         </section>
 
         <div className='flex justify-center'>
-          <input
-            type='button'
-            value='Check in'
-            className={` bottom-4 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12                  
+          <button
+            onClick={handleDelete}
+            className={` bottom-4 fixed sm:hidden bg-slate-400 rounded-md cursor-pointer w-5/6 h-12 bg-gradient-to-br from-red-500 to-rose-900                 
                 text-white font-bold text-lg`}
-          />
+          >
+            Delete
+          </button>
         </div>
       </main>
     </>

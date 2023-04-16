@@ -29,9 +29,4 @@ export const buttonsData = [
     title: 'Delete product',
     path: '/delete',
   },
-  {
-    id: 7,
-    title: 'Backup shelves',
-    path: '/shelves',
-  },
 ]

@@ -51,9 +51,10 @@ const Navbar = () => {
         Home
       </Link>
       <h1 className='text-xl md:text-3xl font-bold'>{title}</h1>
-      <span className='bg-gray-500 py-1 sm:py-4  px-2 sm:px-7  text-white rounded-lg font-bold'>
+      <span className='text-sm font-thin text-white scale-0'>.</span>
+      {/* <span className='bg-gray-500 py-1 sm:py-4  px-2 sm:px-7  text-white rounded-lg font-bold'>
         Logout
-      </span>
+      </span> */}
     </nav>
   )
 }

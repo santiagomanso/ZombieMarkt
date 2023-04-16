@@ -55,7 +55,12 @@ const ConfirmationModal = ({
             <h1 className='lg:text-3xl font-medium text-gray-600'>
               Confirm Deletion
             </h1>
-
+            <button
+              onClick={() => setActiveConfirmation(false)}
+              className='bg-slate-400 px-3 py-1 absolute top-2 right-5'
+            >
+              X
+            </button>
             <p className='mt-2 text-gray-800'>
               This action cannot be undone. This will permanently delete the
               product.. Are you sure you want to delete{' '}
@@ -70,7 +75,7 @@ const ConfirmationModal = ({
             <input
               type='text'
               name='inputConfirm'
-              className='w-full bg-gray-200'
+              className='w-full bg-gray-200 lowercase'
               onChange={handleChange}
             />
             <button

@@ -143,7 +143,9 @@ const UsersPage = () => {
               )
             })
           ) : (
-            <p className='text-3xl text-gray-600'>There are no users.</p>
+            <p className='px-2 lg:px-0 text-xl lg:text-3xl text-gray-600'>
+              There are no users.
+            </p>
           )}
         </section>
       </main>

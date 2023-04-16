@@ -136,7 +136,7 @@ const UpdatePage = () => {
               handleChange={handleChange}
             />
           ) : (
-            <p className='text-3xl text-gray-600'>
+            <p className='px-2 lg:px-0 text-xl lg:text-3xl text-gray-600'>
               Search or scan a product to start
             </p>
           )}
