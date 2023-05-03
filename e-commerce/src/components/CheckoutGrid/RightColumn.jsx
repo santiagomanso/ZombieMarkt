@@ -113,7 +113,7 @@ const RightColumn = ({
               </span>
               <span className='font-semibold text-xl flex justify-between'>
                 <span>Total</span>
-                <span>$ 12314123</span>
+                <span>$ {calculateTotals}</span>
               </span>
             </div>
 
