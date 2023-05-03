@@ -48,7 +48,7 @@ const Dropdown = ({ name, logout, img }) => {
           <div className='w-1/2'>
             <img src={img} alt={name} className='w-16' />
           </div>
-          <span className='w-5/6 text-gray-100 text-2xl font-thin tracking-wider'>
+          <span className='w-5/6 text-gray-100 text-xl font-thin tracking-wider'>
             Profile
           </span>
         </Link>
@@ -57,7 +57,7 @@ const Dropdown = ({ name, logout, img }) => {
           onClick={handleLogout}
         >
           <i className='fa-solid pl-4 py-3 w-1/2 fa-power-off text-red-700 text-4xl duration-500'></i>
-          <span className='w-5/6 text-gray-100 text-2xl font-light'>
+          <span className='w-5/6 text-gray-100 text-xl font-light'>
             Sign out
           </span>
         </li>
