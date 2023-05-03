@@ -9,7 +9,6 @@ import moment from 'moment'
 // @desc Create user
 // @route POST /api/users
 // @access Public
-//FIXME - check if they alreay have googleId and send error saying to use OAUTH
 export const createUser = async (req, res) => {
   const { email } = req.body
   // console.log('email', email)
