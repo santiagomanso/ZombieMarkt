@@ -34,12 +34,16 @@ const CheckoutGrid = () => {
 
   const calculateDiscounts = () => {
     switch (true) {
+      case calculateQty() > 12:
+        return 0.5
+      case calculateQty() > 9:
+        return 0.4
       case calculateQty() > 7:
-        return 30
+        return 0.3
       case calculateQty() > 4:
-        return 20
+        return 0.2
       case calculateQty() > 0:
-        return 10
+        return 0
 
       default:
         break

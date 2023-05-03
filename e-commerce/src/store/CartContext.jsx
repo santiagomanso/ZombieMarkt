@@ -27,7 +27,7 @@ export const CartProvider = ({ children }) => {
   }
 
   //NOTE - PLACE ORDER
-  const placeOrder = async (price) => {
+  const placeOrder = async (total) => {
     const token = getTokenFromStorage()
     //headers
     const headers = {
@@ -46,7 +46,7 @@ export const CartProvider = ({ children }) => {
     const body = {
       cart, //the whole array of products
       shippingAdress: shippingAdress,
-      price: price,
+      price: total,
       orderItems: orderIds, //array of _ids (only ids)
     }
 
