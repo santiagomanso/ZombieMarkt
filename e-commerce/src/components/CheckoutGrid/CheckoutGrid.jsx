@@ -32,6 +32,20 @@ const CheckoutGrid = () => {
     }
   }
 
+  const calculateDiscounts = () => {
+    switch (true) {
+      case calculateQty() > 7:
+        return 30
+      case calculateQty() > 4:
+        return 20
+      case calculateQty() > 0:
+        return 10
+
+      default:
+        break
+    }
+  }
+
   return (
     <section className={`grid grid-cols-1 md:grid-cols-2 w-full h-[88%]`}>
       {msg && (
@@ -48,6 +62,7 @@ const CheckoutGrid = () => {
         hideOnPhones
         calculateSemitotals={calculateSemitotals}
         calculateQty={calculateQty}
+        calculateDiscounts={calculateDiscounts}
       />
       {/* this component is hidden on phone-tablets */}
       {cart.length > 0 && (
@@ -66,6 +81,7 @@ const CheckoutGrid = () => {
             setActive={setActive}
             calculateSemitotals={calculateSemitotals}
             calculateQty={calculateQty}
+            calculateDiscounts={calculateDiscounts}
           />
         </ModalCheckout>
       )}
