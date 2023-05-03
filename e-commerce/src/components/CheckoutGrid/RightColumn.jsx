@@ -33,7 +33,7 @@ const RightColumn = ({
       }, 2500)
     } else {
       setError('')
-      placeOrder(calculateSemitotals())
+      placeOrder(calculateTotals())
       setTimeout(() => {
         // setActive(false)
       }, 2000)
@@ -41,7 +41,9 @@ const RightColumn = ({
   }
 
   const calculateTotals = () => {
-    calculateSemitotals()
+    const result =
+      calculateSemitotals() - calculateSemitotals() * calculateDiscounts()
+    return result.toFixed(2)
   }
 
   return (
@@ -109,11 +111,11 @@ const RightColumn = ({
               </span>
               <span className='flex justify-between'>
                 <span>Discounts</span>
-                <span>{calculateDiscounts()}%</span>
+                <span>{(calculateDiscounts() * 100).toFixed(0)}%</span>
               </span>
               <span className='font-semibold text-xl flex justify-between'>
                 <span>Total</span>
-                <span>$ {calculateTotals}</span>
+                <span>$ {calculateTotals()}</span>
               </span>
             </div>
 
