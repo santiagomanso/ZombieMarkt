@@ -8,6 +8,7 @@ const RightColumn = ({
   setActive,
   calculateQty,
   calculateSemitotals,
+  calculateDiscounts,
 }) => {
   const {
     cart,
@@ -37,6 +38,10 @@ const RightColumn = ({
         // setActive(false)
       }, 2000)
     }
+  }
+
+  const calculateTotals = () => {
+    calculateSemitotals()
   }
 
   return (
@@ -104,7 +109,7 @@ const RightColumn = ({
               </span>
               <span className='flex justify-between'>
                 <span>Discounts</span>
-                <span>30%</span>
+                <span>{calculateDiscounts()}%</span>
               </span>
               <span className='font-semibold text-xl flex justify-between'>
                 <span>Total</span>
