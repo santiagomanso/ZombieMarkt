@@ -9,3 +9,5 @@
 // const cheetos =
 //   'https://i.ibb.co/KybRF91/cheetos-cheese-flavoured-130-removebg-preview.png'
 // const stangen = 'https://i.ibb.co/tXfVMHz/stange-removebg-preview.png'
+//evian https://i.ibb.co/J7hzLm2/evian-Water.png
+//corona bier https://i.ibb.co/t2T3WsR/26274642-digital-image-removebg-preview.png
