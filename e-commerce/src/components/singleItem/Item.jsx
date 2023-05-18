@@ -51,9 +51,7 @@ const Item = ({
       className={`bg-gradient-to-tl to-amber-100/10 
       from-slate-900/80 outline outline-2 outline-amber-100/50   rounded-2xl flex      
         flex-col justify-center items-center relative  group ${
-          item.countInStock > 0 || item.path
-            ? 'cursor-pointer'
-            : 'cursor-not-allowed'
+          item.countInStock > 0 || item.path ? 'cursor-pointer' : 'cursor-cell'
         } ${itemContainerOpt}`}
     >
       {/* NAME FOR LARGE SCREENS */}
@@ -76,7 +74,7 @@ const Item = ({
       </span>
       {item.countInStock === 0 && (
         <span className='font-semibold z-10 bg-gradient-to-br from-amber-200 to-yellow-200 px-5 py-2 rounded absolute top-0 -right-8 rotate-12 text-yellow-700 outline outline-2 outline-yellow-700 uppercase'>
-          Coming back soon
+          Clickme to re-stock +
         </span>
       )}
       {redirectToDetail && (

@@ -1,4 +1,4 @@
-import { Link, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import Header from '../components/header/Header'
 import MainContainer from '../components/containers/MainContainer'
