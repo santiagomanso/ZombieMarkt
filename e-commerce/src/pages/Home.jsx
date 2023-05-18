@@ -5,7 +5,6 @@ import MainContainer from '../components/containers/MainContainer'
 import ItemList from '../components/lists/ItemList'
 import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
-import { useParams } from 'react-router-dom'
 
 const HomePage = () => {
   const { loading, data } = useFetch(
