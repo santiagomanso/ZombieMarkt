@@ -2,8 +2,11 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import ReactDom from 'react-dom'
 import getTokenFromStorage from '../../utils/getTokenFromStorage'
+import { useNavigate } from 'react-router-dom'
 
 const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
+  const navigate = useNavigate()
+
   useEffect(() => {
     const detectKeyDown = (e) => {
       if (e.key === 'Escape') {
@@ -36,6 +39,11 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
     }
   }
 
+  const handleClick = (_id) => {
+    if (dataType === 'orders') return
+    navigate(`/products/details/${_id}`)
+  }
+
   if (!active) return ''
   else {
     return ReactDom.createPortal(
@@ -62,11 +70,22 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                   return (
                     <article
                       key={index}
-                      className={`lg:mt-10 flex flex-col lg:flex-row lg:h-[200px] rounded-md outline outline-1 outline-stone-900 hover:shadow-xl hover:shadow-gray-700 transition-all ease-in-out duration-300 relative w-full opacity-90 hover:opacity-100 ${
+                      className={`lg:mt-10 flex flex-col lg:flex-row lg:h-[200px] rounded-md outline outline-1 outline-stone-900 hover:shadow-xl hover:shadow-gray-700 transition-all ease-in-out duration-300 relative w-full opacity-90 hover:opacity-100 
+                      ${
+                        dataType === 'favorites'
+                          ? 'cursor-pointer'
+                          : 'cursor-default'
+                      }
+                      ${
                         index % 2 === 0
                           ? 'bg-gradient-to-tl from-slate-500/80 via-neutral-600/70 to-gray-900/80 '
                           : 'bg-gradient-to-br from-gray-800/80 to-slate-700/80'
                       }`}
+                      onClick={
+                        dataType === 'favorites'
+                          ? () => handleClick(item._id)
+                          : ''
+                      }
                     >
                       <div className='w-full lg:w-1/5 flex items-center justify-center bg-gradient-to-tl from-gray-100/40 to-slate-800 p-2'>
                         {dataType === 'orders' ? (
