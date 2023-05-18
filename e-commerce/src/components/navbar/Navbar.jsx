@@ -155,7 +155,7 @@ const Navbar = () => {
             : 'hidden lg:flex justify-between bg-orange-100/20 py-5 items-center px-1 lg:px-20 shadow-md z-10'
         }`}
       >
-        <Link to='/home' className='z-50'>
+        <Link to='/home' className='z-10'>
           <i className='fa-solid fa-burger text-orange-500 text-3xl'></i>
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
