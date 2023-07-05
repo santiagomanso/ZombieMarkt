@@ -26,6 +26,9 @@ export const googleLogin = async (req, res) => {
   }
 }
 
+// @desc Logout function
+// @route POST
+// @access Private
 export const logout = async (req, res) => {
   console.log('req.session', req.session)
   req.session = null
@@ -33,6 +36,9 @@ export const logout = async (req, res) => {
   res.send(req.user)
 }
 
+// @desc returns current user when session object in passport is true
+// @route GET
+// @access Public
 export const currentUser = async (req, res) => {
   console.log('req.session.user', req.session.user)
   console.log('req.session.token', req.session.token)
