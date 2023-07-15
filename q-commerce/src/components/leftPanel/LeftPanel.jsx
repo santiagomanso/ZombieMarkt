@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import zombie from '../../assets/zombie2.png'
 import zombieCalculate from '../../assets/zombieCalculate.png'
 import { AnimationContext } from '../../store/AnimationContext'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const LeftPanel = ({
   imgTop,
@@ -14,6 +15,7 @@ const LeftPanel = ({
   bottomCard,
 }) => {
   const { setAnimation } = useContext(AnimationContext)
+  const { txt } = useContext(LanguageContext)
 
   const navigate = useNavigate()
 
@@ -38,12 +40,10 @@ const LeftPanel = ({
           className={`absolute md:-top-20 lg:-top-24 ${topImgOpt && topImgOpt}`}
         />
         <div className='mt-36 lg:mt-40'>
-          <h2 className='font-bold'>{title ? title : 'Calculate food!'}</h2>
+          <h2 className='font-bold'>{title ? title : txt.foodCalculator}</h2>
           <span className='text-start'>
             <p className='font-medium'>
-              {subtitle
-                ? subtitle
-                : 'Calculate how much food you and your group needs.'}
+              {subtitle ? subtitle : txt.foodPerGroup}
             </p>
             <div className='w-full flex justify-center mt-2 '>
               <button
@@ -65,17 +65,15 @@ const LeftPanel = ({
             className='absolute md:-top-20 lg:-top-24'
           />
           <div className='mt-36'>
-            <h2 className='font-bold'>Survivor's kit!</h2>
+            <h2 className='font-bold'>{txt.surivivorsKit}</h2>
             <span className='text-start'>
-              <p className='font-medium'>
-                Everything you need to whitstand the infection
-              </p>
+              <p className='font-medium'>{txt.everythingYouNeed}</p>
               <div className='w-full flex justify-center mt-0 '>
                 <button
                   className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center uppercase'
                   // onClick={() => handleNavigate('/survivor')}
                 >
-                  coming soon!
+                  {txt.comingSoon}
                 </button>
               </div>
             </span>
