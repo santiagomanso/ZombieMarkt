@@ -7,6 +7,8 @@ import { setPathOnStorage } from '../../utils/localStoragePaths'
 import Badge from '../Badge/Badge'
 import Dropdown from '../dropdown/Dropdown'
 import Footer from '../footer/Footer'
+import LanguageSwitcher from '../dropdown/LanguageSwitcher'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const Navbar = () => {
   const location = useLocation()
@@ -15,6 +17,7 @@ const Navbar = () => {
   const { cart } = useContext(CartContext)
   const { user, logOut } = useContext(UserContext)
   const { setPath } = useContext(RedirectContext)
+  const { txt } = useContext(LanguageContext)
 
   const handleClick = (path) => {
     if (!user) {
@@ -83,7 +86,7 @@ const Navbar = () => {
               onClick={() => setActive(!active)}
               className='text-2xl font-medium tracking-wider'
             >
-              Home
+              {txt.home}
             </Link>
             <Link
               to='/cart'
@@ -95,7 +98,7 @@ const Navbar = () => {
               }}
               className='text-2xl font-medium tracking-wider relative'
             >
-              cart
+              {txt.cart}
               {cart.length > 0 && location.pathname !== '/cart' && (
                 <Badge position='absolute -top-2 -right-5' />
               )}
@@ -110,7 +113,7 @@ const Navbar = () => {
               }}
               className='text-2xl font-medium tracking-wider'
             >
-              Profile
+              {txt.profile}
             </Link>
             {/* <Link
               onClick={() => setActive(!active)}
@@ -131,7 +134,7 @@ const Navbar = () => {
                 onClick={() => setActive(!active)}
                 className='bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded px-5 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40 text-2xl'
               >
-                login
+                {txt.login}
               </Link>
             )}
             {user && (
@@ -160,6 +163,7 @@ const Navbar = () => {
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
         <ul className='flex gap-10 items-center'>
+          <LanguageSwitcher />
           {!user && (
             <Link
               to='/login'
@@ -178,7 +182,7 @@ const Navbar = () => {
             className='relative'
             onClick={() => handleClick('/cart')}
           >
-            <span>cart</span>
+            <span>{txt.cart}</span>
             {cart.length > 0 && <Badge position='absolute -top-4 -right-4' />}
             <i className='fa-solid fa-cart-shopping text-gray-700 text-xl'></i>
           </Link>

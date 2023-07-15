@@ -17,51 +17,57 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
 import { RedirectProvider } from './store/RedirectContext'
 import Footer from './components/footer/Footer'
 import SplashScreen from './pages/SplashScreen'
+import { LanguageProvider } from './store/LanguageContext'
 const App = () => {
   return (
     <BrowserRouter>
-      <UserProvider>
-        <CartProvider>
-          <RedirectProvider>
-            <AnimationProvider>
-              <AppContainer>
-                <Navbar />
-                <Routes>
-                  <Route path='/' element={<SplashScreen />} />
-                  <Route path='/home' element={<HomePage />} />
-                  <Route
-                    path='/products/:category'
-                    element={<ProductsPage />}
-                  />
-                  <Route path='/products/details/:_id' element={<Details />} />
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/signup' element={<SignUp />} />
-                  <Route path='/calculator' element={<Calculator />} />
-                  <Route path='/survivalKits' element={<SurvivalKits />} />
-                  <Route
-                    path='/profile'
-                    element={
-                      <ProtectedRoute>
-                        <Profile />
-                      </ProtectedRoute>
-                    }
-                  />
+      <LanguageProvider>
+        <UserProvider>
+          <CartProvider>
+            <RedirectProvider>
+              <AnimationProvider>
+                <AppContainer>
+                  <Navbar />
+                  <Routes>
+                    <Route path='/' element={<SplashScreen />} />
+                    <Route path='/home' element={<HomePage />} />
+                    <Route
+                      path='/products/:category'
+                      element={<ProductsPage />}
+                    />
+                    <Route
+                      path='/products/details/:_id'
+                      element={<Details />}
+                    />
+                    <Route path='/login' element={<Login />} />
+                    <Route path='/signup' element={<SignUp />} />
+                    <Route path='/calculator' element={<Calculator />} />
+                    <Route path='/survivalKits' element={<SurvivalKits />} />
+                    <Route
+                      path='/profile'
+                      element={
+                        <ProtectedRoute>
+                          <Profile />
+                        </ProtectedRoute>
+                      }
+                    />
 
-                  <Route
-                    path='/cart'
-                    element={
-                      <ProtectedRoute>
-                        <Cart />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-                <Footer display='laptop' />
-              </AppContainer>
-            </AnimationProvider>
-          </RedirectProvider>
-        </CartProvider>
-      </UserProvider>
+                    <Route
+                      path='/cart'
+                      element={
+                        <ProtectedRoute>
+                          <Cart />
+                        </ProtectedRoute>
+                      }
+                    />
+                  </Routes>
+                  <Footer display='laptop' />
+                </AppContainer>
+              </AnimationProvider>
+            </RedirectProvider>
+          </CartProvider>
+        </UserProvider>
+      </LanguageProvider>
     </BrowserRouter>
   )
 }

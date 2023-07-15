@@ -5,25 +5,29 @@ import MainContainer from '../components/containers/MainContainer'
 import ItemList from '../components/lists/ItemList'
 import useFetch from '../hooks/useFetch'
 import Loading from '../components/loading/Loading'
+import { useContext } from 'react'
+import { LanguageContext } from '../store/LanguageContext'
 
 const HomePage = () => {
   const { loading, data } = useFetch(
     `${process.env.REACT_APP_SERVER_URL}/api/categories/all`,
   )
 
+  const { txt } = useContext(LanguageContext)
+
   return (
     <MainContainer>
       <LeftPanel
         topImgOpt=''
-        topBtnText='coming soon!'
+        topBtnText={txt.comingSoon}
         topBtnPath='/calculator'
         bottomCard
       />
 
       <RightContainer gap='gap-5 lg:gap-32' padding='p-5 lg:p-0' overflowAuto>
         <Header
-          title='ZombieMarkt Groceries'
-          subtitle='Where prices are dropped dead'
+          title={txt.zombiemarktGroceries}
+          subtitle={txt.wherePricesDropDead}
           typeWritter
           opt='px-5 lg:py-5 lg:px-8  mt-0 lg:mt-0'
         />

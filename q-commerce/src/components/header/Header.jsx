@@ -1,10 +1,23 @@
-import { useContext } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import TypeWriterEffect from 'react-typewriter-effect'
 import { CartContext } from '../../store/CartContext'
+import { LanguageContext } from '../../store/LanguageContext'
+
 const Header = ({ title, subtitle, typeWritter, height, goBack, opt }) => {
+  const { txt, language } = useContext(LanguageContext)
+
   const { msg } = useContext(CartContext)
+
   const navigate = useNavigate()
+  const [multiText, setMultiText] = useState(txt.typeWritter)
+  const [key, setKey] = useState(0) // Key to force re-render
+
+  useEffect(() => {
+    setMultiText(txt.typeWritter)
+    setKey((prevKey) => prevKey + 1) // Update the key value to force re-render
+  }, [language, txt.typeWritter])
+
   return (
     <article
       className={`lg:self-start ${height ? height : ''} ${
@@ -34,18 +47,13 @@ const Header = ({ title, subtitle, typeWritter, height, goBack, opt }) => {
       <div className='absolute hidden lg:block px-8'>
         {typeWritter && (
           <TypeWriterEffect
+            key={key} // Key to force re-render
             textStyle={{
               fontFamily: 'Poppins',
               fontWeight: 500,
             }}
             cursorColor='#3F3D56'
-            multiText={[
-              "Grocery shopping so easy, it's like you've come back to life",
-              'No brains required for our easy shopping experience',
-              'Stock up before the apocalypse with our unbeatable prices',
-              "Our service is to die for...literally, don't forget to tip your driver",
-              'The only thing scarier than the zombie apocalypse is running out of toilet paper - stock up now',
-            ]}
+            multiText={multiText}
             multiTextDelay={1000}
             typeSpeed={30}
             multiTextLoop
