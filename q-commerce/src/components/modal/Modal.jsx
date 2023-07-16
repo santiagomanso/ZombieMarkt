@@ -1,11 +1,15 @@
 import axios from 'axios'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import ReactDom from 'react-dom'
 import getTokenFromStorage from '../../utils/getTokenFromStorage'
 import { useNavigate } from 'react-router-dom'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
   const navigate = useNavigate()
+
+  //extraction from context
+  const { txt, language } = useContext(LanguageContext)
 
   useEffect(() => {
     const detectKeyDown = (e) => {
@@ -106,16 +110,16 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                         <span className='text-xl lg:text-2xl font-medium text-gray-200'>
                           {dataType === 'orders'
                             ? item.createdAt
-                            : `$${item.price}`}
+                            : `${txt.price}: $${item.price}`}
                         </span>
                         <span className='text-xl lg:text-2xl font-medium text-gray-200'>
                           {dataType === 'orders'
-                            ? `Quantity: ${item.quantity}`
-                            : `Category: ${item.category.name}`}
+                            ? `${txt.products}: ${item.quantity}`
+                            : `${txt.category}: ${item.category.name}`}
                         </span>
                         <span className='text-xl lg:text-2xl font-medium text-gray-200'>
                           {dataType === 'orders'
-                            ? `Order price: $${item.price}`
+                            ? `${txt.orderPrice}: $${item.price}`
                             : ''}
                         </span>
                         {dataType === 'favorites' ? (
@@ -143,10 +147,12 @@ const Modal = ({ dataType, active, setActive, array, email, setFavorites }) => {
                 <div className='flex items-center justify-center'>
                   <div className='flex flex-col items-center'>
                     <p className='text-7xl text-gray-800'>
-                      You dont have any{' '}
-                      {dataType === 'orders' ? 'orders' : 'favorites'} yet
+                      {txt.youDontHaveAny}{' '}
+                      {dataType === 'orders' ? txt.orders : txt.favourites}{' '}
+                      {/* avoid yet when language is german, the word noch cannot be at the end */}
+                      {language !== 'de' && txt.yet}
                     </p>
-                    <i className='fa-solid fa-heart-crack text-8xl text-rose-700'></i>
+                    <i className='fa-solid fa-heart-crack text-8xl text-rose-700 mt-4'></i>
                   </div>
                 </div>
               )}
