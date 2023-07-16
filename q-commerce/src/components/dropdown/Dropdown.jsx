@@ -1,9 +1,16 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const Dropdown = ({ name, logout, img }) => {
+  //states
   const [active, setActive] = useState(false)
+
+  //reference for div dropdown
   const menuRef = useRef()
+
+  //extraction from context
+  const { txt } = useContext(LanguageContext)
 
   useEffect(() => {
     const handler = (e) => {
@@ -49,7 +56,7 @@ const Dropdown = ({ name, logout, img }) => {
             <img src={img} alt={name} className='w-16' />
           </div>
           <span className='w-5/6 text-gray-100 text-xl font-thin tracking-wider'>
-            Profile
+            {txt.profile}
           </span>
         </Link>
         <li
@@ -57,8 +64,8 @@ const Dropdown = ({ name, logout, img }) => {
           onClick={handleLogout}
         >
           <i className='fa-solid pl-4 py-3 w-1/2 fa-power-off text-red-700 text-4xl duration-500'></i>
-          <span className='w-5/6 text-gray-100 text-xl font-light'>
-            Sign out
+          <span className='w-full text-gray-100 text-xl font-light'>
+            {txt.signOut}
           </span>
         </li>
       </ul>
