@@ -2,6 +2,7 @@ import { useContext } from 'react'
 import { CartContext } from '../../store/CartContext'
 import { UserContext } from '../../store/UserContext'
 import FloatingMsg from '../floatingMsg/FloatingMsg'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const RightColumn = ({
   hideOnPhones,
@@ -10,6 +11,7 @@ const RightColumn = ({
   calculateSemitotals,
   calculateDiscounts,
 }) => {
+  //extraction from contexts
   const {
     cart,
     placeOrder,
@@ -20,6 +22,7 @@ const RightColumn = ({
     setShippingAdress,
   } = useContext(CartContext)
   const { user } = useContext(UserContext)
+  const { txt } = useContext(LanguageContext)
 
   const handleChange = (e) => {
     setShippingAdress(e.target.value)
@@ -27,7 +30,7 @@ const RightColumn = ({
 
   const handleSubmit = () => {
     if (!shippingAdress) {
-      setError('Please provide a shipping adress')
+      setError(txt.pleaseProvideShippingAddress)
       setTimeout(() => {
         setError('')
       }, 2500)
@@ -79,7 +82,7 @@ const RightColumn = ({
         >
           <div className='flex flex-col  dark:bg-transparent p-4 rounded h-full relative'>
             <div className='bg-gray-800 dark:bg-gray-700/50 py-3 px-4 rounded w-full flex justify-between items-center'>
-              <h2 className='text-gray-200'>Checkout</h2>
+              <h2 className='text-gray-200'>{txt.checkout}</h2>
               {setActive ? (
                 <i
                   onClick={() => setActive(false)}
@@ -89,59 +92,56 @@ const RightColumn = ({
                 <i className='fa-solid fa-wallet text-gray-200 text-2xl'></i>
               )}
             </div>
-            <span className='text-start text-gray-100'>
-              Get ready to break the bank, because your cart is loaded with
-              items that will cost you a pretty penny count!.
-            </span>
+            <span className='text-start text-gray-100'>{txt.getReady}</span>
 
             <h2 className='mt-5 font-semibold text-gray-100 uppercase'>
-              Order Summary
+              {txt.orderSummary}
             </h2>
             <div className='flex flex-col gap-y-3 divide-y-2 divide-gray-400 bg-white/80 dark:bg-gray-700/50 p-4 rounded'>
               <span className='flex justify-between'>
-                <span>Quantity</span>
+                <span>{txt.quantity}</span>
                 <span>{calculateQty()}</span>
               </span>
               <span className='flex justify-between'>
                 <span>
-                  Smitotal
+                  {txt.semitotal}
                   {cart.length > 1 ? 's' : ''}
                 </span>
                 <span>$ {calculateSemitotals()}</span>
               </span>
               <span className='flex justify-between'>
-                <span>Discounts</span>
+                <span>{txt.discounts}</span>
                 <span>{(calculateDiscounts() * 100).toFixed(0)}%</span>
               </span>
               <span className='font-semibold text-xl flex justify-between'>
-                <span>Total</span>
+                <span>{txt.total}</span>
                 <span>$ {calculateTotals()}</span>
               </span>
             </div>
 
             <h2 className='mt-10 font-semibold text-gray-100 uppercase'>
-              Shipping Adress
+              {txt.shippingAdress}
             </h2>
             <div className='flex flex-col gap-y-3 divide-y-2 divide-gray-400 bg-white/80 dark:bg-gray-700/50 p-4 rounded '>
               <span className='flex justify-between'>
-                <span>Customer</span>
+                <span>{txt.customer}</span>
                 <span>{user.email}</span>
               </span>
               <span className='flex justify-between'>
-                <span>Adress</span>
+                <span>{txt.address}</span>
                 <input
                   value={shippingAdress}
                   onChange={handleChange}
-                  placeholder='Enter your adress'
+                  placeholder={txt.addressPlaceHolder}
                   className='bg-transparent py-0 outline outline-2 outline-slate-500 rounded-sm mt-2 h-full px-5'
                 />
               </span>
             </div>
             <button
               onClick={handleSubmit}
-              className='absolute bottom-2 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold'
+              className='absolute bottom-2 lg:bottom-4 left-[50%] -translate-x-[50%] w-full lg:w-3/4 bg-gradient-to-br from-slate-500 to-gray-700 rounded text-gray-200 font-bold uppercase'
             >
-              PLACE ORDER NOW !
+              {txt.placeOrderNow}
             </button>
           </div>
         </div>
