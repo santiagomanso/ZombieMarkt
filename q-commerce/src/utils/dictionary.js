@@ -1,5 +1,8 @@
 export const dictionary = {
   en: {
+    splashScreenIntro:
+      'Humanity is on the edge of extinction, zombies roam free. This is the last remaining Online shop our drivers are skilled enough to neutralize them zombies. Stack-up now!.',
+    enterShop: 'Enter Shop',
     zombiemarktGroceries: 'ZombieMarkt Groceries',
     wherePricesDropDead: 'Where prices are dropped dead',
     typeWritter: [
@@ -88,6 +91,9 @@ export const dictionary = {
   },
 
   es: {
+    splashScreenIntro:
+      'La humanidad está al borde de la extinción, los zombies deambulan libres. Esta es la última tienda en línea que queda nuestros conductores son lo suficientemente hábiles para neutralizarlos zombies. Stack-up ahora!.',
+    enterShop: 'Quiero sobrevivir!',
     zombiemarktGroceries: 'ZombieMarkt Supermerk2',
     wherePricesDropDead: 'Donde los precios caen muertos',
     typeWritter: [
@@ -176,6 +182,9 @@ export const dictionary = {
   },
 
   de: {
+    splashScreenIntro:
+      'Die Menschheit ist am Rande der Ausrottung, Zombies streifen frei. Dies ist die letzte verbleibende Online Shop unsere Fahrer sind geschickt genug, um sie zu neutralisieren Zombies. Stack-up jetzt!',
+    enterShop: 'Shop betreten',
     zombiemarktGroceries: 'ZombieMarkt Lebensmittel',
     wherePricesDropDead: 'Wo die Preise tot fallen',
     typeWritter: [
