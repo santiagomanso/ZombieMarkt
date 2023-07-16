@@ -6,15 +6,45 @@ import RightContainer from '../components/containers/RightContainer'
 import useFetch from '../hooks/useFetch'
 import ItemList from '../components/lists/ItemList'
 import Loading from '../components/loading/Loading'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { LanguageContext } from '../store/LanguageContext'
 
 const ProductsPage = () => {
   const { category } = useParams()
   const [products, setProducts] = useState([])
 
+  //extraction from context
+  const { txt } = useContext(LanguageContext)
+
   const url = `${process.env.REACT_APP_SERVER_URL}/api/products/category/${category}`
 
   const { loading, data } = useFetch(url)
+
+  //function to switch the name of the category
+  const checkName = (category) => {
+    switch (true) {
+      case category === 'beverages':
+        return txt.beverages
+
+      case category === 'snacks':
+        return txt.snacks
+      case category === 'hygiene':
+        return txt.hygiene
+      case category === 'meat':
+        return txt.meat
+      case category === 'pasta':
+        return txt.pasta
+      case category === 'fruits':
+        return txt.fruits
+      case category === 'vegetables':
+        return txt.vegetables
+      case category === 'breakfast':
+        return txt.breakfast
+
+      default:
+        return ''
+    }
+  }
 
   useEffect(() => {
     if (data) setProducts(data.products)
@@ -26,7 +56,7 @@ const ProductsPage = () => {
 
       <RightContainer gap='gap-5 lg:gap-20' padding='p-5 lg:p-10' overflowAuto>
         <Header
-          title={category}
+          title={checkName(category)}
           typeWritter={false}
           goBack
           opt='pl-3 lg:pl-0 lg:pt-3'
@@ -53,9 +83,10 @@ const ProductsPage = () => {
         ) : (
           <article className='flex flex-col items-center gap-2'>
             <span className='text-xl lg:text-3xl'>
-              Uh oh, looks like the zombies got to our{' '}
-              <span className='font-bold text-xl lg:text-3xl'>{category}</span>{' '}
-              category before we did.
+              {txt.noProducts}
+              <span className='font-bold text-xl lg:text-3xl'>
+                {checkName(category)}
+              </span>
             </span>
             <a
               href={`${process.env.REACT_APP_INVENTORY_MANAGER}/create/${category}`}
@@ -64,7 +95,7 @@ const ProductsPage = () => {
               className='text-lg lg:text-3xl bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded flex gap-1 items-baseline outline outline-2 outline-orange-900/40  
               px-4 text-center lg:px-6 lg:py-4 text-gray-200'
             >
-              Click here to add a new product and help us restock!
+              {txt.clickMeToReStock}
             </a>
           </article>
         )}

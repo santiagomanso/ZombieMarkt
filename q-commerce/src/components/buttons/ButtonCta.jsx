@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const ButtonCta = ({ addToCart, product, active }) => {
+  const { txt } = useContext(LanguageContext)
+
   return (
     <button
       onClick={() => addToCart(product)}
@@ -12,12 +15,12 @@ const ButtonCta = ({ addToCart, product, active }) => {
   }    `}
     >
       <span className={`${active ? '' : ' animate-txtAddToCart'}`}>
-        Add to cart
+        {txt.addToCart}
       </span>
       <span
         className={`absolute ${active ? 'hidden' : 'inline animate-txtAdded'}`}
       >
-        Remove from cart <i className='fa-solid fa-trash'></i>
+        {txt.removeFromCart} <i className='fa-solid fa-trash'></i>
       </span>
       <i
         className={`fa-solid fa-box absolute left-[49%] -top-5 ${

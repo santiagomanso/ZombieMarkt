@@ -69,15 +69,18 @@ const Navbar = () => {
             <i className='fa-solid fa-burger text-4xl text-amber-800'></i>
           </button>
           {user && (
-            <div className='flex gap-2 items-center'>
-              <div className='h-14 w-14 bg-gradient-to-br from-amber-100 to-slate-900 rounded-full border-2 border-stone-600'>
-                <img
-                  src={user.image}
-                  alt={user.email}
-                  className='rounded-full'
-                />
+            <div className='flex gap-5 items-center'>
+              <div className='flex items-center gap-1'>
+                <div className='h-14 w-14 bg-gradient-to-br from-amber-100 to-slate-900 rounded-full border-2 border-stone-600'>
+                  <img
+                    src={user.image}
+                    alt={user.email}
+                    className='rounded-full'
+                  />
+                </div>
+                <span>{user.email}</span>
               </div>
-              <span>{user.email}</span>
+              <LanguageSwitcher />
             </div>
           )}
           <ul className='flex flex-col items-center gap-10'>
@@ -142,7 +145,7 @@ const Navbar = () => {
                 onClick={handleLogout}
                 className='bg-gradient-to-br from-red-400/70 to-rose-600/90 rounded px-5 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40 text-2xl'
               >
-                logout
+                {txt.signOut}
               </button>
             )}
           </ul>
@@ -170,7 +173,7 @@ const Navbar = () => {
               className='bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded px-3 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40'
             >
               <i className='fa-solid fa-virus text-gray-200 text-xl'></i>
-              <span className='text-gray-200'>Login</span>
+              <span className='text-gray-200'>{txt.login}</span>
             </Link>
           )}
 

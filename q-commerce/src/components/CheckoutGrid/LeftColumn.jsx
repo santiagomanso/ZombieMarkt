@@ -1,9 +1,13 @@
 import React, { useContext, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { CartContext } from '../../store/CartContext'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const LeftColumn = () => {
+  //extraction from context
   const { msg } = useContext(CartContext)
+  const { txt } = useContext(LanguageContext)
+
   const handleClick = (operation, item) => {
     switch (operation) {
       case '+': {
@@ -69,13 +73,13 @@ const LeftColumn = () => {
     >
       {!cart.length > 0 ? (
         <div className={`${msg | error ? 'blur-xl' : 'blur-none'}`}>
-          <h2>There are no products on your cart</h2>
+          <h2>{txt.thereAreNoProducts}</h2>
           <Link
-            to='/'
+            to='/home'
             className='bg-gradient-to-br w-fit from-orange-400/70 to-amber-600/90 rounded px-3 py-1 flex gap-1 items-baseline outline outline-2 outline-orange-900/40'
           >
             <i className='fa-solid fa-virus text-gray-200 text-xl'></i>
-            <span className='text-gray-200'>shop now</span>
+            <span className='text-gray-200'>{txt.shopNow}</span>
           </Link>
         </div>
       ) : (
@@ -100,11 +104,11 @@ const LeftColumn = () => {
                     </h2>
                   </div>
                   <div className='col-span-2 flex items-center justify-start lg:justify-between gap-1 lg:gap-20 w-full'>
-                    <span className='text-white font-medium'>
-                      Price ${item.price}
+                    <span className='text-white capitalize font-medium'>
+                      {txt.price} ${item.price}
                     </span>
                     <span className='lg:col-span-4 lg:text-xl font-bold text-gray-100'>
-                      Stock: {item.countInStock}
+                      {txt.stock}: {item.countInStock}
                     </span>
 
                     <div className='-translate-y-3 lg:translate-y-0 flex justify-center gap-2 items-center'>

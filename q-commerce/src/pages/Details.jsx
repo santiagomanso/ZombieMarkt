@@ -13,6 +13,7 @@ import useFetch from '../hooks/useFetch'
 import { CartContext } from '../store/CartContext'
 import { UserContext } from '../store/UserContext'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
+import { LanguageContext } from '../store/LanguageContext'
 
 const ProductDetail = () => {
   //params extraction
@@ -24,6 +25,7 @@ const ProductDetail = () => {
   //extraction from context
   const { cart, setCart } = useContext(CartContext)
   const { user } = useContext(UserContext)
+  const { txt, language } = useContext(LanguageContext)
 
   //error/confirmation msgs
   const [msg, setMsg] = useState('')
@@ -70,11 +72,49 @@ const ProductDetail = () => {
     })
   }
 
+  //function to switch the message when user tries to comment
+  const checkAddComment = (language, isValid) => {
+    switch (true) {
+      //error - english
+      case language === 'en' && !isValid: {
+        return setError('Login first')
+      }
+
+      //error - spanish
+      case language === 'es' && !isValid: {
+        return setError('Inicie Sesion')
+      }
+
+      //error - german
+      case language === 'de' && !isValid: {
+        return setError('Erst anmelden')
+      }
+
+      //success - english
+      case language === 'en' && isValid: {
+        return setMsg('Comment added')
+      }
+
+      //success - english
+      case language === 'es' && isValid: {
+        return setMsg('Comentario añadido')
+      }
+
+      //success - english
+      case language === 'de' && isValid: {
+        return setMsg('Kommentar hinzugefügt')
+      }
+
+      default:
+        break
+    }
+  }
+
   //NOTE POST NEW COMMENT
   const submitComment = async (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
       if (!user) {
-        setError('Login first')
+        checkAddComment(language, false) //language and false to indicate failure
         setTimeout(() => {
           setError('')
         }, 2500)
@@ -100,7 +140,7 @@ const ProductDetail = () => {
             headers,
           )
           console.log('data', data)
-          setMsg('Comment added')
+          checkAddComment(language, true) //language, and true to indicate success
           setInputComment('')
           setCommentsArray([...commentsArray, inputComment])
           setTimeout(() => {
@@ -224,12 +264,12 @@ const ProductDetail = () => {
             <div className='self-start h-[90%] p-2'>
               <div className=' grid h-[14%] grid-cols-3 place-items-center  gap-5'>
                 <span className='lg:text-2xl  w-full text-center font-bold text-gray-700 '>
-                  Price: ${product.price}
+                  {txt.price}: ${product.price}
                 </span>
                 <Rating rating={product.rating} />
 
                 <span className='lg:text-2xl w-full font-bold text-gray-700'>
-                  No. Reviews {product.numReviews}
+                  {txt.numberOfReviews} {product.numReviews}
                 </span>
 
                 <div className='col-span-2 w-full'>
@@ -265,7 +305,7 @@ const ProductDetail = () => {
                     type='text'
                     className='w-full px-8 text-lg bg-white/20 text-slate-800 font-medium
                     placeholder-slate-800  outline outline-1 outline-gray-700/30'
-                    placeholder='Place a comment'
+                    placeholder={txt.placeAComment}
                   />
                 </div>
                 <div className='mt-2 bg-gradient-to-b from-slate-900/50 to-amber-100/30 rounded-lg p-5 h-[97%] flex flex-col gap-2 border-4 border-amber-100/50 justify-start overflow-auto'>
@@ -314,10 +354,10 @@ const ProductDetail = () => {
                           ZombieMarkt
                         </span>
                         <span className='text-lg lg:text-xl'>
-                          There are no comments yet
+                          {txt.thereAreNoCommentsYet}
                         </span>
                         <span className='text-lg lg:text-xl'>
-                          Be the first to comment!
+                          {txt.beTheFirstToComment}
                         </span>
                       </div>
                     </div>
