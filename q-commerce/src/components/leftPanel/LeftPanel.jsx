@@ -37,7 +37,7 @@ const LeftPanel = ({
         <img
           src={imgTop || zombieCalculate}
           alt='zombie'
-          className={`absolute md:-top-20 lg:-top-24 ${topImgOpt && topImgOpt}`}
+          className={`absolute md:-top-20  ${topImgOpt ? topImgOpt : ''}`}
         />
         <div className='mt-36 lg:mt-40'>
           <h2 className='font-bold'>{title ? title : txt.foodCalculator}</h2>
