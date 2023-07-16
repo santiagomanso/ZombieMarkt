@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import Rating from '../rating/Rating'
+import { useContext } from 'react'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const Item = ({
   item,
@@ -8,6 +10,8 @@ const Item = ({
   redirectToDetail,
   shortName,
 }) => {
+  const { txt, language } = useContext(LanguageContext)
+
   //function to check which path the <Link> component should use
   const checkPath = () => {
     switch (true) {
@@ -42,6 +46,32 @@ const Item = ({
     }
   }
 
+  //function to check if the item name is from a category and return object with language name, later the names
+  const checkName = () => {
+    switch (true) {
+      case item.name === 'beverages':
+        return txt.beverages
+
+      case item.name === 'snacks':
+        return txt.snacks
+      case item.name === 'hygiene':
+        return txt.hygiene
+      case item.name === 'meat':
+        return txt.meat
+      case item.name === 'pasta':
+        return txt.pasta
+      case item.name === 'fruits':
+        return txt.fruits
+      case item.name === 'vegetables':
+        return txt.vegetables
+      case item.name === 'breakfast':
+        return txt.breakfast
+
+      default:
+        return item.name //the default would be the the product name when this component gets called from productsPage it will return the full item.name example: coca cola 1lt, pepsi cola 333ml
+    }
+  }
+
   return (
     <Link
       // to={redirectToDetail ? `/products/details/${item._id}` : item.path}
@@ -61,7 +91,7 @@ const Item = ({
            item.countInStock === 0 ? '' : 'group-hover:scale-100'
          } text-3xl lg:text-5xl font-zombie tracking-wider`}
       >
-        {item.name}
+        {checkName()}
       </span>
 
       {/* NAME FOR SMALL SCREENS */}
@@ -70,11 +100,11 @@ const Item = ({
           shortName ? 'w-1/2' : ''
         }`}
       >
-        {item.name}
+        {checkName()}
       </span>
       {item.countInStock === 0 && (
         <span className='font-semibold z-10 bg-gradient-to-br from-amber-200 to-yellow-200 px-5 py-2 rounded absolute top-0 -right-8 rotate-12 text-yellow-700 outline outline-2 outline-yellow-700 uppercase'>
-          Clickme to re-stock +
+          {txt.clickMeToReStock}
         </span>
       )}
       {redirectToDetail && (
