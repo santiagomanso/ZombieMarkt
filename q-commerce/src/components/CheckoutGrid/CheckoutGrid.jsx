@@ -4,10 +4,13 @@ import FloatingMsg from '../floatingMsg/FloatingMsg'
 import ModalCheckout from '../modal/ModalCheckout'
 import LeftColumn from './LeftColumn'
 import RightColumn from './RightColumn'
+import { LanguageContext } from '../../store/LanguageContext'
 
 const CheckoutGrid = () => {
+  //extraction from contexts
   const { msg } = useContext(CartContext)
   const { cart } = useContext(CartContext)
+  const { txt } = useContext(LanguageContext)
 
   //modal states
   const [active, setActive] = useState(false)
@@ -74,7 +77,7 @@ const CheckoutGrid = () => {
           onClick={() => setActive(!active)}
           className='lg:hidden fixed w-[300px] bottom-4 left-[50%] -translate-x-[50%] bg-gradient-to-br from-orange-400/70 to-amber-600/90 rounded font-bold uppercase  flex justify-around text-gray-200 tracking-wider'
         >
-          <span>to checkout</span>
+          <span>{txt.toCheckout}</span>
           <span>${calculateSemitotals()} </span>
         </button>
       )}
