@@ -9,10 +9,12 @@ import Modal from '../components/modal/Modal'
 
 import { UserContext } from '../store/UserContext'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
+import { LanguageContext } from '../store/LanguageContext'
 
 const Profile = () => {
   //extract states from context
   const { user, setUser } = useContext(UserContext)
+  const { txt } = useContext(LanguageContext)
 
   //hooks
   const navigate = useNavigate()
@@ -92,10 +94,13 @@ const Profile = () => {
                 className='w-full h-full object-scale-down rounded max-h-[500px]'
               />
             </div>
-            <div className='w-full lg:w-2/3 bg-gray-700/10 grid grid-cols-2 lg:grid-cols-3 px-2 py-3 lg:p-10 place-content-center gap-x-10 gap-y-5 lg:gap-20'>
+            <div className='w-full lg:w-2/3 bg-gray-700/10 grid grid-cols-2 lg:grid-cols-3 px-2 py-3 lg:p-10 place-content-center gap-x-10 gap-y-5 lg:gap-x-5'>
               <div className='flex flex-col'>
-                <label className='font-medium text-gray-100' htmlFor='name'>
-                  Email
+                <label
+                  className='font-medium text-gray-100 capitalize'
+                  htmlFor='name'
+                >
+                  {txt.email}
                 </label>
                 <input
                   readOnly={true}
@@ -106,8 +111,11 @@ const Profile = () => {
                 />
               </div>
               <div className='flex flex-col'>
-                <label className='font-medium text-gray-100' htmlFor='sku'>
-                  Image
+                <label
+                  className='font-medium text-gray-100 capitalize'
+                  htmlFor='sku'
+                >
+                  {txt.image}
                 </label>
                 <input
                   readOnly={true}
@@ -118,8 +126,11 @@ const Profile = () => {
                 />
               </div>
               <div className='flex flex-col order-last lg:order-none'>
-                <span className='font-medium text-gray-100' htmlFor='ean'>
-                  Joined
+                <span
+                  className='font-medium text-gray-100 capitalize'
+                  htmlFor='ean'
+                >
+                  {txt.joined}
                 </span>
                 <span className='px-1 py-[0.35rem] rounded outline outline-1 outline-gray-300 font-medium bg-white text-gray-800'>
                   {user.joined}
@@ -128,19 +139,19 @@ const Profile = () => {
               <div className='flex flex-col'>
                 <button
                   onClick={() => setActive('favorites')}
-                  className='flex gap-1 justify-center items-baseline w-full bg-slate-800/60 font-bold text-gray-100 tracking-wider text-lg rounded outline outline-2 outline-slate-500 self-center place-self-center'
+                  className='flex gap-1 justify-center items-baseline w-full bg-slate-800/60 font-bold text-gray-100 tracking-wider text-lg rounded outline outline-2 outline-slate-500 self-center place-self-center capitalize'
                 >
                   <i className='fa-regular fa-heart'></i>
-                  <span>Favourites</span>
+                  <span>{txt.favourites}</span>
                 </button>
               </div>
-              <div className='flex flex-col lg:col-span-1 w-full'>
+              <div className='flex flex-col lg:col-span-2 w-full'>
                 <button
                   onClick={() => setActive('orders')}
                   className='flex gap-1 justify-center items-baseline w-full bg-slate-800/60 font-bold text-gray-100 tracking-wider text-lg rounded outline outline-2 outline-slate-500 self-center place-self-center'
                 >
                   <i className='fa-solid fa-folder-open'></i>
-                  <span>My Orders</span>
+                  <span className='capitalize'>{txt.myOrders}</span>
                 </button>
               </div>
             </div>
