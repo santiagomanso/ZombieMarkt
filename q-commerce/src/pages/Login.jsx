@@ -11,6 +11,7 @@ import { UserContext } from '../store/UserContext'
 import signUpImg from '../assets/signUp.png'
 import { RedirectContext } from '../store/RedirectContext'
 import { guestAccounts } from '../utils/guestsAccounts'
+import { LanguageContext } from '../store/LanguageContext'
 
 const Login = () => {
   //context states extractions
@@ -18,6 +19,7 @@ const Login = () => {
     useContext(UserContext)
   const { setAnimation } = useContext(AnimationContext)
   const { path } = useContext(RedirectContext)
+  const { txt, language } = useContext(LanguageContext)
 
   //hooks
 
@@ -35,19 +37,48 @@ const Login = () => {
 
   const validateInputs = (object) => {
     switch (true) {
-      case object === null: {
+      case object === null && language === 'en': {
         setError('ERROR - Complete all fields')
         // console.log('null object')
         break
       }
 
-      case !object.email || !object.password: {
-        setError('ERROR - Complete all fields')
-        console.log('empty fields')
+      case object === null && language === 'es': {
+        setError('ERROR - Completar todos los campos')
+        // console.log('null object')
         break
       }
 
-      //submit to userContext and trigger create user function only when everything goes ok
+      case object === null && language === 'de': {
+        setError('Fehler - Vervollständigen aller Felder')
+        // console.log('null object')
+        break
+      }
+
+      //when one input is empty but the other has data, based on language
+
+      //english
+      case (!object.email || !object.password) && language === 'en': {
+        setError('ERROR - Complete all fields')
+
+        break
+      }
+
+      //spanish
+      case (!object.email || !object.password) && language === 'es': {
+        setError('ERROR - Complete todos los campos')
+
+        break
+      }
+
+      //german
+      case (!object.email || !object.password) && language === 'de': {
+        setError('Fehler - Alle Felder ausfüllen')
+
+        break
+      }
+
+      //submit to userContext and trigger login function only when everything goes ok it then query the API and switch the message response from the API (by default the API message comes in english, but to further translation there is another switch on the userContext)
       default: {
         loginUser(object)
         break
@@ -79,7 +110,7 @@ const Login = () => {
           navigate('/home', { replace: true }) // redirection to home screen
         }
       }
-    }, 1200)
+    }, 1500) //this setTimeout controls the time to show the msg and then redirect user
     //eslint-disable-next-line
   }, [user])
 
@@ -94,19 +125,19 @@ const Login = () => {
   return (
     <MainContainer>
       <LeftPanel
-        title='No account yet?'
-        subtitle='Register now and get access to your only chance of salvation against the horde of zombies!'
+        title={txt.noAccountYet}
+        subtitle={txt.registerNowText}
         imgTop={signUpImg}
-        topImgOpt=' -top-8 w-[200px]'
-        topBtnText='sign up now!'
+        topImgOpt=' lg:-top-8 w-[200px]'
+        topBtnText={txt.registerNow}
         topBtnPath='/signUp'
         bottomCard={false}
       />
       <RightContainer gap='gap-5 lg:gap-10' relative>
         <Header
           opt='px-5 lg:px-0 mt-4 lg:mt-0'
-          title='Sign in'
-          subtitle="Provide your survivor's credentials"
+          title={txt.login}
+          subtitle={txt.loginCredentials}
         />
         {msg && (
           <FloatingMsg
@@ -130,15 +161,17 @@ const Login = () => {
           <div className='flex rounded-md  md:p-5 shadow-2xl items-stretch   md:h-auto w-full'>
             {/* form container */}
             <div className='w-full md:w-[45%] p-5 md:px-10 flex flex-col justify-center'>
-              <h2 className='font-bold text-slate-700 select-none'>Login</h2>
+              <h2 className='font-bold text-slate-700 select-none'>
+                {txt.login}
+              </h2>
 
               <form className='flex flex-col gap-2 mt-4 relative'>
                 <label className='flex flex-col'>
-                  <span>Email</span>
+                  <span>{txt.email}</span>
                   <input
                     className='p-2 rounded-lg border-2 border-opacity-50 outline-none focus:border-blue-500  transition duration-200'
                     type='email'
-                    placeholder='Enter your email'
+                    placeholder={txt.emailPlaceHolder}
                     name='email'
                     onChange={handleChange}
                     onClick={() => setError(null)}
@@ -149,7 +182,7 @@ const Login = () => {
                 </label>
 
                 <label>
-                  <span>Password</span>
+                  <span>{txt.password}</span>
                   <div className='relative'>
                     <svg
                       onClick={handleShowPassword}
@@ -167,7 +200,7 @@ const Login = () => {
                       className='w-full bg-white p-2 rounded-lg border-2 border-opacity-50 outline-none focus:border-blue-500  transition duration-200'
                       type={`${showPassword ? 'text' : 'password'}`}
                       name='password'
-                      placeholder='Enter your password'
+                      placeholder={txt.passwordPlaceHolder}
                       onClick={() => setError(null)}
                       onChange={handleChange}
                     />
@@ -191,14 +224,14 @@ const Login = () => {
                       <path d='M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z' />
                       <path d='M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z' />
                     </svg>
-                    <span>Use Guest account</span>
+                    <span>{txt.useGuestAccount}</span>
                   </button>
                   <button
                     type='submit'
                     onClick={handleSubmit}
                     className='w-[45%] shadow-md bg-gradient-to-br from-gray-400/20 to-slate-700/70 text-gray-200 tracking-wider py-2 rounded-md font-bold hover:scale-105 duration-300 border'
                   >
-                    Login now
+                    {txt.loginNow}
                   </button>
                 </div>
               </form>
@@ -243,7 +276,7 @@ const Login = () => {
                   onClick={() => redirectTo('/signup')}
                   className='select-none cursor-pointer hover:scale-110 duration-500 text-gray-300'
                 >
-                  Sign up
+                  {txt.signUp}
                 </p>
               </div>
             </div>
