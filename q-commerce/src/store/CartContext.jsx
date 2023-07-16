@@ -1,7 +1,8 @@
 import axios from 'axios'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
+import { LanguageContext } from './LanguageContext'
 
 export const CartContext = createContext()
 
@@ -20,6 +21,9 @@ export const CartProvider = ({ children }) => {
   const [msg, setMsg] = useState('')
   const [error, setError] = useState('')
   const [shippingAdress, setShippingAdress] = useState('')
+
+  //extraction from context
+  const { txt } = useContext(LanguageContext)
 
   //functions
   const setCartToStorage = () => {
@@ -61,7 +65,7 @@ export const CartProvider = ({ children }) => {
 
     if (data) {
       setCart([])
-      setMsg('Order placed')
+      setMsg(txt.orderPlaced)
       setTimeout(() => {
         navigate('/home')
         setMsg('')
