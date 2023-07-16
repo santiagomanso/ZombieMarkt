@@ -1,14 +1,19 @@
 import axios from 'axios'
 import cookies from 'js-cookie'
-import { createContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import getTokenFromStorage from '../utils/getTokenFromStorage'
+import { LanguageContext } from './LanguageContext'
 
 export const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
+  //internal states of the component
   const [user, setUser] = useState('')
   const [errorContext, setErrorContext] = useState('')
   const [msg, setMsg] = useState('')
+
+  //other contexts extraction
+  const { language } = useContext(LanguageContext)
 
   //NOTE create user
   const createUser = async (newUser) => {
@@ -29,6 +34,55 @@ const UserProvider = ({ children }) => {
     }
   }
 
+  const checkMsg = (msg, isValid) => {
+    switch (true) {
+      //language english and success
+      case language === 'en' && isValid: {
+        return setMsg('Successfully logged in')
+      }
+      //language spanish and success
+      case language === 'es' && isValid: {
+        return setMsg('Inicio de sesion correcto')
+      }
+      //language german and success
+      case language === 'de' && isValid: {
+        return setMsg('Erfolgreich eingeloggt')
+      }
+
+      //errors
+
+      //english - incorrect password
+      case language === 'en' && msg === 'error: incorrect password': {
+        return setErrorContext('Error: incorrect password')
+      }
+      //english - email does not exists
+      case language === 'en' && msg === 'error: email does not exist': {
+        return setErrorContext('Error: Email does not exist')
+      }
+
+      //spanish and incorrect password
+      case language === 'es' && msg === 'error: incorrect password': {
+        return setErrorContext('Error: contraseña incorrecta')
+      }
+      //spanish - email does not exists
+      case language === 'es' && msg === 'error: email does not exist': {
+        return setErrorContext('Error: El correo electrónico no existe')
+      }
+
+      //german and incorrect password
+      case language === 'de' && msg === 'error: incorrect password': {
+        return setErrorContext('Fehler - falsches Passwort')
+      }
+      //german - email does not exists
+      case language === 'de' && msg === 'error: email does not exist': {
+        return setErrorContext('Fehler: E-Mail existiert nicht')
+      }
+
+      default:
+        break
+    }
+  }
+
   //NOTE - login
   const loginUser = async (userObj) => {
     // console.log('userObj', userObj)
@@ -37,14 +91,11 @@ const UserProvider = ({ children }) => {
         `${process.env.REACT_APP_SERVER_URL}/api/auth/login`,
         userObj,
       )
-      // console.log('data.user', data.user)
+      checkMsg(data.msg, true) //switch of the message based on the language
       setUser(data.user)
-      setMsg(data.msg)
       saveTokenToLocalStorage(data.token)
     } catch (error) {
-      setErrorContext(error)
-      setErrorContext(error.response.data.msg)
-      //FIXME - hacer error msg floating
+      checkMsg(error.response.data.msg) //switch error message based on language
     }
   }
 
