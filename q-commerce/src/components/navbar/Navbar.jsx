@@ -80,9 +80,11 @@ const Navbar = () => {
                 </div>
                 <span>{user.email}</span>
               </div>
-              <LanguageSwitcher />
             </div>
           )}
+          <div className='mt-3'>
+            <LanguageSwitcher />
+          </div>
           <ul className='flex flex-col items-center gap-10'>
             <Link
               to='/home'
