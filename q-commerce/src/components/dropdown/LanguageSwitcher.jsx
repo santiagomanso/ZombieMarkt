@@ -41,7 +41,7 @@ const LanguageSwitcher = () => {
   return (
     <div
       ref={menuRef}
-      className='relative rounded-md cursor-pointer'
+      className='relative rounded-md cursor-pointer w-20 lg:w-auto'
       onClick={() => setOpen(!open)}
     >
       <div className='flex items-center justify-start gap-2 duration-200  rounded-lg px-2'>
