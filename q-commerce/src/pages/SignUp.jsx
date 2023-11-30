@@ -7,11 +7,16 @@ import Header from '../components/header/Header'
 import LeftPanel from '../components/leftPanel/LeftPanel'
 import { AnimationContext } from '../store/AnimationContext'
 import { UserContext } from '../store/UserContext'
+import { LanguageContext } from '../store/LanguageContext'
 
 const SignUp = () => {
   //context states extractions
-  const { createUser, msg, errorContext, user } = useContext(UserContext)
+  const { createUser, msg, errorContext, user, setMsg, setErrorContext } =
+    useContext(UserContext)
   const { setAnimation } = useContext(AnimationContext)
+
+  //extraction from context
+  const { txt, language } = useContext(LanguageContext)
 
   //component states
   const [error, setError] = useState('')
@@ -22,6 +27,55 @@ const SignUp = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     validateInputs(newUser) //NOTE after validating this function firesUp the createUser
+  }
+
+  const checkMsg = (msg, isValid) => {
+    switch (true) {
+      //language english and success
+      case language === 'en' && isValid: {
+        return setMsg('Successfully logged in')
+      }
+      //language spanish and success
+      case language === 'es' && isValid: {
+        return setMsg('Inicio de sesion correcto')
+      }
+      //language german and success
+      case language === 'de' && isValid: {
+        return setMsg('Erfolgreich eingeloggt')
+      }
+
+      //errors
+
+      //english - incorrect password
+      case language === 'en' && msg === 'error: incorrect password': {
+        return setErrorContext('Error: incorrect password')
+      }
+      //english - email does not exists
+      case language === 'en' && msg === 'error: email does not exist': {
+        return setErrorContext('Error: Email does not exist')
+      }
+
+      //spanish and incorrect password
+      case language === 'es' && msg === 'error: incorrect password': {
+        return setErrorContext('Error: contraseña incorrecta')
+      }
+      //spanish - email does not exists
+      case language === 'es' && msg === 'error: email does not exist': {
+        return setErrorContext('Error: El correo electrónico no existe')
+      }
+
+      //german and incorrect password
+      case language === 'de' && msg === 'error: incorrect password': {
+        return setErrorContext('Fehler - falsches Passwort')
+      }
+      //german - email does not exists
+      case language === 'de' && msg === 'error: email does not exist': {
+        return setErrorContext('Fehler: E-Mail existiert nicht')
+      }
+
+      default:
+        break
+    }
   }
 
   const validateInputs = (object) => {
@@ -73,8 +127,8 @@ const SignUp = () => {
       <RightContainer gap='gap-5 lg:gap-10' relative>
         <Header
           opt='px-3 mt-7 lg:px-0 lg:mt-0'
-          title='Sign up'
-          subtitle="The undead can't shop here, but you can. Sign in now!"
+          title={txt.signUp}
+          subtitle={txt.theUndeadCantShop}
         />
         {msg && (
           <FloatingMsg
@@ -97,14 +151,14 @@ const SignUp = () => {
           <div className='w-full px-5 md:px-10 flex flex-col justify-center'>
             <span
               onClick={() => redirectTo('/login')}
-              className='mt-2 text-gray-700 p-0 w-[300px] font-bold  select-none cursor-pointer'
+              className='mt-2 text-gray-700 p-0 w-full font-bold  select-none cursor-pointer'
             >
-              Already a survivor? Click here
+              {txt.alreadyASurvivor}
             </span>
             <form className='flex flex-col gap-4 mt-5' onSubmit={handleSubmit}>
               <label className='flex flex-col relative'>
                 <span className='text-gray-800 font-medium capitalize flex gap-1'>
-                  Email
+                  {txt.email}
                   <span className='hidden md:inline text-red-900 font-bold'>
                     {error && error}
                   </span>
@@ -117,13 +171,15 @@ const SignUp = () => {
                   onChange={handleChange}
                   className={`  p-2 mb-2 rounded-lg  focus:border-blue-500  transition duration-200`}
                   type='email'
-                  placeholder='Enter your email'
+                  placeholder={txt.emailPlaceHolder}
                   name='email'
                 />
               </label>
 
               <label className='flex flex-col'>
-                <span className='text-gray-800 font-medium'>Password</span>
+                <span className='text-gray-800 font-medium'>
+                  {txt.password}
+                </span>
                 <div className='relative'>
                   <svg
                     xmlns='http://www.w3.org/2000/svg'
@@ -143,12 +199,12 @@ const SignUp = () => {
                     type='password'
                     name='password'
                     id=''
-                    placeholder='Enter your password'
+                    placeholder={txt.passwordPlaceHolder}
                   />
                 </div>
               </label>
 
-              <button className='select-none mt-7 w-full shadow-md bg-gradient-to-br  text-white rounded-lg py-2 flex justify-center items-center gap-2 border font-semibold  hover:scale-105 duration-300'>
+              <button className='select-none mt-7 w-full shadow-md bg-gradient-to-br  text-white rounded-lg py-2 flex justify-center items-center gap-2 border font-semibold duration-300'>
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   width='22'
@@ -163,7 +219,7 @@ const SignUp = () => {
                   />
                   <path d='M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4Z' />
                 </svg>
-                <span className=''>Join the living (or undead) now!</span>
+                <span className=''>{txt.joinTheLiving}</span>
               </button>
             </form>
           </div>
