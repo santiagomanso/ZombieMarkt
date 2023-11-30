@@ -32,6 +32,10 @@ const Navbar = () => {
     logOut()
   }
 
+  const inventoryManagerHref = () => {
+    return process.env.REACT_APP_INVENTORY_MANAGER
+  }
+
   useEffect(() => {
     if (location.pathname === '/') {
       setSplash(true)
@@ -82,6 +86,7 @@ const Navbar = () => {
               </div>
             </div>
           )}
+          <p>Inventory Manager</p>
           <div className='mt-3'>
             <LanguageSwitcher />
           </div>
@@ -168,6 +173,15 @@ const Navbar = () => {
           <span className='text-3xl'>ZombieMarkt</span>
         </Link>
         <ul className='flex gap-10 items-center'>
+          <a
+            href={inventoryManagerHref()}
+            target='_blank'
+            rel='noreferrer'
+            className='text-gray-800 lg:text-xl flex items-center gap-1 capitalize'
+          >
+            <i class='fa-solid fa-boxes-packing text-gray-700 text-xl'></i>
+            <span>{txt.inventoryManager}</span>
+          </a>
           <LanguageSwitcher />
           {!user && (
             <Link

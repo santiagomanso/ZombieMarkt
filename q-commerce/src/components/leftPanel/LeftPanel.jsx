@@ -50,7 +50,7 @@ const LeftPanel = ({
                 className='w-5/6 bg-gradient-to-br from-teal-700/20 to-indigo-900/40 font-bold text-slate-700 rounded  outline outline-2 outline-slate-500 self-center place-self-center uppercase'
                 onClick={() => handleNavigate(topBtnPath || '/calculator')}
               >
-                {topBtnText || 'comming soon'}
+                {topBtnText || txt.comingSoon}
               </button>
             </div>
           </span>

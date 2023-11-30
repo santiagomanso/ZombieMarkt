@@ -14,6 +14,7 @@ export const dictionary = {
     ],
     cart: 'cart',
     login: 'login',
+    inventoryManager: 'inventory manager',
     loginCredentials: "Provide your survivor's credentials",
     email: 'email',
     emailPlaceHolder: 'Enter your email',
@@ -58,7 +59,7 @@ export const dictionary = {
     noAccountYet: 'No account yet?',
     registerNowText:
       'Register now and get access to your only chance of salvation against the horde of zombies!',
-    signUpNow: 'Sign up now',
+    registerNow: 'Sign up now',
     checkoutPage: 'Checkout Page',
     editYourAmounts: 'Edit your amounts and hit checkout',
     checkout: 'checkout',
@@ -88,6 +89,9 @@ export const dictionary = {
     products: 'Products',
     orders: 'orders',
     toCheckout: 'to checkout',
+    joinTheLiving: 'Join the living (or the undead) now !',
+    alreadyASurvivor: 'Already a survivor? click here to login',
+    theUndeadCantShop: "The undead can't shop here, but you can. Sign in now!",
   },
 
   es: {
@@ -105,6 +109,7 @@ export const dictionary = {
     ],
     cart: 'carrito',
     login: 'Iniciar sesion',
+    inventoryManager: 'control de stock',
     loginCredentials: 'Provea sus credenciales de sobreviviente',
     email: 'correo',
     emailPlaceHolder: 'Escriba su email',
@@ -179,6 +184,10 @@ export const dictionary = {
     products: 'Productos',
     orders: 'pedidos',
     toCheckout: 'ir a checkout',
+    joinTheLiving: 'Únase a los vivos (o a los muertos) ahora !',
+    alreadyASurvivor: 'Ya es un superviviente? click aqui para iniciar sesión',
+    theUndeadCantShop:
+      'Los muertos vivientes no pueden comprar aquí, pero tú sí. regístrate ahora',
   },
 
   de: {
@@ -196,10 +205,11 @@ export const dictionary = {
     ],
     cart: 'Warenkorb',
     login: 'Anmeldung',
+    inventoryManager: 'Lagerverwalter',
     loginCredentials: 'Legen Sie die Zeugnisse des Überlebenden vor',
     email: 'E-Mail',
     emailPlaceHolder: 'Ihre E-Mail eingeben',
-    passwordPlaceHolder: 'Ihre E-Mail passwort',
+    passwordPlaceHolder: 'Ihre E-Mail passwort eingeben',
     password: 'passwort',
     useGuestAccount: 'Gastkonto verwenden',
     loginNow: 'Jetzt anmelden',
@@ -272,5 +282,11 @@ export const dictionary = {
     products: 'Produkte',
     orders: 'Bestellungen',
     toCheckout: 'zur Kasse',
+    joinTheLiving:
+      'Schließen Sie sich jetzt den Lebenden (oder den Untoten) an!',
+    alreadyASurvivor:
+      'Bereits ein Überlebender? Klicken Sie hier, um sich einzuloggen',
+    theUndeadCantShop:
+      'Die Untoten können hier nicht einkaufen, aber du schon. Tragen Sie sich jetzt ein',
   },
 }
